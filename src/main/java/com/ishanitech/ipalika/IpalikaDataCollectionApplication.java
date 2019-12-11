@@ -9,5 +9,4 @@ public class IpalikaDataCollectionApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(IpalikaDataCollectionApplication.class, args);
 	}
-
 }

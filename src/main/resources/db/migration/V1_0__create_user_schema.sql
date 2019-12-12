@@ -3,6 +3,12 @@ CREATE TABLE IF NOT EXISTS `user` (
     `first_name` VARCHAR(30) NOT NULL,
     `last_name` VARCHAR(30) NOT NULL,
     `email` VARCHAR(50) UNIQUE KEY,
+    `password` VARCHAR(60) NOT NULL,
     `phone_no` VARCHAR(10) NOT NULL,
+    `locked` BIT(1) NOT NULL DEFAULT 1,
+    `first_login` BIT(1) NOT NULL DEFAULT 1,
+    `enabled` BIT(1) NOT NULL DEFAULT 1,
+    `expired` BIT(1) NOT NULL DEFAULT 1,
+    `role_id` INT NOT NULL DEFAULT 1,
     `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

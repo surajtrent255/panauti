@@ -4,7 +4,14 @@
  */
 package com.ishanitech.ipalika.config;
 
+
+import java.util.Optional;
+
 import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.config.ConfigRegistry;
+import org.jdbi.v3.core.mapper.RowMapper;
+import org.jdbi.v3.core.mapper.RowMapperFactory;
+import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +20,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.ishanitech.ipalika.model.Role;
+import com.ishanitech.ipalika.model.User;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -43,6 +52,8 @@ public class DatasourceConfig {
 	@Bean
 	Jdbi jdbiBean() {
 		Jdbi jdbi = Jdbi.create(transactionAwareDataSourceProxy());
+		jdbi.registerRowMapper(BeanMapper.factory(User.class));
+		jdbi.registerRowMapper(BeanMapper.factory(Role.class));
 		jdbi.installPlugin(new SqlObjectPlugin());
 		return jdbi;
 	}

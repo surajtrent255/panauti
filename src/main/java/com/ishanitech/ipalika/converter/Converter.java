@@ -11,6 +11,11 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 
+ * @param <T>. Target class
+ * @param <C>. Consumer Class
+ */
 @Setter
 @AllArgsConstructor
 public abstract class Converter<T, C> {

@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 /**
- * Class ApiError is a custom error response class which holds the erros 
+ * @Class ApiError is a custom error response class which holds the erros 
  */
 public class ApiError {
 	private HttpStatus status;

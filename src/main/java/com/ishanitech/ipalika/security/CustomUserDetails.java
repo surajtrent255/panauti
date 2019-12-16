@@ -72,10 +72,4 @@ public class CustomUserDetails implements UserDetails{
 		return user;
 	}
 
-	@Override
-	public String toString() {
-		return "CustomUserDetails [user=" + this.user.toString() + ", authorities=" + authorities + "]";
-	}
-
-	
 }

@@ -34,20 +34,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByUsername(String username) {
 		UserDAO userDao = dbService.getDao(UserDAO.class);
-		List<JoinRow> userRow = userDao.getUserByUsername(username);
-		if (userRow != null && userRow.size() > 0) {
-			User user = userRow.get(0).get(User.class);
-			Set<Role> roles = new HashSet<>();
-			userRow.forEach(jr -> {
-				roles.add(jr.get(Role.class));
-			});
-
-			user.setRole(roles);
-			return user;
-		} else {
-			throw new UsernameNotFoundException(String.format("User with username %s is not found", username));
-		}
-
+		return userDao.getUserByUsername(username);
 	}
 	
 	@Override

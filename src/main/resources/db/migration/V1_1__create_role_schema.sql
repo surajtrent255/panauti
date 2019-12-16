@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS `role` (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    role VARCHAR(15) NOT NULL
-);
-
-INSERT INTO `role` (`id`, `role`) VALUES
-    (1, 'ADMIN'),
-    (2, 'STAFF');

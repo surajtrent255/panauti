@@ -32,10 +32,8 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
 	private AuthenticationManager authenticationManager;
 	private ObjectMapper objectMapper;
 	private com.ishanitech.ipalika.utils.JsonTokenHelper tokenHelper;
-	
-	public TokenAuthenticationFilter(
-			AuthenticationManager authenticationManager,
-			ObjectMapper objectMapper,
+
+	public TokenAuthenticationFilter(AuthenticationManager authenticationManager, ObjectMapper objectMapper,
 			JsonTokenHelper tokenHelper) {
 		this.authenticationManager = authenticationManager;
 		this.objectMapper = objectMapper;
@@ -45,17 +43,15 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
+		LoginDTO loginData;
 		try {
-			LoginDTO loginData = objectMapper.readValue(request.getInputStream(), LoginDTO.class);
-			return authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(
-							loginData.getUsername(),
-							loginData.getPassword(),
-							new ArrayList<>()
-					));
-		} catch (Exception ex) {
-			throw new com.ishanitech.ipalika.model.AuthException(ex.getMessage());
+			loginData = objectMapper.readValue(request.getInputStream(), LoginDTO.class);
+			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginData.getUsername(),
+					loginData.getPassword(), new ArrayList<>()));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		return null;
 		
 	}
 
@@ -68,7 +64,6 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
 		response.setStatus(HttpStatus.OK.value());
 		String jwtToken = tokenHelper.generateToken(user);
 		response.setHeader("Authorization", "Bearer " + jwtToken);
-		//user.setToken(jwtToken);
 		ResponseDTO<User> userResponse = new ResponseDTO<User>(user);
 		objectMapper.writeValue(response.getOutputStream(), userResponse);
 	}
@@ -76,23 +71,23 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
-		
-		if(!request.getMethod().equalsIgnoreCase("post")) {
+
+		if (!request.getMethod().equalsIgnoreCase("post")) {
 			response.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
 			response.setContentType("application/json");
-			objectMapper.writeValue(response.getOutputStream(), String.format("%s method is not allowed.", request.getMethod()));
+			objectMapper.writeValue(response.getOutputStream(),
+					String.format("%s method is not allowed.", request.getMethod()));
 		} else {
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			response.setContentType("application/json");
-			ApiError apiError = new ApiError.Builder(HttpStatus.UNAUTHORIZED)
+			ApiError apiError = new ApiError.Builder(HttpStatus.UNAUTHORIZED.value())
 					.withTime(LocalDateTime.now())
 					.withMessage(failed.getLocalizedMessage())
-					.withDescription("Authentication was not successful. Please re-enter correct credentials.")
+					.withDescription("Authentication failed! Please re-enter correct credentials.")
 					.build();
 			objectMapper.writeValue(response.getOutputStream(), apiError);
 		}
-		
+
 	}
 
-	
 }

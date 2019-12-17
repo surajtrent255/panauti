@@ -1,7 +1,3 @@
-/**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Aug 27, 2019
- */
 package com.ishanitech.ipalika.security;
 
 import java.util.Collection;
@@ -15,6 +11,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ishanitech.ipalika.model.User;
 
+/**
+ * {@code CustomUserDetails} gives the information about the 
+ * currently loggedin user or authenticated entity.
+ * This class also holds the authorities of the currently authenticated user or entity.
+ * @author Umesh Bhujel <yoomesbhujel@gmail.com>
+ * @since 1.0
+ */
 public class CustomUserDetails implements UserDetails{
 	private static final long serialVersionUID = 6534708822085674206L;
 	private User user;
@@ -50,7 +53,7 @@ public class CustomUserDetails implements UserDetails{
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return false;
+		return this.user.isExpired();
 	}
 
 	@Override

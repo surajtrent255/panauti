@@ -1,7 +1,3 @@
-/**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Aug 23, 2019
- */
 package com.ishanitech.ipalika.security;
 
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -13,9 +9,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.ishanitech.ipalika.converter.UserConverter;
+import com.ishanitech.ipalika.model.AuthException;
 import com.ishanitech.ipalika.model.User;
 import com.ishanitech.ipalika.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * {@code CustomAuthenticationProvicer} is a customized authentication provider class
+ * which does the authentication based on {@code String username} and {@code String password}
+ * @author Umesh Bhujel
+ * @since 1.0
+ */
+@Slf4j
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	private PasswordEncoder passwordEncoder;
@@ -37,10 +44,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				authentication = new UsernamePasswordAuthenticationToken(loggedInUser, null, loggedInUser.getAuthorities());
 				return authentication;
 			} else {
-				throw new BadCredentialsException("Bad Credentials...");
+				throw new BadCredentialsException("Incorrect Credentials!");
 			}
-		} catch(Exception ex) {
-			throw new UsernameNotFoundException(ex.getMessage());
+		} catch(UsernameNotFoundException ex) {
+			throw new AuthException(ex.getMessage());
 		}
 		
 	}

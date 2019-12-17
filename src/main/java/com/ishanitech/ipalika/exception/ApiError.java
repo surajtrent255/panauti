@@ -1,21 +1,18 @@
-/**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Sep 1, 2019
- */
 package com.ishanitech.ipalika.exception;
 
 import java.time.LocalDateTime;
-import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 /**
- * @Class ApiError is a custom error response class which holds the erros 
+ * {@code ApiError} is a custom error response class which holds the erros. 
+ * @author Umesh Bhujel
+ * @since 1.0
  */
 public class ApiError {
-	private HttpStatus status;
+	private Integer status;
 	private String message;
 	private String description;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
@@ -23,7 +20,7 @@ public class ApiError {
 	private LocalDateTime time;
 	
 	
-	public HttpStatus getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
@@ -47,12 +44,12 @@ public class ApiError {
 	}
 	
 	public static class Builder {
-		private HttpStatus status;
+		private Integer status;
 		private String message;
 		private String description;
 		private LocalDateTime time;
 		
-		public Builder(HttpStatus status) {
+		public Builder(Integer status) {
 			this.status = status;
 		}
 		

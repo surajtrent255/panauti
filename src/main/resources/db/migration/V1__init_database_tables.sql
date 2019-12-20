@@ -82,8 +82,7 @@ CREATE TABLE IF NOT EXISTS `option` (
 	`option_id` VARCHAR(50) NOT NULL,
 	`option_text` VARCHAR(100) NOT NULL,
 	`question_id` INT(11) NOT NULL,
-	PRIMARY KEY (`id`),
-	UNIQUE INDEX `option_id` (`option_id`)
+	PRIMARY KEY (`id`)
 );
 
 

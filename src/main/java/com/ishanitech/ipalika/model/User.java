@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 /**
  * 
- * @author Umesh Bhujel
- * An entity class which represents the table user.
+ * {@code User} represents the user entity.
  * User entity also represents the authenticated user on the system.
+ * @author Umesh Bhujel
+ * @since 1.0
  */
 @Data
 @NoArgsConstructor

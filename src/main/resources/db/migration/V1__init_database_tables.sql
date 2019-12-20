@@ -15,10 +15,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `username` (`username`),
 	UNIQUE INDEX `email` (`email`)
-)
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=2;
+);
 
 INSERT INTO `user` (`id`, `first_name`, `middle_name`, `last_name`, `username`, `email`, `password`, `mobile_number`, `locked`, `first_login`, `enabled`, `expired`, `registered_date`)
  VALUES
@@ -41,3 +38,60 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 
 INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 1),
 (1, 2);
+
+
+CREATE TABLE IF NOT EXISTS `form` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`form_id` VARCHAR(50) NOT NULL DEFAULT '0',
+	`form_name` VARCHAR(50) NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `form_id` (`form_id`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `question` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`question_id` VARCHAR(50) NOT NULL,
+	`description` VARCHAR(50) NOT NULL,
+	`group` VARCHAR(50) NOT NULL,
+	`required` BIT(1) NOT NULL DEFAULT b'1',
+	`type_id` INT(11) NOT NULL DEFAULT 1,
+	`form_id` INT(11) NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `question_id` (`question_id`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `question_type` (
+	`type_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`type_name` VARCHAR(20) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`type_id`)
+);
+
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('1', 'CHECKBOX');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('2', 'RADIO');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('3', 'TEXT');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('4', 'NUMBER');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('5', 'DATE');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('6', 'GPS');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('7', 'IMAGE');
+
+
+CREATE TABLE IF NOT EXISTS `option` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`option_id` VARCHAR(50) NOT NULL,
+	`option_text` VARCHAR(100) NOT NULL,
+	`question_id` INT(11) NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `option_id` (`option_id`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `survey_answer` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`question_id` INT(11) NOT NULL,
+	`answer_id` INT(11) NULL DEFAULT NULL,
+	`answer_text` VARCHAR(100) NOT NULL,
+	PRIMARY KEY (`id`)
+);
+

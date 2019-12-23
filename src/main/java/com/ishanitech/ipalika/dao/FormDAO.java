@@ -34,4 +34,18 @@ public interface FormDAO {
 	@SqlQuery("SELECT * FROM form WHERE id = :id")
 	@RegisterBeanMapper(Form.class)
 	public Form getFormById(@Bind("id") Integer id);
+
+	/**
+	 * @param id
+	 */
+	@SqlUpdate("DELETES FROM form WHERE id = :id")
+	public void deleteById(@Bind("id") Integer id);
+
+	/**
+	 * @param id
+	 * @param form
+	 * @return
+	 */
+	@SqlUpdate("UPDATE form SET form_name = :formName WHERE id = :id")
+	public void updateFormById(@Bind Integer id, @BindBean Form form);
 }

@@ -65,4 +65,32 @@ public class FormServiceImpl implements FormService {
 		}
 	}
 
+	/**
+	 * Deletes the From from table using the given id.
+	 * @param id integer
+	 * @throws {@code CustomSqlException} if there are errors in sql query and something goes wrong while excuting query.
+	 * @author <b> Umesh Bhujel </b>
+	 * @since 1.0
+	 */
+	@Override
+	public void deleteById(Integer id) throws CustomSqlException {
+		FormDAO formDAO = dbService.getDao(FormDAO.class);
+		try {
+			formDAO.deleteById(id);
+		} catch(JdbiException jex) {
+			throw new CustomSqlException("Something went wrong while deleting data from database. Contact your system admin if error still exists.");
+		}
+	}
+
+	@Override
+	public void updateFormById(Integer id, Form form) throws CustomSqlException {
+		FormDAO formDAO = dbService.getDao(FormDAO.class);
+		try {
+			formDAO.updateFormById(id, form);
+		} catch(JdbiException jex) {
+			log.info("Message: " + jex.getMessage());
+			throw new CustomSqlException("Something went wrong while updating form!");
+		}
+	}
+
 }

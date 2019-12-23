@@ -1,6 +1,9 @@
 package com.ishanitech.ipalika.dao;
 
+import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import com.ishanitech.ipalika.model.Form;
@@ -21,4 +24,14 @@ public interface FormDAO {
 	 */
 	@SqlUpdate("INSERT INTO form(`form_id`, `form_name`) VALUES (:formId, :formName)")
 	public void addForm(@BindBean Form form);
+
+	/**
+	 * This method gets from info from form table.
+	 * @param id integer id
+	 * @author <b> Umesh Bhujel </b>
+	 * @since 1.0
+	 */
+	@SqlQuery("SELECT * FROM form WHERE id = :id")
+	@RegisterBeanMapper(Form.class)
+	public Form getFormById(@Bind("id") Integer id);
 }

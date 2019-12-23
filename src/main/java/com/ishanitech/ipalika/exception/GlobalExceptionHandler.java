@@ -37,10 +37,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				.withTime(LocalDateTime.now())
 				.withDescription("Maybe wrong input is sent or there are no results to show!")
 				.build();
-		return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+		return buildErrorResponse(apiError, HttpStatus.NOT_FOUND);
 				
 	}
 	
+	/**
+	 * Handles the sql exception occurred while persisting data into database table.
+	 * @param cex custom sql exception object.
+	 * @return {@code ResponseEntity} instance with {@code ApiError} type.
+	 * @author <b> Umesh Bhujel </b>
+	 * @since 1.0
+	 */
 	@ExceptionHandler(CustomSqlException.class)
 	public ResponseEntity<ApiError> handleCustomSqlException(CustomSqlException cex) {
 		ApiError apiError = new ApiError.Builder(cex.getStatus().value())
@@ -48,7 +55,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				.withDescription(cex.getMessage())
 				.withTime(LocalDateTime.now())
 				.build();
-		return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+		return buildErrorResponse(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	/**
+	 * Builds the response entity.
+	 * @param <T> type object
+	 * @param t error type object
+	 * @param status HttpStatus 
+	 * @return {@code ResponseEntity} response entity
+	 * @author <b> Umesh Bhujel </b>
+	 * @since 1.0
+	 */
+	private <T> ResponseEntity<T> buildErrorResponse(T t, HttpStatus status) {
+		return new ResponseEntity<>(t, status);
+	}
 }

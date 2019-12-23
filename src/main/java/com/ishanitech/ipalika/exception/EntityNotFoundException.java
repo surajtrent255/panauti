@@ -6,7 +6,7 @@ package com.ishanitech.ipalika.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class EntityNotFoundException extends RuntimeException{
+public class EntityNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = -5133741561910183291L;
 	private static HttpStatus status;
 	private String message;

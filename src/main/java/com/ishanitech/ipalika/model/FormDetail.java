@@ -1,11 +1,11 @@
 package com.ishanitech.ipalika.model;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * {@code Form} represents the form table.
@@ -16,6 +16,7 @@ import lombok.Data;
  */
 
 @Data
+@NoArgsConstructor
 public class FormDetail {
 	@JsonIgnore
 	private int uuid;

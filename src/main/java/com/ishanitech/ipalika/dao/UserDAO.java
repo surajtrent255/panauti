@@ -12,10 +12,10 @@ import org.jdbi.v3.sqlobject.statement.UseRowReducer;
 import com.ishanitech.ipalika.model.Role;
 import com.ishanitech.ipalika.model.User;
 /**
- * 
- * @author Umesh Bhujel
  * A DAO interface which holds all the CRUD operations that can be performed 
  * on an User entity or Table.
+ * @author Umesh Bhujel
+ * @since 1.0
  */
 
 @RegisterBeanMapper(value = User.class, prefix = "u")
@@ -44,9 +44,11 @@ public interface UserDAO {
 	
 	
 	/**
-	 * Custom Row Reducer class to reduce master detail rows.
+	 * {@code UserReducer } Custom Row Reducer class to reduce master detail rows.
 	 * Mainly used for @SqlQuery annotation which uses joins to reduce master-details
 	 * rows to one or more master-level objects.
+	 * @author Umesh Bhujel
+	 * @since 1.0
 	 */
 	class UserReducer implements LinkedHashMapRowReducer<Integer, User> {
 

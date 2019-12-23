@@ -1,7 +1,3 @@
-/**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Dec 20, 2019
- */
 package com.ishanitech.ipalika.controller;
 
 import java.util.List;
@@ -16,8 +12,13 @@ import com.ishanitech.ipalika.exception.EntityNotFoundException;
 import com.ishanitech.ipalika.model.FormDetail;
 import com.ishanitech.ipalika.service.FormDetailService;
 
+/**
+ * {@code FormDetailController} is a controller class.
+ * @author Umesh Bhujel
+ * @since 1.0
+ */
 @RestController
-@RequestMapping("/form")
+@RequestMapping("/form-detail")
 public class FormDetailController {
 	FormDetailService formDetailService;
 	

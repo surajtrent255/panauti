@@ -12,6 +12,7 @@ public class AuthException extends AuthenticationException {
 
 	/**
 	 * @param error message or detail that explains the cause of exception.
+	 * @since 1.0
 	 */
 	public AuthException(String msg) {
 		super(msg);

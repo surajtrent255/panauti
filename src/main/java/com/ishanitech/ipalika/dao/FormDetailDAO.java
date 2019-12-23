@@ -18,7 +18,7 @@ public interface FormDetailDAO {
 	@SqlQuery("SELECT DISTINCT q.id as id, q.question_id AS q_id, q.description AS q_desc, " + 
 			"	q.group AS q_grouping, q.required AS q_is_required, " + 
 			"	qt.type_name AS q_type " + 
-			"	FROM question q INNER JOIN option o ON o.question_id = q.id " + 
+			"	FROM question q" + 
 			"	INNER JOIN question_type qt ON q.type_id = qt.type_id " + 
 			"	WHERE q.form_id = :formID")
 	@RegisterRowMapper(FormDetailMapper.class)

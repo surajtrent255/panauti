@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ishanitech.ipalika.dto.UserDTO;
 import com.ishanitech.ipalika.model.User;
 
 /**
@@ -20,17 +21,13 @@ import com.ishanitech.ipalika.model.User;
  */
 public class CustomUserDetails implements UserDetails{
 	private static final long serialVersionUID = 6534708822085674206L;
-	private User user;
+	private UserDTO user;
 	private final List<GrantedAuthority> authorities;
 	
-	public CustomUserDetails(User user) {
+	public CustomUserDetails(UserDTO user) {
 		super();
 		this.user = user;
-		this.authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(
-					user.getRole().stream()
-						.map(role -> role.getRole())
-						.collect(Collectors.joining(", "))
-				);
+		this.authorities = AuthorityUtils.createAuthorityList(user.getRoles().toString());
 	
 	}
 
@@ -43,7 +40,7 @@ public class CustomUserDetails implements UserDetails{
 	@JsonIgnore
 	@Override
 	public String getPassword() {
-		return this.user.getPassword();
+		return null;
 	}
 
 	@Override
@@ -71,7 +68,7 @@ public class CustomUserDetails implements UserDetails{
 		return this.user.isEnabled();
 	}
 
-	public User getUser() {
+	public UserDTO getUser() {
 		return user;
 	}
 

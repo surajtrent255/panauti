@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.ishanitech.ipalika.converter.UserConverter;
+import com.ishanitech.ipalika.converter.impl.UserConverter;
 import com.ishanitech.ipalika.model.AuthException;
 import com.ishanitech.ipalika.model.User;
 import com.ishanitech.ipalika.service.UserService;
@@ -40,7 +40,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		try {
 			user = userService.getUserByUsername(token.getName());
 			if(passwordEncoder.matches(token.getCredentials().toString(), user.getPassword())) {
-				CustomUserDetails loggedInUser = new CustomUserDetails(user);
+				UserConverter userConverter = new UserConverter();
+				CustomUserDetails loggedInUser = new CustomUserDetails(userConverter.fromEntity(user));
 				authentication = new UsernamePasswordAuthenticationToken(loggedInUser, null, loggedInUser.getAuthorities());
 				return authentication;
 			} else {

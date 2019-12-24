@@ -23,9 +23,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ishanitech.ipalika.dto.LoginDTO;
 import com.ishanitech.ipalika.dto.ResponseDTO;
-import com.ishanitech.ipalika.model.User;
-import com.ishanitech.ipalika.utils.JsonTokenHelper;
+import com.ishanitech.ipalika.dto.UserDTO;
 import com.ishanitech.ipalika.exception.ApiError;
+import com.ishanitech.ipalika.utils.JsonTokenHelper;
 
 public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -58,13 +58,13 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
-		User user = new User();
+		UserDTO user = new UserDTO();
 		user = ((CustomUserDetails) authResult.getPrincipal()).getUser();
 		response.setContentType("application/json");
 		response.setStatus(HttpStatus.OK.value());
 		String jwtToken = tokenHelper.generateToken(user);
 		response.setHeader("Authorization", "Bearer " + jwtToken);
-		ResponseDTO<User> userResponse = new ResponseDTO<User>(user);
+		ResponseDTO<UserDTO> userResponse = new ResponseDTO<UserDTO>(user);
 		objectMapper.writeValue(response.getOutputStream(), userResponse);
 	}
 

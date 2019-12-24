@@ -4,7 +4,6 @@
  */
 package com.ishanitech.ipalika.utils;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
+import com.ishanitech.ipalika.converter.impl.UserConverter;
+import com.ishanitech.ipalika.dto.UserDTO;
 import com.ishanitech.ipalika.model.User;
 import com.ishanitech.ipalika.security.CustomUserDetails;
 import com.ishanitech.ipalika.service.UserService;
@@ -51,7 +52,7 @@ public class JsonTokenHelper {
 	 * @param user: User
 	 * @return String
 	 */
-	public String generateToken(User user) {
+	public String generateToken(UserDTO user) {
 		String token = Jwts.builder()
 				.claim("role", "ADMIN")
 				.setSubject(user.getUsername())
@@ -150,8 +151,10 @@ public class JsonTokenHelper {
 		if(token != null) {
 			String username = this.getUsernameFromToken(token);
 			if(username != null) {
-				CustomUserDetails user = new CustomUserDetails(userService.getUserByUsername(username));
-				return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+				User user = userService.getUserByUsername(username);
+				UserConverter userConverter = new UserConverter();
+				CustomUserDetails loggedInUser = new CustomUserDetails(userConverter.fromEntity(user));
+				return new UsernamePasswordAuthenticationToken(user, null, loggedInUser.getAuthorities());
 			}
 			return null;
 		}

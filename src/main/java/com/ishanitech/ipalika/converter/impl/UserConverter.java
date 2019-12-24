@@ -1,5 +1,6 @@
 package com.ishanitech.ipalika.converter.impl;
 
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import com.ishanitech.ipalika.converter.BaseConverter;
@@ -13,7 +14,6 @@ import com.ishanitech.ipalika.model.User;
  */
 public class UserConverter extends BaseConverter<User, UserDTO> {
 
-	
 	/**
 	 * Converts {@code UserDTO} object to {@code User} entity object.
 	 * @param dto UserDTO object
@@ -21,7 +21,16 @@ public class UserConverter extends BaseConverter<User, UserDTO> {
 	 */
 	@Override
 	public User fromDto(UserDTO dto) {
-		return null;
+		User user = new User();
+		user.setUsername(dto.getUsername());
+		user.setEmail(dto.getEmail());
+		user.setMobileNumber(dto.getMobileNumber());
+		user.setRegisteredDate(new Date());
+		user.setEnabled(true);
+		user.setFirstLogin(true);
+		user.setLocked(false);
+		user.setExpired(false);
+		return user;
 	}
 
 	/**

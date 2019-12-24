@@ -2,6 +2,8 @@ package com.ishanitech.ipalika.service.impl;
 
 
 
+import java.util.UUID;
+
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,7 @@ public class FormServiceImpl implements FormService {
 	public void addForm(Form form) throws CustomSqlException {
 		FormDAO formDAO = dbService.getDao(FormDAO.class);
 		try {
+			form.setFormId(UUID.randomUUID().toString());
 			formDAO.addForm(form);
 		} catch(JdbiException jex) {
 			throw new CustomSqlException("Something went wrong while inserting form data.");
@@ -88,7 +91,6 @@ public class FormServiceImpl implements FormService {
 		try {
 			formDAO.updateFormById(id, form);
 		} catch(JdbiException jex) {
-			log.info("Message: " + jex.getMessage());
 			throw new CustomSqlException("Something went wrong while updating form!");
 		}
 	}

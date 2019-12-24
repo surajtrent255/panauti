@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ishanitech.ipalika.converter.impl.FormConverter;
 import com.ishanitech.ipalika.dto.FormDTO;
 import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
@@ -34,6 +34,7 @@ public class FormController {
 	public FormController(FormService formService) {
 		this.formService = formService;
 	}
+	
 
 	/**
 	 * Handles the post request coming to {@code FormController} on its root url {@link /form}.
@@ -45,11 +46,9 @@ public class FormController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public void postForm(HttpServletResponse response, @RequestBody FormDTO form) throws CustomSqlException {
-		Form formModel = new Form();
-		formModel.setFormName(form.getFormName());
-		formModel.setFormId("yoyoyo");
 		response.setHeader("Location", "/form/1");
-		formService.addForm(formModel);
+		FormConverter converter = new FormConverter();
+		formService.addForm(converter.fromDto(form));
 	}
 	
 	/**
@@ -62,26 +61,17 @@ public class FormController {
 	 */
 	@GetMapping("/{id}")
 	public ResponseDTO<FormDTO> getFormById(@PathVariable("id") Integer id) throws EntityNotFoundException {
-		FormDTO formDTO = new FormDTO();
 		Form form = formService.getFormById(id);
-		formDTO.setId(form.getId());
-		formDTO.setFormId(form.getFormId());
-		formDTO.setFormName(form.getFormName());
-		return new ResponseDTO<>(formDTO);
+		FormConverter converter = new FormConverter();
+		return new ResponseDTO<>(converter.fromEntity(form));
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/{id}")
 	public ResponseDTO<FormDTO> updateFormById(@PathVariable("id") Integer id, @RequestBody FormDTO formDTO) {
-		Form form = new Form();
-		form.setFormName(formDTO.getFormName());
-		formService.updateFormById(id, form);
+		FormConverter converter = new FormConverter();
+		formService.updateFormById(id, converter.fromDto(formDTO));
 		return new ResponseDTO<>(formDTO);
-	}
-	
-	@PatchMapping("/{id}")
-	public ResponseDTO<FormDTO> updatePartiallyById(@PathVariable("id") Integer id, @RequestBody FormDTO formDTO) {
-		return null;
 	}
 	
 	/**

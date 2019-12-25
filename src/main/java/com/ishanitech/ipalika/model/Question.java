@@ -4,6 +4,8 @@
  */
 package com.ishanitech.ipalika.model;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,4 +19,5 @@ public class Question {
 	private boolean required;
 	private Integer typeId;
 	private Integer formId;
+	private List<Option> options;
 }

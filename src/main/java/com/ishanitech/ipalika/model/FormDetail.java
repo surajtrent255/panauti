@@ -19,8 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FormDetail {
 	@JsonIgnore
-	private int uuid
-	;
+	private int uuid;
 	@JsonIgnore
     private int formId;
     @JsonIgnore

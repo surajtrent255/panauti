@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Option {
 	private int id;
-	private String optionId;
+	private int optionId;
 	private String optionText;
-	private int questinId;
+	private int questionId;
 }

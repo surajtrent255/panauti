@@ -79,7 +79,7 @@ INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('7', 'IMA
 
 CREATE TABLE IF NOT EXISTS `option` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`option_id` VARCHAR(50) NOT NULL,
+	`option_id` INT NOT NULL,
 	`option_text` VARCHAR(100) NOT NULL,
 	`question_id` INT(11) NOT NULL,
 	PRIMARY KEY (`id`)

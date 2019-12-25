@@ -20,12 +20,14 @@ public interface QuestionOptionsDAO {
 	default void insertQuestionAndOptions(List<Question> questions, int formId) {
 		questions.forEach(question -> {
 			int questionId = createQuestionDao().addQuestion(question, formId);
-			List<Option> options = question.getOptions();
-			for(int i = 0; i < options.size(); i++) {
-				options.get(i).setOptionId(i + 1);
-				options.get(i).setQuestionId(questionId);
+			if(question.getOptions() != null && !question.getOptions().isEmpty()) {
+				List<Option> options = question.getOptions();
+				for(int i = 0; i < options.size(); i++) {
+					options.get(i).setOptionId(i + 1);
+					options.get(i).setQuestionId(questionId);
+				}
+				createOptionDao().addOptions(options);
 			}
-			createOptionDao().addOptions(options);
 		});
 	}
 }

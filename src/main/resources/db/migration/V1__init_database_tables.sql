@@ -75,6 +75,7 @@ INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('4', 'NUM
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('5', 'DATE');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('6', 'GPS');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('7', 'IMAGE');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('8', 'MULTI_TEXT');
 
 
 CREATE TABLE IF NOT EXISTS `option` (

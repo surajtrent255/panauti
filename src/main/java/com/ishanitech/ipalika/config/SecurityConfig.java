@@ -1,7 +1,3 @@
-/**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Aug 23, 2019
- */
 package com.ishanitech.ipalika.config;
 
 import org.springframework.context.annotation.Bean;
@@ -22,7 +18,13 @@ import com.ishanitech.ipalika.security.CustomAuthenticationProvider;
 import com.ishanitech.ipalika.security.TokenAuthenticationFilter;
 import com.ishanitech.ipalika.security.TokenAuthorizationFilter;
 import com.ishanitech.ipalika.utils.JsonTokenHelper;
-
+/**
+ * Custom Security configuration class. 
+ * Any customization (except auth providers) related to security has to be done 
+ * in this class. 
+ * @author <b> Umesh Bhujel
+ * @since 1.0
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -58,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.authorizeRequests()
 			.antMatchers(HttpMethod.GET, "/form-detail/**").permitAll()
-			.antMatchers("/form/**", "/question-option/**").permitAll()
+			.antMatchers("/home", "/form/**", "/question-option/**").permitAll()
 			.anyRequest()
 			.authenticated()
 			.and()
@@ -70,7 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	/**
-	 * 
 	 * @return CorsFilter object. Configuration to allow cors request..
 	 */
 	

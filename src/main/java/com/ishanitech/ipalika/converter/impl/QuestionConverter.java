@@ -23,7 +23,7 @@ public class QuestionConverter extends BaseConverter<Question, QuestionDTO> {
 		question.setDescription(dto.getQuestion());
 		question.setTypeId(dto.getQuestionType());
 		question.setRequired(true);
-		question.setQuestionId(UUID.randomUUID().toString());
+		question.setQuestionId(UUID.randomUUID().toString()); //change this if you want to use your own question id.
 		List<Option> options = Stream.of(dto.getOptions()).map(option -> {
 			Option opt = new Option();
 			opt.setOptionText(option);

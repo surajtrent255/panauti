@@ -2,7 +2,6 @@ package com.ishanitech.ipalika.security;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -10,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ishanitech.ipalika.dto.UserDTO;
-import com.ishanitech.ipalika.model.User;
 
 /**
  * {@code CustomUserDetails} gives the information about the 

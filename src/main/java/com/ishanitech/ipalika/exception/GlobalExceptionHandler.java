@@ -35,7 +35,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError apiError =	new ApiError.Builder(EntityNotFoundException.getStatus().value())
 				.withMessage(ex.getMessage())
 				.withTime(LocalDateTime.now())
-				.withDescription("Maybe wrong input is sent or there are no results to show!")
+				.withDescription("Wrong input or there are no results to show!")
 				.build();
 		return buildErrorResponse(apiError, HttpStatus.NOT_FOUND);
 				

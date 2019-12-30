@@ -14,9 +14,7 @@ import com.ishanitech.ipalika.model.Form;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.FormService;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class FormServiceImpl implements FormService {
 	private DbService dbService;

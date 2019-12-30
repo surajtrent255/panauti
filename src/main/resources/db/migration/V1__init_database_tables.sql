@@ -76,6 +76,7 @@ INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('5', 'DAT
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('6', 'GPS');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('7', 'IMAGE');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('8', 'MULTI_TEXT');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('9', 'RADIO_D');
 
 
 CREATE TABLE IF NOT EXISTS `option` (
@@ -87,11 +88,19 @@ CREATE TABLE IF NOT EXISTS `option` (
 );
 
 
-CREATE TABLE IF NOT EXISTS `survey_answer` (
+CREATE TABLE `survey_answer` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`question_id` INT(11) NOT NULL,
+	`question_id` VARCHAR(50) NOT NULL DEFAULT '',
 	`answer_id` INT(11) NULL DEFAULT NULL,
-	`answer_text` VARCHAR(100) NOT NULL,
+	`answer_text` VARCHAR(100) NULL DEFAULT NULL,
+	`filled_id` VARCHAR(100) NOT NULL,
+	`extra_info_id` INT(11) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `survey_answer_info` (
+	`survey_answer_extra_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`entry_date` DATETIME NOT NULL,
+	`duration` VARCHAR(50) NOT NULL DEFAULT '',
+	PRIMARY KEY (`survey_answer_extra_id`)
+);

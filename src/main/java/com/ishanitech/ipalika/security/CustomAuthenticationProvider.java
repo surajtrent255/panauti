@@ -14,7 +14,6 @@ import com.ishanitech.ipalika.model.AuthException;
 import com.ishanitech.ipalika.model.User;
 import com.ishanitech.ipalika.service.UserService;
 
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * {@code CustomAuthenticationProvicer} is a customized authentication provider class
@@ -22,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
  * @author Umesh Bhujel
  * @since 1.0
  */
-@Slf4j
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	private PasswordEncoder passwordEncoder;

@@ -7,5 +7,5 @@ import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
 import com.ishanitech.ipalika.dto.SurveyExtraInfoDTO;
 
 public interface SurveyAnswerService {
-	public void addSurveyAnswers(RequestDTO<List<SurveyAnswerDTO>, SurveyExtraInfoDTO> surveyAnswerInfo);
+	public void addSurveyAnswers(RequestDTO<List<SurveyAnswerDTO>, List<SurveyExtraInfoDTO>> surveyAnswerInfo);
 }

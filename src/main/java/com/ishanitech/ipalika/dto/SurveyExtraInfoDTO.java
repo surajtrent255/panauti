@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class SurveyExtraInfoDTO extends ExtraRequestInfoDTO {
 	private Date date;
 	private String duration;
+	private String filledFormId;
 }

@@ -6,29 +6,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.ishanitech.ipalika.converter.BaseConverter;
-import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
-import com.ishanitech.ipalika.dto.SurveyExtraInfoDTO;
 import com.ishanitech.ipalika.model.SurveyAnswer;
-import com.ishanitech.ipalika.model.SurveyAnswerInfo;
 
-public class SurveyAnswerConverter extends BaseConverter<SurveyAnswerInfo, RequestDTO<List<SurveyAnswerDTO>, SurveyExtraInfoDTO>> {
+public class SurveyAnswerConverter extends BaseConverter<SurveyAnswer, SurveyAnswerDTO> {
 
-	@Override
-	public SurveyAnswerInfo fromDto(RequestDTO<List<SurveyAnswerDTO>, SurveyExtraInfoDTO> dto) {
-		SurveyAnswerInfo surveyAnswerInfo = new SurveyAnswerInfo();
-		surveyAnswerInfo.setDuration(dto.getExtraInfo().getDuration());
-		surveyAnswerInfo.setEntryDate(dto.getExtraInfo().getDate());
-		surveyAnswerInfo.setSurveyAnswers(fromSurveyAnswerDtos(dto.getData()));
-		return surveyAnswerInfo;
-	}
 
-	@Override
-	public RequestDTO<List<SurveyAnswerDTO>, SurveyExtraInfoDTO> fromEntity(SurveyAnswerInfo entity) {
-		return null;
-	}
-
-	private List<SurveyAnswer> fromSurveyAnswerDtos(List<SurveyAnswerDTO> surveyAnswers) {
+	public List<SurveyAnswer> fromSurveyAnswerDtos(List<SurveyAnswerDTO> surveyAnswers) {
 		return surveyAnswers.stream().map(this::fromSurveyAnswerDto)
 				.flatMap(surveyAnswer -> surveyAnswer.stream())
 				.collect(Collectors.toList());
@@ -60,12 +44,8 @@ public class SurveyAnswerConverter extends BaseConverter<SurveyAnswerInfo, Reque
 				ans.setFilledId(surveyAnswerDto.getFilledId());
 				return ans;
 			}).collect(Collectors.toList())
-				.forEach(ans -> surveyAnswerLists.add(ans));
+				.forEach(surveyAnswerLists::add);
 			
-			/*
-			 * survAns.forEach(ans -> { surveyAnswerLists.add(ans); });
-			 */
-			//surveyAnswerLists.add(survAns);
 			break;
 		case GPS:
 			break;
@@ -83,6 +63,18 @@ public class SurveyAnswerConverter extends BaseConverter<SurveyAnswerInfo, Reque
 		}
 		
 		return surveyAnswerLists;
+	}
+	
+	@Override
+	public SurveyAnswer fromDto(SurveyAnswerDTO dto) {
+		SurveyAnswer surveyAnswer = new SurveyAnswer();
+		return surveyAnswer;
+	}
+
+	@Override
+	public SurveyAnswerDTO fromEntity(SurveyAnswer entity) {
+		SurveyAnswerDTO surveyAnswerDTO = new SurveyAnswerDTO();
+		return surveyAnswerDTO;
 	}
 	
 	private String[] generateArray(String rawValue, String delimiter) {

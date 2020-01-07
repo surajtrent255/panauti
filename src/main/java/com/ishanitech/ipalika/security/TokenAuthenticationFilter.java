@@ -1,7 +1,3 @@
-/**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Aug 23, 2019
- */
 package com.ishanitech.ipalika.security;
 
 import java.io.IOException;
@@ -31,7 +27,9 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
 
 	private AuthenticationManager authenticationManager;
 	private ObjectMapper objectMapper;
-	private com.ishanitech.ipalika.utils.JsonTokenHelper tokenHelper;
+	private JsonTokenHelper tokenHelper;
+	private final String TOKEN_SCHEMA_PREFIX = "Bearer ";
+	private final String TOKEN_HEADER = "Authorization";
 
 	public TokenAuthenticationFilter(AuthenticationManager authenticationManager, ObjectMapper objectMapper,
 			JsonTokenHelper tokenHelper) {
@@ -63,7 +61,8 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
 		response.setContentType("application/json");
 		response.setStatus(HttpStatus.OK.value());
 		String jwtToken = tokenHelper.generateToken(user);
-		response.setHeader("Authorization", "Bearer " + jwtToken);
+		response.addHeader("Access-Control-Expose-Headers", TOKEN_HEADER);
+		response.setHeader(TOKEN_HEADER, TOKEN_SCHEMA_PREFIX + jwtToken);
 		ResponseDTO<UserDTO> userResponse = new ResponseDTO<UserDTO>(user);
 		objectMapper.writeValue(response.getOutputStream(), userResponse);
 	}

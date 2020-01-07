@@ -51,18 +51,20 @@ public class SurveyAnswerConverter extends BaseConverter<SurveyAnswerInfo, Reque
 			break;
 		case CHECKBOX:
 			String[] answers = generateArray(surveyAnswerDto.getAnswer(), ",");
-			List<SurveyAnswer> survAns = Stream.of(answers).map(answer -> {
+			//List<SurveyAnswer> survAns = 
+			Stream.of(answers).map(answer -> {
 				SurveyAnswer ans = new SurveyAnswer();
 				ans.setAnswerText(null);
 				ans.setAnswerId(Integer.parseInt(answer));
 				ans.setQuestionId(surveyAnswerDto.getQuestionId());
 				ans.setFilledId(surveyAnswerDto.getFilledId());
 				return ans;
-			}).collect(Collectors.toList());
+			}).collect(Collectors.toList())
+				.forEach(ans -> surveyAnswerLists.add(ans));
 			
-			survAns.forEach(ans -> {
-				surveyAnswerLists.add(ans);
-			});
+			/*
+			 * survAns.forEach(ans -> { surveyAnswerLists.add(ans); });
+			 */
 			//surveyAnswerLists.add(survAns);
 			break;
 		case GPS:

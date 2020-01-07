@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS `form` (
 CREATE TABLE IF NOT EXISTS `question` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`question_id` VARCHAR(50) NOT NULL,
-	`description` VARCHAR(50) NOT NULL,
+	`description` TEXT NOT NULL,
 	`group` VARCHAR(50) NOT NULL,
-	`required` BIT(1) NOT NULL DEFAULT b'1',
+	`required` INT(11) NOT NULL DEFAULT 0,
 	`type_id` INT(11) NOT NULL DEFAULT 1,
 	`form_id` INT(11) NOT NULL,
 	PRIMARY KEY (`id`),
@@ -77,7 +77,8 @@ INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('6', 'GPS
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('7', 'IMAGE');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('8', 'MULTI_TEXT');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('9', 'RADIO_D');
-
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('10', 'RATING_M');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('11', 'RATING');
 
 CREATE TABLE IF NOT EXISTS `option` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,

@@ -8,6 +8,7 @@ public enum QuestionType {
 	CHECKBOX("CHECKBOX"),
 	NUMBER("NUMBER"),
 	RATING("RATING"),
+	RATING_M("RATING_M"),
 	DATE("DATE"),
 	GPS("GPS"),
 	IMAGE("IMAGE"),

@@ -28,7 +28,6 @@ public class JsonTokenHelper {
 	private final String KEY;
 	private final String APPLICATION_NAME;
 	private final String TOKEN_HEADER;
-	private final String TOKEN_SCHEMA_PREFIX;
 	private final int EXPIRATION_TIME;
 	private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
 	private UserService userService;
@@ -36,13 +35,11 @@ public class JsonTokenHelper {
 	public JsonTokenHelper(@Value("${jwt.security.key}") String KEY,
 			@Value("${jwt.applicationName}") String APPLICATION_NAME,
 			@Value("${jwt.auth.header}") String TOKEN_HEADER,
-			@Value("${jwt.auth.schema}") String TOKEN_SCHEMA_PREFIX,
 			@Value("${jwt.expirationDate}") int EXPIRATION_TIME,
 			UserService userService) {
 		this.KEY = KEY;
 		this.APPLICATION_NAME = APPLICATION_NAME;
 		this.TOKEN_HEADER = TOKEN_HEADER;
-		this.TOKEN_SCHEMA_PREFIX = TOKEN_SCHEMA_PREFIX;
 		this.EXPIRATION_TIME = EXPIRATION_TIME;
 		this.userService = userService;
 	}

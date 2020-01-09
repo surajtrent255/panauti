@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestDTO<T, E> {
 	private T data;
-	private E extraInfo;
+	private E infoData;
 }

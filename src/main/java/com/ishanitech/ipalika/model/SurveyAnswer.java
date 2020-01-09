@@ -10,6 +10,4 @@ public class SurveyAnswer {
 	private Integer answerId;
 	private String answerText;
 	private String filledId;
-	private Integer extraInfoId;
-	
 }

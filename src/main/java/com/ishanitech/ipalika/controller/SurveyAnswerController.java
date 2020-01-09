@@ -32,7 +32,7 @@ public class SurveyAnswerController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public void addSurveyAnswer(HttpServletResponse http, 
-			@RequestBody RequestDTO<List<SurveyAnswerDTO>, SurveyExtraInfoDTO> surveyAnswerInfo) throws CustomSqlException {
+			@RequestBody RequestDTO<List<SurveyAnswerDTO>, List<SurveyExtraInfoDTO>> surveyAnswerInfo) throws CustomSqlException {
 		log.info("### Add Survey Answer Controller Called ###");
 		surveyAnswerService.addSurveyAnswers(surveyAnswerInfo);
 	}

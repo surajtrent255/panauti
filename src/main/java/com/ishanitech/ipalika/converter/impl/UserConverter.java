@@ -41,6 +41,7 @@ public class UserConverter extends BaseConverter<User, UserDTO> {
 	@Override
 	public UserDTO fromEntity(User entity) {
 		UserDTO userDTO = new UserDTO();
+		userDTO.setUserId(entity.getId());
 		userDTO.setUsername(entity.getUsername());
 		userDTO.setEmail(entity.getEmail());
 		userDTO.setFullName(String.format("%s %s %s", entity.getFirstName(), entity.getMiddleName(), entity.getLastName()));

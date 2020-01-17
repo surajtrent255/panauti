@@ -59,6 +59,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	
 	/**
+	 * Handles the file storage exception
+	 * 
+	 */
+	@ExceptionHandler(FileStorageException.class)
+	public ResponseEntity<ApiError> handleStorageException(FileStorageException stex) {
+		ApiError apiError = new ApiError.Builder(FileStorageException.getStatus().value())
+				.withMessage("Storage Exception.")
+				.withDescription(stex.getMessage())
+				.withTime(LocalDateTime.now())
+				.build();
+		return buildErrorResponse(apiError, FileStorageException.getStatus());
+	}
+	
+	/**
 	 * Builds the response entity.
 	 * @param <T> type object
 	 * @param t error type object

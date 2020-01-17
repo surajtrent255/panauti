@@ -22,45 +22,23 @@ public class SurveyAnswerConverter extends BaseConverter<SurveyAnswer, SurveyAns
 		List<SurveyAnswer> surveyAnswerLists = new ArrayList<>();
 		//conditional answer based on types...
 		SurveyAnswer surveyAnswer = new SurveyAnswer();
-		switch (surveyAnswerDto.getQuestionType()) {
-		case TEXT:
-		case NUMBER:
-		case IMAGE:
-		case DATE:
-		case RATING:
-			surveyAnswer.setAnswerId(null);
-			surveyAnswer.setQuestionId(surveyAnswerDto.getQuestionId());
-			surveyAnswer.setFilledId(surveyAnswerDto.getFilledId());
-			surveyAnswer.setAnswerText(surveyAnswerDto.getAnswer());
-			break;
-		case CHECKBOX:
-			String[] answers = generateArray(surveyAnswerDto.getAnswer(), ",");
-			//List<SurveyAnswer> survAns = 
-			Stream.of(answers).map(answer -> {
-				SurveyAnswer ans = new SurveyAnswer();
-				ans.setAnswerText(null);
-				ans.setAnswerId(Integer.parseInt(answer));
-				ans.setQuestionId(surveyAnswerDto.getQuestionId());
-				ans.setFilledId(surveyAnswerDto.getFilledId());
-				return ans;
-			}).collect(Collectors.toList())
-				.forEach(surveyAnswerLists::add);
-			
-			break;
-		case GPS:
-			break;
-		case MULTI_TEXT:
-			break;
-		case RADIO_D:
-			break;
-		default:
-			surveyAnswer.setAnswerId(Integer.parseInt(surveyAnswerDto.getAnswer()));
-			surveyAnswer.setAnswerId(null);
-			surveyAnswer.setQuestionId(surveyAnswerDto.getQuestionId());
-			surveyAnswer.setFilledId(surveyAnswerDto.getFilledId());
-			surveyAnswerLists.add(surveyAnswer);
-			break;
-		}
+		surveyAnswer.setQuestionId(surveyAnswerDto.getQuestionId());
+		surveyAnswer.setAnswerText(surveyAnswerDto.getAnswer());
+		surveyAnswer.setFilledId(surveyAnswerDto.getFilledId());
+		surveyAnswerLists.add(surveyAnswer);
+		/*
+		 * case CHECKBOX: String[] answers = generateArray(surveyAnswerDto.getAnswer(),
+		 * ","); //List<SurveyAnswer> survAns = Stream.of(answers).map(answer -> {
+		 * SurveyAnswer ans = new SurveyAnswer(); ans.setAnswerText(null);
+		 * ans.setAnswerId(Integer.parseInt(answer));
+		 * ans.setQuestionId(surveyAnswerDto.getQuestionId());
+		 * ans.setFilledId(surveyAnswerDto.getFilledId()); return ans;
+		 * }).collect(Collectors.toList()) .forEach(surveyAnswerLists::add);
+		 * 
+		 * break;
+		 *
+		 *}
+		 */
 		
 		return surveyAnswerLists;
 	}

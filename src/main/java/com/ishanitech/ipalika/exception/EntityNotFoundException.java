@@ -1,7 +1,3 @@
-/**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Sep 1, 2019
- */
 package com.ishanitech.ipalika.exception;
 
 import org.springframework.http.HttpStatus;

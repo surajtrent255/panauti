@@ -92,10 +92,8 @@ CREATE TABLE IF NOT EXISTS `option` (
 CREATE TABLE `survey_answer` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`question_id` VARCHAR(50) NOT NULL DEFAULT '',
-	`answer_id` INT(11) NULL DEFAULT NULL,
 	`answer_text` VARCHAR(100) NULL DEFAULT NULL,
 	`filled_id` VARCHAR(100) NOT NULL,
-	`extra_info_id` INT(11) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`)
 );
 
@@ -103,5 +101,7 @@ CREATE TABLE `survey_answer_info` (
 	`survey_answer_extra_id` INT(11) NOT NULL AUTO_INCREMENT,
 	`entry_date` DATETIME NOT NULL,
 	`duration` VARCHAR(50) NOT NULL DEFAULT '',
-	PRIMARY KEY (`survey_answer_extra_id`)
+	`filled_id` VARCHAR(100) NOT NULL,
+	PRIMARY KEY (`survey_answer_extra_id`),
+	UNIQUE INDEX `filled_id` (`filled_id`)
 );

@@ -1,12 +1,10 @@
 package com.ishanitech.ipalika.service.impl;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalika.converter.impl.SurveyAnswerConverter;
@@ -55,7 +53,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 				.collect(Collectors.toList());
 		
 		List<SurveyAnswer> surveyAnswers = surveyAnswerConverter
-				.fromSurveyAnswerDtos(surveyAnswerInfo.getData())
+				.fromDto(surveyAnswerInfo.getData())
 				.stream()
 				.filter(surveyAnswer -> !filledIdsInDatabase.contains(surveyAnswer.getFilledId()))
 				.collect(Collectors.toList());

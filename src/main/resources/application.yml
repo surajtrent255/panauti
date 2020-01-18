@@ -24,4 +24,4 @@ jwt:
   expirationDate: 360000
   auth:
     header: Authorization
-    schema: Bearer 
+    schema: Bearer

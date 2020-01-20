@@ -12,5 +12,5 @@ public class JwtProperties {
 	private String applicationName;
 	private int expirationDate;
 	private SecurityProperty security;
-	private AuthenticationProperty auth;
+	private JwtAuthenticationProperty auth;
 }

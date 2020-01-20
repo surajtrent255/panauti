@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 	`registered_date` TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `username` (`username`),
+	UNIQUE INDEX `mobile_number` (`mobile_number`),
 	UNIQUE INDEX `email` (`email`)
 );
 
@@ -79,6 +80,7 @@ INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('8', 'MUL
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('9', 'RADIO_D');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('10', 'RATING_M');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('11', 'RATING');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('12', 'CHECKBOX_N');
 
 CREATE TABLE IF NOT EXISTS `option` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,

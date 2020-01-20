@@ -2,6 +2,7 @@ package com.ishanitech.ipalika.service.impl;
 
 
 
+import org.jdbi.v3.core.JdbiException;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ishanitech.ipalika.converter.impl.UserConverter;
 import com.ishanitech.ipalika.dao.UserDAO;
 import com.ishanitech.ipalika.dto.UserDTO;
+import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.model.User;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.UserService;
@@ -56,7 +58,11 @@ public class UserServiceImpl implements UserService {
 		UserDAO userDao = dbService.getDao(UserDAO.class);
 		User user = new UserConverter().fromDto(userDto);
 		user.setPassword(encoder.encode(user.getPassword()));
-		userDao.addUserAndRole(user);
+		 try {
+			 userDao.addUserAndRole(user);
+		 } catch (JdbiException jex) {
+			 log.error(String.format("Error occured while inserting a user: %s", jex.getLocalizedMessage()));
+		 }
 	}
 
 }

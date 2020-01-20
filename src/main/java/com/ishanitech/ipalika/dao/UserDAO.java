@@ -6,8 +6,12 @@ import org.jdbi.v3.core.result.RowView;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.statement.UseRowReducer;
+import org.jdbi.v3.sqlobject.transaction.Transaction;
 
 import com.ishanitech.ipalika.model.Role;
 import com.ishanitech.ipalika.model.User;
@@ -21,6 +25,45 @@ import com.ishanitech.ipalika.model.User;
 @RegisterBeanMapper(value = User.class, prefix = "u")
 @RegisterBeanMapper(value = Role.class, prefix = "r")
 public interface UserDAO {
+	
+	/**
+	 * Inserts user into database.
+	 * @param user User model object.
+	 */
+	@GetGeneratedKeys
+	@SqlUpdate("INSERT INTO user ( `first_name`,"
+			+ " `middle_name`, "
+			+ " `last_name`, "
+			+ " `username`, "
+			+ " `email`, "
+			+ " `password`, "
+			+ " `mobile_number`, "
+			+ " `locked`, "
+			+ " `first_login`, "
+			+ " `enabled`, "
+			+ " `expired`, "
+			+ " `registered_date`) "
+			+ " VALUES (:firstName, "
+			+ " :middleName, "
+			+ " :lastName, "
+			+ " :username, "
+			+ " :email, "
+			+ " :password, "
+			+ " :mobileNumber, "
+			+ " :locked, "
+			+ " :firstLogin, "
+			+ " :enabled, "
+			+ " :expired, "
+			+ " :registeredDate)")
+	public int addUser(@BindBean User user);
+	
+	/**
+	 * Inserts currently inserted user's role into user_role table.
+	 * @param userId
+	 * @param roleId
+	 */
+	@SqlUpdate("INSERT INTO user_role(`user_id`, `role_id`) VALUES(:userId, :roleId)")
+	public void addUserRole(@Bind("userId") int userId, @Bind("roleId") int roleId);
 	
 	@SqlQuery(" SELECT u.id AS u_id, "
 			+ " username AS u_username, "
@@ -43,6 +86,13 @@ public interface UserDAO {
 	public User getUserByUsername(@Bind("username") String username) throws UnableToExecuteStatementException;
 	
 	
+	@Transaction
+	default void addUserAndRole(User user) {
+		int userId = addUser(user);
+		addUserRole(userId, 2); //staff id is 2
+	}
+	
+
 	/**
 	 * {@code UserReducer } Custom Row Reducer class to reduce master detail rows.
 	 * Mainly used for @SqlQuery annotation which uses joins to reduce master-details

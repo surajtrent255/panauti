@@ -1,5 +1,6 @@
 package com.ishanitech.ipalika.service;
 
+import com.ishanitech.ipalika.dto.UserDTO;
 import com.ishanitech.ipalika.model.User;
 /**
  * 
@@ -8,4 +9,5 @@ import com.ishanitech.ipalika.model.User;
  */
 public interface UserService {
 	User getUserByUsername(String username);
+	public void addUser(UserDTO user);
 }

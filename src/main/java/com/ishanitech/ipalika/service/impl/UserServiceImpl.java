@@ -7,7 +7,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ishanitech.ipalika.converter.impl.UserConverter;
 import com.ishanitech.ipalika.dao.UserDAO;
+import com.ishanitech.ipalika.dto.UserDTO;
 import com.ishanitech.ipalika.model.User;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.UserService;
@@ -47,6 +49,14 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		throw new UsernameNotFoundException("Incorrect Credentials!");
+	}
+
+	@Override
+	public void addUser(UserDTO userDto) {
+		UserDAO userDao = dbService.getDao(UserDAO.class);
+		User user = new UserConverter().fromDto(userDto);
+		user.setPassword(encoder.encode(user.getPassword()));
+		userDao.addUserAndRole(user);
 	}
 
 }

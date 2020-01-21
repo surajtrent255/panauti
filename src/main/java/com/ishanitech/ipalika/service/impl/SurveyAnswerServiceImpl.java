@@ -14,6 +14,7 @@ import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
 import com.ishanitech.ipalika.dto.SurveyExtraInfoDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
+import com.ishanitech.ipalika.exception.FileStorageException;
 import com.ishanitech.ipalika.model.SurveyAnswer;
 import com.ishanitech.ipalika.model.SurveyAnswerInfo;
 import com.ishanitech.ipalika.service.DbService;
@@ -65,7 +66,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	}
 	
 	@Override
-	public void addSurveyAnswerImage(MultipartFile image) {
+	public void addSurveyAnswerImage(MultipartFile image) throws FileStorageException {
 		fileUtilService.storeFile(image);
 	}
 

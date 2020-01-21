@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.ishanitech.ipalika.converter.impl.UserConverter;
 import com.ishanitech.ipalika.dao.UserDAO;
 import com.ishanitech.ipalika.dto.UserDTO;
-import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.model.User;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.UserService;

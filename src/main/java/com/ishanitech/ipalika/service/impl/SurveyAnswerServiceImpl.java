@@ -58,6 +58,8 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 				.stream()
 				.filter(surveyAnswer -> !filledIdsInDatabase.contains(surveyAnswer.getFilledId()))
 				.collect(Collectors.toList());
+		
+		//List<Citizen>
 		try {
 			dbService.getDao(SurveyAnswerDAO.class).insertSurveyAnswer(surveyAnswerInfos, surveyAnswers);
 		} catch(JdbiException jex) {

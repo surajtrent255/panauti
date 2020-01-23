@@ -3,6 +3,8 @@ package com.ishanitech.ipalika.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +16,7 @@ public class UserDTO implements Serializable {
 	private String username;
 	private String fullName;
 	private String email;
+	@JsonIgnore
 	private String password;
 	private String mobileNumber;
 	private boolean isLocked;

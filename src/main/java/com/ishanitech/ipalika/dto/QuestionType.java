@@ -13,7 +13,9 @@ public enum QuestionType {
 	GPS("GPS"),
 	IMAGE("IMAGE"),
 	MULTI_TEXT("MULTI_TEXT"),
-	RADIO_D("RADIO_D");
+	RADIO_D("RADIO_D"),
+	FAMILY_MEMBER("FAMILY_MEMBER"),
+	CHECKBOX_N("CHECKBOX_N");
 	
 	@JsonValue
 	private final String questionType;

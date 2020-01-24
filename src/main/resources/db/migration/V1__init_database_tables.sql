@@ -200,14 +200,14 @@ CREATE TABLE `family_member` (
 );
 
 
-CREATE TABLE IF NOT EXISTS `family_relation` (
+CREATE TABLE `family_relation` (
   `relation_id` int(11) NOT NULL AUTO_INCREMENT,
   `relation_nepali` varchar(50) NOT NULL DEFAULT '0',
   `relation_english` varchar(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`relation_id`)
 );
 
-CREATE TABLE IF NOT EXISTS `academic_qualification` (
+CREATE TABLE `academic_qualification` (
   `qualification_id` int(11) NOT NULL AUTO_INCREMENT,
   `qualification_nep` varchar(50) DEFAULT NULL,
   `qualification_eng` varchar(50) DEFAULT NULL,

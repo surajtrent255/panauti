@@ -47,15 +47,18 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	public void addSurveyAnswers(RequestDTO<List<SurveyAnswerDTO>, Object> surveyAnswerInfo) {
 		SurveyAnswerConverter surveyAnswerConverter = new SurveyAnswerConverter();
 		List<String> filledIdsInDatabase = dbService.getDao(SurveyAnswerDAO.class).getAllFilledIds();
-		log.info(String.format("Incomming request"));
 		List<SurveyAnswer> surveyAnswers = surveyAnswerConverter
-				.fromDto(surveyAnswerInfo.getData())
-				.stream()
-				.filter(surveyAnswer -> !filledIdsInDatabase.contains(surveyAnswer.getFilledId()))
-				.collect(Collectors.toList());
+				.fromDto(surveyAnswerInfo.getData());
+		/*
+		 * if(filledIdsInDatabase != null && filledIdsInDatabase.size() > 0) {
+		 * surveyAnswers = surveyAnswers .stream() .filter(surveyAnswer ->
+		 * !filledIdsInDatabase.contains(surveyAnswer.getFilledId()))
+		 * .collect(Collectors.toList()); }
+		 */
 		
 		try {
-			dbService.getDao(SurveyAnswerDAO.class).insertSurveyAnswer(surveyAnswers);
+			//dbService.getDao(SurveyAnswerDAO.class).insertSurveyAnswer(surveyAnswers);
+			dbService.getDao(SurveyAnswerDAO.class).addAnswerList(surveyAnswerConverter.fromSuveyAnswersToAnswersList(surveyAnswers));
 		} catch(JdbiException jex) {
 			throw new CustomSqlException("Exception: " + jex.getMessage());
 		}

@@ -46,7 +46,7 @@ public interface SurveyAnswerDAO {
 	@Transaction
 	default void insertSurveyAnswer(List<SurveyAnswer> surveyAnswers) {
 		//addSurveyAnswerInfos(surveyAnswerInfos);
-		//addSurveyAnswers(surveyAnswers);
+		addSurveyAnswers(surveyAnswers);
 	}
 	
 	@Transaction

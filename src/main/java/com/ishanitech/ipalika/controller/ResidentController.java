@@ -29,7 +29,7 @@ public class ResidentController {
 	
 	//returns full information of the resident by its filled id.
 	@GetMapping("/detail/{filledId}")
-	public Answer getFullInformationOfResident(Model model, @PathVariable("filledId") String filledId) {
-		return surveyAnswerSwervice.getAnswerByFilledId(filledId);
+	public ResponseDTO<Answer> getFullInformationOfResident(Model model, @PathVariable("filledId") String filledId) {
+		return new ResponseDTO<Answer>(surveyAnswerSwervice.getAnswerByFilledId(filledId));
 	}
 }

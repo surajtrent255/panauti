@@ -166,3 +166,33 @@ INSERT INTO `question` (`id`, `question_id`, `description`, `group`, `required`,
 	(47, 'gps_info', 'GPS co-ordinate', 'Survey Info', 2, 6, 1),
 	(48, 'house_owner_photo', 'Photo of house owner', 'Survey Info', 2, 7, 1);
 
+-- Dumping data for table ipalika.family_relation: ~15 rows (approximately)
+/*!40000 ALTER TABLE `family_relation` DISABLE KEYS */;
+INSERT INTO `family_relation` (`relation_id`, `relation_nepali`, `relation_english`) VALUES
+	(1, 'आफु', 'self'),
+	(2, 'हजुर बुबा', 'grandfather'),
+	(3, 'हजुर आमा', 'grandmother'),
+	(4, 'बुबा', 'father'),
+	(5, 'आमा', 'mother'),
+	(6, 'छोरा', 'son'),
+	(7, 'छोरी', 'daughter'),
+	(8, 'नाति', 'grandson'),
+	(9, 'नातिनी', 'granddaughter'),
+	(10, 'दाइ', 'brother(elder)'),
+	(11, 'भाइ', 'brother(younger)'),
+	(12, 'दिदी', 'sister(elder)'),
+	(13, 'बहिनी', 'sister(younger)'),
+	(15, 'बुहारी', 'daughter in law'),
+	(16, 'अन्य', 'other');
+
+
+	INSERT INTO `academic_qualification` (`qualification_id`, `qualification_nep`, `qualification_eng`) VALUES
+	(1, 'पिएचडि', 'phd'),
+	(2, 'एमफिल', 'mphil'),
+	(3, 'मास्टर डिग्री(स्नातकोत्तर)', 'masters'),
+	(4, 'स्नातक', 'bachelors'),
+	(5, 'उच्च विद्यालय', 'high school'),
+	(6, 'माध्यामिक', 'secondary'),
+	(7, 'तल्लो माध्यामिक', 'lower secondary'),
+	(8, 'प्राथमिक', 'primary'),
+	(9, 'सामान्य शिक्षा', 'literate');

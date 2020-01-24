@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ishanitech.ipalika.dto.AnswerDTO;
 import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
-import com.ishanitech.ipalika.dto.SurveyExtraInfoDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.service.SurveyAnswerService;
 
@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class SurveyAnswerController {
 	private final SurveyAnswerService surveyAnswerService;
-	
+
 	public SurveyAnswerController(SurveyAnswerService surveyAnswerService) {
 		this.surveyAnswerService = surveyAnswerService;
 	}
@@ -34,15 +34,25 @@ public class SurveyAnswerController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public void addSurveyAnswer(HttpServletResponse http, 
-			@RequestBody RequestDTO<List<SurveyAnswerDTO>, List<SurveyExtraInfoDTO>> surveyAnswerInfo) throws CustomSqlException {
+			@RequestBody RequestDTO<List<SurveyAnswerDTO>, Object> surveyAnswerInfo) throws CustomSqlException {
 		surveyAnswerService.addSurveyAnswers(surveyAnswerInfo);
 	}
-	
+
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/new")
+	public void addSurveyAnswers(HttpServletResponse http,
+			@RequestBody RequestDTO<List<AnswerDTO>, Object> surveyAnswerInfo) throws CustomSqlException {
+		if (surveyAnswerInfo.getData() != null) {
+			surveyAnswerService.addAnswers(surveyAnswerInfo.getData());
+		} else {
+			throw new NullPointerException("Invalid data");
+		}
+	}
+
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/image")
 	public void uploadImageForSurveyAnswer(@RequestParam("picture") MultipartFile image) {
 		log.info(String.format("Image name: %s", image.getOriginalFilename()));
 		surveyAnswerService.addSurveyAnswerImage(image);
 	}
-	
 }

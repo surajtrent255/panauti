@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ishanitech.ipalika.dto.ResidentDTO;
+import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.model.Answer;
 import com.ishanitech.ipalika.service.SurveyAnswerService;
 
@@ -22,8 +23,8 @@ public class ResidentController {
 
 
 	@GetMapping
-	public List<ResidentDTO> getResidents() {
-		return surveyAnswerSwervice.getResident();
+	public ResponseDTO<List<ResidentDTO>>getResidents() {
+		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerSwervice.getResident());
 	}
 	
 	//returns full information of the resident by its filled id.

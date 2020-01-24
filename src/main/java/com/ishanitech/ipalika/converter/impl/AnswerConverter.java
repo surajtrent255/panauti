@@ -9,7 +9,6 @@ import com.ishanitech.ipalika.dto.ResidentDTO;
 import com.ishanitech.ipalika.model.Answer;
 
 public class AnswerConverter extends BaseConverter<Answer, AnswerDTO> {
-
 	@Override
 	public Answer fromDto(AnswerDTO dto) {
 		Answer answer = new Answer();
@@ -105,7 +104,7 @@ public class AnswerConverter extends BaseConverter<Answer, AnswerDTO> {
 		residentDto.setHouseNo(entity.getAnswer3()); //house number
 		residentDto.setKittaNo(entity.getAnswer12()); //kitta number
 		residentDto.setPhoneNo(entity.getAnswer4()); //phone number
-		residentDto.setImageUrl(entity.getAnswer47()); //image url
+		residentDto.setImageUrl(String.format("%s/%s", "http://localhost:8888/resource", entity.getAnswer47())); //image url
 		return residentDto;
 	}
 	

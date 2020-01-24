@@ -99,6 +99,7 @@ public class AnswerConverter extends BaseConverter<Answer, AnswerDTO> {
 	
 	public ResidentDTO entityToResident(Answer entity) {
 		ResidentDTO residentDto = new ResidentDTO();
+		residentDto.setFilledId(entity.getFilledId());
 		residentDto.setHouseOwner(entity.getAnswer1()); //house owner's name
 		residentDto.setTole(entity.getAnswer2()); //tole
 		residentDto.setHouseNo(entity.getAnswer3()); //house number

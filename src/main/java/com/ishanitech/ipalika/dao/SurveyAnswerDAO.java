@@ -59,7 +59,7 @@ public interface SurveyAnswerDAO {
 	/**
 	 * @return
 	 */
-	@SqlQuery("SELECT a_1 AS answer1, a_2 AS answer2, a_3 AS answer3, a_4 AS answer4, a_12 AS answer12, a_47 AS answer_47 FROM answer GROUP BY filled_id")
+	@SqlQuery("SELECT filled_id as filledId, a_1 AS answer1, a_2 AS answer2, a_3 AS answer3, a_4 AS answer4, a_12 AS answer12, a_47 AS answer_47 FROM answer GROUP BY filled_id")
 	@RegisterBeanMapper(Answer.class)
 	List<Answer> getResidents();
 	

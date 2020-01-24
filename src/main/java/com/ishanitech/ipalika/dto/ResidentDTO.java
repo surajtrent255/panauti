@@ -15,4 +15,5 @@ public class ResidentDTO {
 	private String kittaNo;
 	private String imageUrl;
 	private int totalFamilyMembers;
+	private String filledId;
 }

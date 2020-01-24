@@ -103,7 +103,9 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	@Override
 	public Answer getAnswerByFilledId(String filledId) {
 		try {
-			return dbService.getDao(SurveyAnswerDAO.class).getAnswerByFilledId(filledId);
+			Answer answer = dbService.getDao(SurveyAnswerDAO.class).getAnswerByFilledId(filledId);
+			answer.setAnswer47("http://localhost:8888/resource/" + answer.getAnswer47());
+			return answer;
 		} catch(JdbiException jex) {
 			throw new CustomSqlException("Exception: " +jex.getLocalizedMessage());
 		}

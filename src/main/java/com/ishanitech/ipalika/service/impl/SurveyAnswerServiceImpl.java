@@ -100,4 +100,13 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 		}
 	}
 
+	@Override
+	public Answer getAnswerByFilledId(String filledId) {
+		try {
+			return dbService.getDao(SurveyAnswerDAO.class).getAnswerByFilledId(filledId);
+		} catch(JdbiException jex) {
+			throw new CustomSqlException("Exception: " +jex.getLocalizedMessage());
+		}
+	}
+
 }

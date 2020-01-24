@@ -3,6 +3,8 @@ package com.ishanitech.ipalika.dao;
 import java.util.List;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.locator.UseClasspathSqlLocator;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
@@ -61,4 +63,8 @@ public interface SurveyAnswerDAO {
 	@RegisterBeanMapper(Answer.class)
 	List<Answer> getResidents();
 	
+	@UseClasspathSqlLocator
+	@SqlQuery("answer_full_detail")
+	@RegisterBeanMapper(Answer.class)
+	Answer getAnswerByFilledId(@Bind("filledId") String filledId);
 }

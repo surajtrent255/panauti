@@ -1,0 +1,11 @@
+server:
+  port: 8888
+
+jwt:
+  security:
+    key: ishanitech
+  applicationName: ishanitech
+  expirationDate: 360000
+  auth:
+    header: Authorization
+    schema: Bearer 

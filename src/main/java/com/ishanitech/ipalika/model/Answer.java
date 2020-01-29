@@ -1,10 +1,8 @@
 package com.ishanitech.ipalika.model;
 
 import lombok.Data;
-import lombok.ToString;
 
 @Data
-@ToString
 public class Answer {
 	private long id;
 	private long formId;

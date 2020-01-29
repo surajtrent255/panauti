@@ -38,6 +38,16 @@ public class SurveyAnswerController {
 		surveyAnswerService.addSurveyAnswers(surveyAnswerInfo);
 	}
 
+	/**
+	 * This is new endpoint for survey answer insertion operation.
+	 * This endpoint expects the list of request object ({@code AnswerDTO}) which has the same format as
+	 * {@code Answer} model.
+	 * @param http HttpServletResponse object 
+	 * @param surveyAnswerInfo request object
+	 * @throws CustomSqlException
+	 * @author <b> Umesh Bhujel
+	 * @since 1.0
+	 */
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/new")
 	public void addSurveyAnswers(HttpServletResponse http,

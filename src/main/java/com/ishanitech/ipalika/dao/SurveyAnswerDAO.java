@@ -1,19 +1,23 @@
 package com.ishanitech.ipalika.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.jdbi.v3.core.result.LinkedHashMapRowReducer;
+import org.jdbi.v3.core.result.RowView;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
-import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.locator.UseClasspathSqlLocator;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.UseRowReducer;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 
 import com.ishanitech.ipalika.model.Answer;
-import com.ishanitech.ipalika.model.SurveyAnswer;
-import com.ishanitech.ipalika.model.SurveyAnswerInfo;
+import com.ishanitech.ipalika.model.Option;
+import com.ishanitech.ipalika.model.Question;
+import com.ishanitech.ipalika.model.QuestionOption;
 
 /**
  * {@code SurveyAnswerDAO} does database operations for SurveyAnswers.
@@ -23,20 +27,8 @@ import com.ishanitech.ipalika.model.SurveyAnswerInfo;
 
 public interface SurveyAnswerDAO {
 	
-	/*
-	 * @SqlQuery("SELECT filled_id FROM survey_answer_info") List<String>
-	 * getAllFilledIds();
-	 */
-	
 	@SqlQuery("SELECT filled_id FROM answer")
 	List<String> getAllFilledIds();
-	
-	@SqlBatch("INSERT INTO survey_answer_info(entry_date, duration, filled_id) VALUES (:entryDate, :duration, :filledId)")
-	int[] addSurveyAnswerInfos(@BindBean List<SurveyAnswerInfo> surveyAnsInfo);
-	
-	@SqlBatch("INSERT INTO survey_answer(`question_id`, `answer_text`, `filled_id`) VALUES (:questionId, :answerText, :filledId)")
-	public void addSurveyAnswers(@BindBean List<SurveyAnswer> surveyAnswers);
-	
 	/**
 	 * Adds answers to answer table.
 	 * @param answers
@@ -44,12 +36,6 @@ public interface SurveyAnswerDAO {
 	@UseClasspathSqlLocator
 	@SqlBatch("insert_answers")
 	public void addAnswers(@BindBean List<Answer> answers);
-	
-	@Transaction
-	default void insertSurveyAnswer(List<SurveyAnswer> surveyAnswers) {
-		//addSurveyAnswerInfos(surveyAnswerInfos);
-		addSurveyAnswers(surveyAnswers);
-	}
 	
 	@Transaction
 	default void addAnswerList(List<Answer> answers) {
@@ -67,4 +53,34 @@ public interface SurveyAnswerDAO {
 	@SqlQuery("answer_full_detail")
 	@RegisterBeanMapper(Answer.class)
 	Answer getAnswerByFilledId(@Bind("filledId") String filledId);
+	
+	@SqlQuery(" SELECT q.id as q_question_id, "+
+			" qt.type_name as q_question_type,"+
+			" o.option_id as o_option_id, " +
+			" o.option_text as o_option_text " + 
+			"	FROM question_type qt " + 
+			"	INNER JOIN question q " + 
+			"	ON qt.type_id = q.type_id " + 
+			"	INNER JOIN option o " + 
+			"	ON o.question_id = q.id ;")
+	
+	@RegisterBeanMapper(value = QuestionOption.class, prefix = "q")
+	@RegisterBeanMapper(value = Option.class, prefix = "o")
+	@UseRowReducer(QuestionOptionReducer.class)
+	List<QuestionOption> getAllQuestionWithOptions();
+	
+	class QuestionOptionReducer implements LinkedHashMapRowReducer<Integer, QuestionOption>  {
+
+		@Override
+		public void accumulate(Map<Integer, QuestionOption> container, RowView rowView) {
+			QuestionOption questionOption = container.computeIfAbsent(rowView.getColumn("q_question_id", Integer.class), id -> {
+				return rowView.getRow(QuestionOption.class);
+			});
+			if(rowView.getColumn("o_option_text", String.class) != null) {
+				Option option = rowView.getRow(Option.class);
+				questionOption.getOptions().add(option);
+			}
+		}
+		
+	}
 }

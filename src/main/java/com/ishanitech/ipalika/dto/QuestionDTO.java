@@ -1,7 +1,3 @@
-/**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Dec 24, 2019
- */
 package com.ishanitech.ipalika.dto;
 
 import java.io.Serializable;

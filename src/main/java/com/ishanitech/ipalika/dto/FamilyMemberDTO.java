@@ -19,13 +19,5 @@ public class FamilyMemberDTO {
     private String healthCondition;
     private String dateOfBirth;
     private Boolean isDead;
-    
-	
-	
-	
-	
-	
-	
-	
-	
+    private Boolean submitStatus;
 }

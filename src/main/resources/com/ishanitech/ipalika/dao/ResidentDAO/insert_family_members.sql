@@ -1,0 +1,30 @@
+INSERT INTO family_member (
+	`f_id`,
+	`full_name`,
+	`relation_id`,
+	`age`,
+	`gender_id`,
+	`maritial_status`,
+	`qualification_id`,
+	`occupation`,
+	`has_voter_id`,
+	`migration`,
+	`health_status`,
+	`filled_id`,
+	`date_of_birth`
+) VALUE
+(
+	:mainId,
+	:name,
+	:relation,
+	:age,
+	:gender,
+	:maritialStatus,
+	:education,
+	:occupation,
+	:voterCard,
+	:address,
+	:healthCondition,
+	:memberId,
+	:dateOfBirth
+);

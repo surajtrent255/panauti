@@ -2,22 +2,28 @@ package com.ishanitech.ipalika.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ishanitech.ipalika.converter.impl.AnswerConverter;
 import com.ishanitech.ipalika.converter.impl.FavouritePlaceConverter;
 import com.ishanitech.ipalika.dao.FavouritePlaceDAO;
 import com.ishanitech.ipalika.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
+import com.ishanitech.ipalika.model.Answer;
 import com.ishanitech.ipalika.model.FavouritePlace;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.FavouritePlacesService;
 import com.ishanitech.ipalika.utils.FileUtilService;
 
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 @Service
 public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 
@@ -50,19 +56,36 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		fileUtilService.storeFile(image);
 	}
 
-
-
 	@Override
-	public void addFavouritePlace(FavouritePlaceDTO favouritePlaceInfo) {
-		FavouritePlaceConverter favPlaceConverter = new FavouritePlaceConverter();
-		FavouritePlace favPlace = favPlaceConverter.fromDto(favouritePlaceInfo);
-	
+	public void addFavouritePlace(List<FavouritePlaceDTO> favouritePlaceInfo) {
+//		FavouritePlaceConverter favPlaceConverter = new FavouritePlaceConverter();
+		List<String> filledIdsInDatabase = dbService.getDao(FavouritePlaceDAO.class).getAllFilledIds();
+		log.info("#########################");
+		log.info(filledIdsInDatabase.toString());
+		
+		List<FavouritePlace> favPlaces = new FavouritePlaceConverter().fromDto(favouritePlaceInfo)
+				.stream()
+				.filter(favPlace -> !filledIdsInDatabase.contains(favPlace.getFavPlaceId()))
+				.collect(Collectors.toList());
+		
 		try {
-			dbService.getDao(FavouritePlaceDAO.class).addFavouritePlace(favPlace);
+			dbService.getDao(FavouritePlaceDAO.class).addFavouritePlaceList(favPlaces);
 		} catch(JdbiException jex) {
-			throw new CustomSqlException("Exception " + jex.getMessage());
+			throw new CustomSqlException("Exception: " + jex.getMessage());
 		}
-	
 	}
+
+//	@Override
+//	public void addFavouritePlace(FavouritePlaceDTO favouritePlaceInfo) {
+//		FavouritePlaceConverter favPlaceConverter = new FavouritePlaceConverter();
+//		FavouritePlace favPlace = favPlaceConverter.fromDto(favouritePlaceInfo);
+//	
+//		try {
+//			dbService.getDao(FavouritePlaceDAO.class).addFavouritePlace(favPlace);
+//		} catch(JdbiException jex) {
+//			throw new CustomSqlException("Exception " + jex.getMessage());
+//		}
+//	
+//	}
 
 }

@@ -13,29 +13,29 @@ public class FavouritePlaceConverter extends BaseConverter<FavouritePlace, Favou
 	public FavouritePlace fromDto(FavouritePlaceDTO dto) {
 		FavouritePlace favPlace = new FavouritePlace();
 		
-		favPlace.setFavPlaceId(dto.getFavPlaceId());
-		favPlace.setFavPlaceName(dto.getFavPlaceName());
-		favPlace.setFavPlaceDesc(dto.getFavPlaceDesc());
-		favPlace.setFavPlacePhoto(dto.getFavPlacePhoto());
-		favPlace.setFavPlaceLocation(dto.getFavPlaceLocation());
-		favPlace.setFavPlaceWard(dto.getFavPlaceWard());
+		favPlace.setFavPlaceId(dto.getFilledId());
+		favPlace.setFavPlaceName(dto.getPlaceName());
+		favPlace.setFavPlaceDesc(dto.getPlaceDescription());
+		favPlace.setFavPlacePhoto(dto.getPlaceImage());
+		favPlace.setFavPlaceLocation(dto.getPlaceGPS());
+		favPlace.setFavPlaceWard(dto.getPlaceWard());
 		return favPlace;
 	}
 
 	@Override
 	public FavouritePlaceDTO fromEntity(FavouritePlace entity) {
 		FavouritePlaceDTO favPlaceDTO = new FavouritePlaceDTO();
-		favPlaceDTO.setFavPlaceId(entity.getFavPlaceId());
-		favPlaceDTO.setFavPlaceName(entity.getFavPlaceName());
-		favPlaceDTO.setFavPlaceDesc(entity.getFavPlaceDesc());
-		favPlaceDTO.setFavPlacePhoto(String.format("%s%s", "http://103.233.58.121:8888/resource", entity.getFavPlacePhoto()));
-		favPlaceDTO.setFavPlaceLocation(entity.getFavPlaceLocation());
-		favPlaceDTO.setFavPlaceWard(entity.getFavPlaceWard());
+		favPlaceDTO.setFilledId(entity.getFavPlaceId());
+		favPlaceDTO.setPlaceName(entity.getFavPlaceName());
+		favPlaceDTO.setPlaceDescription(entity.getFavPlaceDesc());
+		favPlaceDTO.setPlaceImage(String.format("%s%s", "http://103.233.58.121:8888/resource", entity.getFavPlacePhoto()));
+		favPlaceDTO.setPlaceGPS(entity.getFavPlaceLocation());
+		favPlaceDTO.setPlaceWard(entity.getFavPlaceWard());
 		return favPlaceDTO;
 	}
 	
 	@Override
-	public List<FavouritePlace> fromDto(List<FavouritePlaceDTO> dtos) {;
+	public List<FavouritePlace> fromDto(List<FavouritePlaceDTO> dtos) {
 		return dtos.stream().map(this::fromDto).collect(Collectors.toList());
 	}
 

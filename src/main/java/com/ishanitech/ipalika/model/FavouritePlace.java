@@ -9,7 +9,7 @@ import lombok.Data;
 public class FavouritePlace {
 	@JsonIgnore
 	private long id;
-	private long favPlaceId;
+	private String favPlaceId;
 	private String favPlaceName;
 	private String favPlaceDesc;
 	private String favPlacePhoto;

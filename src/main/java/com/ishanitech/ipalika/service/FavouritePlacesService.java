@@ -13,5 +13,7 @@ public interface FavouritePlacesService {
 
 	public void addFavouritePlaceImage(MultipartFile image);
 
-	public void addFavouritePlace(FavouritePlaceDTO favouritePlaceInfo);
+//	public void addFavouritePlace(FavouritePlaceDTO favouritePlaceInfo);
+
+	public void addFavouritePlace(List<FavouritePlaceDTO> favouritePlaceInfo);
 }

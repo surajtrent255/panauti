@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Slf4j
-@RequestMapping("/favourite")
+@RequestMapping("/favourite-place")
 @RestController
 public class FavouritePlacesController {
 	
@@ -56,7 +56,8 @@ public class FavouritePlacesController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public void addFavouritePlace(HttpServletResponse http,
-			@RequestBody FavouritePlaceDTO favouritePlaceInfo ) throws CustomSqlException {
+			@RequestBody List<FavouritePlaceDTO> favouritePlaceInfo ) throws CustomSqlException {
+		log.info("incomming request");
 		favouritePlacesService.addFavouritePlace(favouritePlaceInfo);
 	}
 

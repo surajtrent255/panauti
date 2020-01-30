@@ -5,10 +5,11 @@ import lombok.Data;
 @Data
 public class FavouritePlaceDTO {
 
-	private long favPlaceId;
-	private String favPlaceName;
-	private String favPlaceDesc;
-	private String favPlacePhoto;
-	private String favPlaceLocation;
-	private String favPlaceWard;
+	private String filledId;
+    private String placeName;
+    private String placeDescription;
+    private String placeImage;
+    private String placeWard;
+    private String placeGPS;
+    private Boolean submitStatus;
 }

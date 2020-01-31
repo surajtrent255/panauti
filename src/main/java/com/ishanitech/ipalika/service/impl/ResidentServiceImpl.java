@@ -26,12 +26,6 @@ public class ResidentServiceImpl implements ResidentService {
 		this.dbService = dbService;
 	}
 
-
-
-
-
-
-
 	@Override
 	public void addResidentMembers(List<FamilyMemberDTO> familyMemberInfo) {
 		List<String> memberIdsInDatabase = dbService.getDao(ResidentDAO.class).getAllMemberIds();
@@ -50,11 +44,6 @@ public class ResidentServiceImpl implements ResidentService {
 		}
 		
 	}
-
-
-
-
-
 
 
 	@Override

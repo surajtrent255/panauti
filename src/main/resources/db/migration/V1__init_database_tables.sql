@@ -198,9 +198,9 @@ CREATE TABLE `favourite_place` (
 
 
 CREATE TABLE `family_member` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`f_id` VARCHAR(50) NOT NULL,
-	`full_name` VARCHAR(50) NULL DEFAULT NULL,
+	`full_name` VARCHAR(50) NOT NULL,
 	`relation_id` INT(11) NOT NULL,
 	`age` INT(11) NOT NULL,
 	`gender_id` INT(11) NOT NULL,

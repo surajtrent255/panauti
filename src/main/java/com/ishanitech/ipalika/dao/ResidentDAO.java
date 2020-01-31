@@ -19,8 +19,8 @@ import com.ishanitech.ipalika.model.FamilyMember;
 public interface ResidentDAO {
 
 	
-	@SqlQuery("SELECT filled_id FROM family_member")
-	List<String> getAllFilledIds();
+	@SqlQuery("SELECT member_id FROM family_member")
+	List<String> getAllMemberIds();
 
 	
 	

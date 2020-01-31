@@ -199,22 +199,22 @@ CREATE TABLE `favourite_place` (
 
 CREATE TABLE `family_member` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`f_id` VARCHAR(50) NOT NULL,
+	`family_id` VARCHAR(50) NOT NULL,
 	`full_name` VARCHAR(50) NOT NULL,
 	`relation_id` INT(11) NOT NULL,
 	`age` INT(11) NOT NULL,
 	`gender_id` INT(11) NOT NULL,
 	`marital_status` INT(11) NOT NULL,
-	`qualificatin_id` INT(11) NOT NULL,
+	`qualification_id` INT(11) NOT NULL,
 	`occupation` VARCHAR(50) NOT NULL,
 	`has_voter_id` BIT(1) NOT NULL DEFAULT b'0',
 	`migration` VARCHAR(50) NOT NULL DEFAULT '0',
 	`health_status` VARCHAR(50) NOT NULL DEFAULT '0',
-	`filled_id` VARCHAR(50) NOT NULL DEFAULT '0',
+	`member_id` VARCHAR(50) NOT NULL DEFAULT '0',
 	`is_dead` BIT(1) DEFAULT b'0',
 	`date_of_birth` VARCHAR(45) DEFAULT NULL,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `filled_id_UNIQUE` (`filled_id`)
+	UNIQUE KEY `member_id_UNIQUE` (`member_id`)
 );
 
 

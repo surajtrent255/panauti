@@ -33,13 +33,13 @@ public class ResidentServiceImpl implements ResidentService {
 
 	@Override
 	public void addResidentMembers(List<FamilyMemberDTO> familyMemberInfo) {
-		List<String> filledIdsInDatabase = dbService.getDao(ResidentDAO.class).getAllFilledIds();
+		List<String> memberIdsInDatabase = dbService.getDao(ResidentDAO.class).getAllMemberIds();
 		
 		
 		
 		List<FamilyMember> familyMembers = new FamilyMemberConverter().fromDto(familyMemberInfo)
 				.stream()
-				.filter(famMember -> !filledIdsInDatabase.contains(famMember.getMemberId()))
+				.filter(famMember -> !memberIdsInDatabase.contains(famMember.getMemberId()))
 				.collect(Collectors.toList());
 		
 		try {

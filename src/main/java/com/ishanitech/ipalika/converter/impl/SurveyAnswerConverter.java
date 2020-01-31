@@ -2,7 +2,6 @@ package com.ishanitech.ipalika.converter.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,8 +47,6 @@ public class SurveyAnswerConverter extends BaseConverter<SurveyAnswer, SurveyAns
 			.collect(Collectors.toList());
 		List<Answer> answers = survAnswers.stream().map(ans -> {
 			Answer answer = new Answer();
-			answer.setEntryDate(LocalDateTime.now().toString());
-			answer.setDuration("2 minutes");
 			for(int i = 0; i < ans.size(); i++) {
 				try {
 					answer.setFilledId(ans.get(i).getFilledId());

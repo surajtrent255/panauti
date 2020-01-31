@@ -198,4 +198,5 @@ INSERT INTO `family_relation` (`relation_id`, `relation_nepali`, `relation_engli
 	(6, 'माध्यामिक', 'secondary'),
 	(7, 'तल्लो माध्यामिक', 'lower secondary'),
 	(8, 'प्राथमिक', 'primary'),
-	(9, 'सामान्य शिक्षा', 'literate');
+	(9, 'सामान्य शिक्षा', 'literate'),
+	(10, 'असाक्षर', 'Iliterate');

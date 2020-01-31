@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ishanitech.ipalika.dto.AnswerDTO;
 import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
+import com.ishanitech.ipalika.dto.SurveyAnswerExtraInfoDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.service.SurveyAnswerService;
 
@@ -34,7 +35,7 @@ public class SurveyAnswerController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public void addSurveyAnswer(HttpServletResponse http, 
-			@RequestBody RequestDTO<List<SurveyAnswerDTO>, Object> surveyAnswerInfo) throws CustomSqlException {
+			@RequestBody RequestDTO<List<SurveyAnswerDTO>, SurveyAnswerExtraInfoDTO> surveyAnswerInfo) throws CustomSqlException {
 		surveyAnswerService.addSurveyAnswers(surveyAnswerInfo);
 	}
 

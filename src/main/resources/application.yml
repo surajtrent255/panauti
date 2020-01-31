@@ -9,7 +9,7 @@ spring:
 ############## File Uploading Directory #################
 file:
   upload:
-    directory: /ipasal/ipalika/
+    directory: /Users/ishanitech/ipalika/
 
 ############## Server port configuration ################   
 server:

@@ -1,7 +1,3 @@
-/**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Dec 20, 2019
- */
 package com.ishanitech.ipalika.model;
 
 import lombok.Data;

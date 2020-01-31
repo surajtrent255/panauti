@@ -19,6 +19,7 @@ import com.ishanitech.ipalika.dto.AnswerDTO;
 import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.dto.ResidentDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
+import com.ishanitech.ipalika.dto.SurveyAnswerExtraInfoDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.exception.FileStorageException;
 import com.ishanitech.ipalika.model.Answer;
@@ -49,13 +50,21 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	}
 
 	@Override
-	public void addSurveyAnswers(RequestDTO<List<SurveyAnswerDTO>, Object> surveyAnswerInfo) {
+	public void addSurveyAnswers(RequestDTO<List<SurveyAnswerDTO>, SurveyAnswerExtraInfoDTO> surveyAnswerInfo) {
 		SurveyAnswerConverter surveyAnswerConverter = new SurveyAnswerConverter();
 		List<String> filledIdsInDatabase = dbService.getDao(SurveyAnswerDAO.class).getAllFilledIds();
 		List<SurveyAnswer> surveyAnswers = surveyAnswerConverter
 				.fromDto(surveyAnswerInfo.getData());
 		try {
-			dbService.getDao(SurveyAnswerDAO.class).addAnswerList(surveyAnswerConverter.fromSuveyAnswersToAnswersList(surveyAnswers));
+			List<Answer> answers = surveyAnswerConverter.fromSuveyAnswersToAnswersList(surveyAnswers)
+					.stream().map(surveyAns -> {
+						Answer ans = new Answer();
+						ans.setAddedBy(surveyAnswerInfo.getInfoData().getUserId());
+						ans.setDuration(surveyAnswerInfo.getInfoData().getDuration());
+						ans.setEntryDate(surveyAnswerInfo.getInfoData().getDate().toString());
+						return ans;
+					}).collect(Collectors.toList());
+			dbService.getDao(SurveyAnswerDAO.class).addAnswerList(answers);
 		} catch(JdbiException jex) {
 			throw new CustomSqlException("Exception: " + jex.getMessage());
 		}

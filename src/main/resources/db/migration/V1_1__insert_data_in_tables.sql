@@ -164,7 +164,10 @@ INSERT INTO `question` (`id`, `question_id`, `description`, `group`, `required`,
 	(44, 'skill_training_in_future', 'भविष्यमा कस्तो सिप तालिम गर्नु पर्ला?', 'Economic', 2, 3, 1),
 	(45, 'documents_obtained', 'कागजातहरु', 'Economic', 2, 1, 1),
 	(46, 'gps_info', 'GPS co-ordinate', 'Survey Info', 2, 6, 1),
-	(47, 'house_owner_photo', 'Photo of house owner', 'Survey Info', 2, 7, 1);
+	(47, 'house_owner_photo', 'Photo of house owner', 'Survey Info', 2, 7, 1),
+	(48, 'resident_ward_no', 'वडा नं', 'Personal', '2', '4', '1'),
+	(49, 'document_photo', 'कागजातको फोटो', 'Economic', '1', '7', '1');
+
 
 -- Dumping data for table ipalika.family_relation: ~15 rows (approximately)
 /*!40000 ALTER TABLE `family_relation` DISABLE KEYS */;

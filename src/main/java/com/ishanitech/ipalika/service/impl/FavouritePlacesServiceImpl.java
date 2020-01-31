@@ -8,13 +8,10 @@ import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ishanitech.ipalika.converter.impl.AnswerConverter;
 import com.ishanitech.ipalika.converter.impl.FavouritePlaceConverter;
 import com.ishanitech.ipalika.dao.FavouritePlaceDAO;
 import com.ishanitech.ipalika.dto.FavouritePlaceDTO;
-import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
-import com.ishanitech.ipalika.model.Answer;
 import com.ishanitech.ipalika.model.FavouritePlace;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.FavouritePlacesService;

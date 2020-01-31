@@ -19,7 +19,6 @@ import com.ishanitech.ipalika.dto.ResidentDTO;
 import com.ishanitech.ipalika.dto.ResidentDetailDTO;
 import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
-import com.ishanitech.ipalika.model.Answer;
 import com.ishanitech.ipalika.service.ResidentService;
 import com.ishanitech.ipalika.service.SurveyAnswerService;
 

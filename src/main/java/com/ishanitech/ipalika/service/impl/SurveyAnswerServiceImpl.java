@@ -9,9 +9,11 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.jdbi.v3.core.JdbiException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ishanitech.ipalika.config.properties.RestBaseProperty;
 import com.ishanitech.ipalika.converter.impl.AnswerConverter;
 import com.ishanitech.ipalika.converter.impl.SurveyAnswerConverter;
 import com.ishanitech.ipalika.dao.SurveyAnswerDAO;
@@ -32,6 +34,7 @@ import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.ResidentService;
 import com.ishanitech.ipalika.service.SurveyAnswerService;
 import com.ishanitech.ipalika.utils.FileUtilService;
+import com.ishanitech.ipalika.utils.ImageUtilService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,6 +51,9 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	private final DbService dbService;
 	private final FileUtilService fileUtilService;
 	private final ResidentService residentService;
+	
+	@Autowired
+	private RestBaseProperty restUrlProperty;
 	
 	public SurveyAnswerServiceImpl(DbService dbService, FileUtilService fileUtilService, ResidentService residentService) {
 		this.dbService = dbService;
@@ -108,10 +114,12 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 
 	@Override
 	public List<ResidentDTO> getResident() {
-		List<ResidentDTO> residents = new ArrayList<>();
 		try {
-			List<Answer> residentsAllInfo = dbService.getDao(SurveyAnswerDAO.class).getResidents();
-			residents = new AnswerConverter().entityListToResidentList(residentsAllInfo);
+			/**List<Answer> residentsAllInfo = dbService.getDao(SurveyAnswerDAO.class).getResidents();
+			residents = new AnswerConverter().entityListToResidentList(residentsAllInfo);*/
+			//return residents;
+			List<ResidentDTO> residents = dbService.getDao(SurveyAnswerDAO.class).getResidents();
+			residents.forEach(resident -> resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl())));
 			return residents;
 		} catch(JdbiException jex) {
 			throw new CustomSqlException("Exception: " +jex.getLocalizedMessage());
@@ -150,7 +158,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 					}
 				}
 			});
-			answer.setAnswer47("http://localhost:8888/resource/" + answer.getAnswer47());
+			answer.setAnswer47(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer47()));
 			residentDetail.setResidentDetail(answer);
 			return residentDetail;
 		} catch(JdbiException jex) {
@@ -227,5 +235,4 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	private String replaceArrayBracket(String rawString) {
 		return rawString.replace("[", "").replace("]", "");
 	}
-
 }

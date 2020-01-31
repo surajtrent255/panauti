@@ -29,9 +29,6 @@ public class ResidentServiceImpl implements ResidentService {
 	@Override
 	public void addResidentMembers(List<FamilyMemberDTO> familyMemberInfo) {
 		List<String> memberIdsInDatabase = dbService.getDao(ResidentDAO.class).getAllMemberIds();
-		
-		
-		
 		List<FamilyMember> familyMembers = new FamilyMemberConverter().fromDto(familyMemberInfo)
 				.stream()
 				.filter(famMember -> !memberIdsInDatabase.contains(famMember.getMemberId()))
@@ -45,7 +42,6 @@ public class ResidentServiceImpl implements ResidentService {
 		
 	}
 
-
 	@Override
 	public List<FamilyMemberDTO> getAllFamilyMembersFromFamilyId(String familyId) {
 		List<FamilyMemberDTO> familyMembers = new ArrayList<>();
@@ -57,12 +53,6 @@ public class ResidentServiceImpl implements ResidentService {
 			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
 		}
 	}
-
-
-
-
-
-
 
 	@Override
 	public FamilyMemberDTO getMemberDetailsFromMemberId(String memberId) {

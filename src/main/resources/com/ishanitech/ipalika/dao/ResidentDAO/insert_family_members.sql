@@ -1,5 +1,5 @@
 INSERT INTO family_member (
-	`f_id`,
+	`family_id`,
 	`full_name`,
 	`relation_id`,
 	`age`,
@@ -10,7 +10,7 @@ INSERT INTO family_member (
 	`has_voter_id`,
 	`migration`,
 	`health_status`,
-	`filled_id`,
+	`member_id`,
 	`date_of_birth`
 ) VALUE
 (

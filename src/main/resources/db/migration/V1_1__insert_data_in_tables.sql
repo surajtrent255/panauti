@@ -185,7 +185,7 @@ INSERT INTO `family_relation` (`relation_id`, `relation_nepali`, `relation_engli
 	(14, 'दिदी', 'sister(elder)'),
 	(15, 'बहिनी', 'sister(younger)'),
 	(16, 'बुहारी', 'daughter in law'),
-	(17, 'ज्वाँइ', 'son in law');
+	(17, 'ज्वाँइ', 'son in law'),
 	(18, 'अन्य', 'other');
 
 

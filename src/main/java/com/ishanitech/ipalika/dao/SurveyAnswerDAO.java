@@ -61,7 +61,7 @@ public interface SurveyAnswerDAO {
 			"	FROM question_type qt " + 
 			"	INNER JOIN question q " + 
 			"	ON qt.type_id = q.type_id " + 
-			"	INNER JOIN option o " + 
+			"	INNER JOIN options o " + 
 			"	ON o.question_id = q.id ;")
 	
 	@RegisterBeanMapper(value = QuestionOption.class, prefix = "q")

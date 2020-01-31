@@ -82,7 +82,7 @@ INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('10', 'RA
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('11', 'RATING');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('12', 'CHECKBOX_N');
 
-CREATE TABLE IF NOT EXISTS `option` (
+CREATE TABLE IF NOT EXISTS `options` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`option_id` INT NOT NULL,
 	`option_text` VARCHAR(100) NOT NULL,
@@ -183,20 +183,38 @@ CREATE TABLE `survey_answer_info` (
 	UNIQUE INDEX `filled_id` (`filled_id`)
 );
 
+
+CREATE TABLE `favourite_place` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`fav_place_id` VARCHAR(100) NOT NULL,
+	`fav_place_name` TEXT,
+	`fav_place_desc` TEXT,
+	`fav_place_photo` TEXT,
+	`fav_place_location` TEXT,
+	`fav_place_ward` TEXT,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `fav_place_id_UNIQUE` (`fav_place_id`)
+);
+
+
 CREATE TABLE `family_member` (
-	`f_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`id` INT(11) NOT NULL AUTO_INCREMENT
+	`f_id` VARCHAR(50) NOT NULL,
 	`full_name` VARCHAR(50) NULL DEFAULT NULL,
 	`relation_id` INT(11) NOT NULL,
 	`age` INT(11) NOT NULL,
 	`gender_id` INT(11) NOT NULL,
-	`maritial_status` INT(11) NOT NULL,
+	`marital_status` INT(11) NOT NULL,
 	`qualificatin_id` INT(11) NOT NULL,
 	`occupation` VARCHAR(50) NOT NULL,
 	`has_voter_id` BIT(1) NOT NULL DEFAULT b'0',
 	`migration` VARCHAR(50) NOT NULL DEFAULT '0',
 	`health_status` VARCHAR(50) NOT NULL DEFAULT '0',
 	`filled_id` VARCHAR(50) NOT NULL DEFAULT '0',
-	PRIMARY KEY (`f_id`)
+	`is_dead` BIT(1) DEFAULT b'0',
+	`date_of_birth` VARCHAR(45) DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `filled_id_UNIQUE` (`filled_id`)
 );
 
 

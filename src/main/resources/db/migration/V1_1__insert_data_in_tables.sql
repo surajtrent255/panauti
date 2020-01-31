@@ -1,6 +1,6 @@
 INSERT INTO `form` (`id`, `form_id`, `form_name`) VALUES (1, 'MUNICIPALITY_RESIDENT_FORM', 'Municipality Residents Information Form');
 
-INSERT INTO `option` (`id`, `option_id`, `option_text`, `question_id`) VALUES
+INSERT INTO `options` (`id`, `option_id`, `option_text`, `question_id`) VALUES
 	(2, 1, 'धारा', 18),
 	(3, 2, 'इनार', 18),
 	(4, 3, 'अन्य', 18),

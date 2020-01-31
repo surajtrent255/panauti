@@ -174,16 +174,19 @@ INSERT INTO `family_relation` (`relation_id`, `relation_nepali`, `relation_engli
 	(3, 'हजुर आमा', 'grandmother'),
 	(4, 'बुबा', 'father'),
 	(5, 'आमा', 'mother'),
-	(6, 'छोरा', 'son'),
-	(7, 'छोरी', 'daughter'),
-	(8, 'नाति', 'grandson'),
-	(9, 'नातिनी', 'granddaughter'),
-	(10, 'दाइ', 'brother(elder)'),
-	(11, 'भाइ', 'brother(younger)'),
-	(12, 'दिदी', 'sister(elder)'),
-	(13, 'बहिनी', 'sister(younger)'),
-	(15, 'बुहारी', 'daughter in law'),
-	(16, 'अन्य', 'other');
+	(6, 'श्रीमान', 'husband'),
+	(7, 'श्रीमती', 'wife'),
+	(8, 'छोरा', 'son'),
+	(9, 'छोरी', 'daughter'),
+	(10, 'नाति', 'grandson'),
+	(11, 'नातिनी', 'granddaughter'),
+	(12, 'दाइ', 'brother(elder)'),
+	(13, 'भाइ', 'brother(younger)'),
+	(14, 'दिदी', 'sister(elder)'),
+	(15, 'बहिनी', 'sister(younger)'),
+	(16, 'बुहारी', 'daughter in law'),
+	(17, 'ज्वाँइ', 'son in law');
+	(18, 'अन्य', 'other');
 
 
 	INSERT INTO `academic_qualification` (`qualification_id`, `qualification_nep`, `qualification_eng`) VALUES

@@ -104,7 +104,7 @@ public class AnswerConverter extends BaseConverter<Answer, AnswerDTO> {
 		residentDto.setHouseNo(entity.getAnswer3()); //house number
 		residentDto.setKittaNo(entity.getAnswer12()); //kitta number
 		residentDto.setPhoneNo(entity.getAnswer4()); //phone number
-		residentDto.setImageUrl(String.format("%s/%s", "http://103.233.58.121:8888/resource", entity.getAnswer47())); //image url
+		residentDto.setImageUrl(String.format("%s/%s", "http://localhost:8888/resource", entity.getAnswer47())); //image url
 		return residentDto;
 	}
 	

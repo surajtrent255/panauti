@@ -8,4 +8,8 @@ public interface ResidentService {
 
 	void addResidentMembers(List<FamilyMemberDTO> familyMemberInfo);
 
+	List<FamilyMemberDTO> getAllFamilyMembersFromFamilyId(String familyId);
+
+	FamilyMemberDTO getMemberDetailsFromMemberId(String memberId);
+
 }

@@ -200,3 +200,9 @@ INSERT INTO `family_relation` (`relation_id`, `relation_nepali`, `relation_engli
 	(8, 'प्राथमिक', 'primary'),
 	(9, 'सामान्य शिक्षा', 'literate'),
 	(10, 'असाक्षर', 'Iliterate');
+
+
+	INSERT INTO `gender` (`gender_id`, `gender_english`, `gender_nepali`) VALUES
+	(1, 'Male', 'पुरुष'),
+	(2, 'Female', 'महिला'),
+	(3, 'Other', 'अन्य');

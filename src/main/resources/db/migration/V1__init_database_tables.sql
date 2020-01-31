@@ -219,10 +219,17 @@ CREATE TABLE `family_member` (
 
 
 CREATE TABLE `family_relation` (
-  `relation_id` int(11) NOT NULL AUTO_INCREMENT,
-  `relation_nepali` varchar(50) NOT NULL DEFAULT '0',
-  `relation_english` varchar(50) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`relation_id`)
+	`relation_id` int(11) NOT NULL AUTO_INCREMENT,
+	`relation_nepali` varchar(50) NOT NULL DEFAULT '0',
+	`relation_english` varchar(50) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`relation_id`)
+);
+
+CREATE TABLE `gender` (
+	`gender_id` int(11) NOT NULL AUTO_INCREMENT,
+	`gender_english` varchar(45) DEFAULT NULL,
+	`gender_nepali` varchar(45) DEFAULT NULL,
+	PRIMARY KEY (`gender_id`)
 );
 
 CREATE TABLE `academic_qualification` (

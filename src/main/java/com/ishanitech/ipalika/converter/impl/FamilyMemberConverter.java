@@ -17,9 +17,9 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 		familyMember.setMainId(dto.getMainId());
 		familyMember.setName(dto.getName());
 		familyMember.setOccupation(dto.getOccupation());
-		familyMember.setRelation(Integer.parseInt(dto.getRelation()));
-		familyMember.setEducation(Integer.parseInt(dto.getEducation()));
-		familyMember.setGender(Integer.parseInt(dto.getGender()));
+		familyMember.setRelation(dto.getRelation());
+		familyMember.setEducation(dto.getEducation());
+		familyMember.setGender(dto.getGender());
 		familyMember.setMaritalStatus(Integer.parseInt(dto.getMaritalStatus()));
 		familyMember.setVoterCard(Boolean.parseBoolean(dto.getVoterCard()));
 		familyMember.setAddress(dto.getAddress());
@@ -39,9 +39,9 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 		familyMemberDTO.setMainId(entity.getMainId());
 		familyMemberDTO.setName(entity.getName());
 		familyMemberDTO.setOccupation(entity.getOccupation());
-		familyMemberDTO.setRelation(String.valueOf(entity.getRelation()));
-		familyMemberDTO.setEducation(String.valueOf(entity.getEducation()));
-		familyMemberDTO.setGender(String.valueOf(entity.getGender()));
+		familyMemberDTO.setRelation(entity.getRelation());
+		familyMemberDTO.setEducation(entity.getEducation());
+		familyMemberDTO.setGender(entity.getGender());
 		familyMemberDTO.setMaritalStatus(String.valueOf(entity.getMaritalStatus()));
 		familyMemberDTO.setVoterCard(String.valueOf(entity.getVoterCard()));
 		familyMemberDTO.setAddress(entity.getAddress());

@@ -1,5 +1,6 @@
 package com.ishanitech.ipalika.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +49,42 @@ public class ResidentServiceImpl implements ResidentService {
 			throw new CustomSqlException("Exception: " + jex.getMessage());
 		}
 		
+	}
+
+
+
+
+
+
+
+	@Override
+	public List<FamilyMemberDTO> getAllFamilyMembersFromFamilyId(String familyId) {
+		List<FamilyMemberDTO> familyMembers = new ArrayList<>();
+		try {
+			List<FamilyMember> familyMemberInfo = dbService.getDao(ResidentDAO.class).getAllFamilyMembersFromFamilyId(familyId);
+			familyMembers = new FamilyMemberConverter().fromEntity(familyMemberInfo);
+			return familyMembers;
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
+		}
+	}
+
+
+
+
+
+
+
+	@Override
+	public FamilyMemberDTO getMemberDetailsFromMemberId(String memberId) {
+		FamilyMemberDTO familyMember = new FamilyMemberDTO();
+		try {
+			FamilyMember familyMemberInfo = dbService.getDao(ResidentDAO.class).getMemberDetailsFromMemberId(memberId);
+			familyMember = new FamilyMemberConverter().fromEntity(familyMemberInfo);
+			return familyMember;
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
+		}
 	}
 
 }

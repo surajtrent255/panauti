@@ -45,10 +45,25 @@ public class ResidentController {
 	}
 	
 	
+	//Adds the family members to a resident
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/add-resident-members")
 	public void addResidentMembers(HttpServletResponse http, @RequestBody List<FamilyMemberDTO> familyMemberInfo ) throws CustomSqlException {
 		residentService.addResidentMembers(familyMemberInfo);
 	}
+	
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@GetMapping("/family/{familyId}")
+	public ResponseDTO<List<FamilyMemberDTO>> getAllFamilyMembersFromFamilyId(@PathVariable("familyId") String familyId) {
+		return new ResponseDTO<List<FamilyMemberDTO>>(residentService.getAllFamilyMembersFromFamilyId(familyId));
+	}
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@GetMapping("/member/{memberId}")
+	public ResponseDTO<FamilyMemberDTO> getFamilyMemberByMemberId(@PathVariable("memberId") String memberId) {
+		return new ResponseDTO<FamilyMemberDTO> (residentService.getMemberDetailsFromMemberId(memberId));
+	}
+	
 	
 }

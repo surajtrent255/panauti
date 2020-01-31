@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 public class SurveyAnswerExtraInfoDTO {
 	private Date date;
 	private String duration;
-	private List<String> filledId;
+	private String filledFormId;
 	private int userId;
 }

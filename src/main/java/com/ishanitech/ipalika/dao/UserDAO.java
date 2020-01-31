@@ -113,4 +113,11 @@ public interface UserDAO {
 		
 	}
 
+
+	/**
+	 * @return
+	 */
+	@SqlQuery("SELECT CONCAT(`first_name`, `middle_name`, `last_name`)  FROM user WHERE id =:id")
+	public String getUserFullNameById(@Bind("id") int id);
+
 }

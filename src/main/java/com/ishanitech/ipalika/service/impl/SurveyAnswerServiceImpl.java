@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ishanitech.ipalika.converter.impl.AnswerConverter;
 import com.ishanitech.ipalika.converter.impl.SurveyAnswerConverter;
 import com.ishanitech.ipalika.dao.SurveyAnswerDAO;
+import com.ishanitech.ipalika.dao.UserDAO;
 import com.ishanitech.ipalika.dto.AnswerDTO;
 import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.dto.ResidentDTO;
@@ -50,20 +51,26 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	}
 
 	@Override
-	public void addSurveyAnswers(RequestDTO<List<SurveyAnswerDTO>, SurveyAnswerExtraInfoDTO> surveyAnswerInfo) {
+	public void addSurveyAnswers(RequestDTO<List<SurveyAnswerDTO>, List<SurveyAnswerExtraInfoDTO>> surveyAnswerInfo) {
 		SurveyAnswerConverter surveyAnswerConverter = new SurveyAnswerConverter();
 		List<String> filledIdsInDatabase = dbService.getDao(SurveyAnswerDAO.class).getAllFilledIds();
 		List<SurveyAnswer> surveyAnswers = surveyAnswerConverter
-				.fromDto(surveyAnswerInfo.getData());
+				.fromDto(surveyAnswerInfo.getData())
+				.stream()
+				.filter(surveyAns -> !filledIdsInDatabase.contains(surveyAns.getFilledId()))
+				.collect(Collectors.toList());
+		List<SurveyAnswerExtraInfoDTO> surveyExtraInfo = surveyAnswerInfo.getInfoData().stream()
+				.filter(extraData -> !filledIdsInDatabase.contains(extraData.getFilledFormId()))
+				.collect(Collectors.toList());
 		try {
-			List<Answer> answers = surveyAnswerConverter.fromSuveyAnswersToAnswersList(surveyAnswers)
-					.stream().map(surveyAns -> {
-						Answer ans = new Answer();
-						ans.setAddedBy(surveyAnswerInfo.getInfoData().getUserId());
-						ans.setDuration(surveyAnswerInfo.getInfoData().getDuration());
-						ans.setEntryDate(surveyAnswerInfo.getInfoData().getDate().toString());
-						return ans;
-					}).collect(Collectors.toList());
+			List<Answer> answers = surveyAnswerConverter.fromSuveyAnswersToAnswersList(surveyAnswers);
+			IntStream.range(0, answers.size())
+				.forEach(i -> {
+					answers.get(i).setAddedBy(surveyExtraInfo.get(i).getUserId());
+					answers.get(i).setDuration(surveyExtraInfo.get(i).getDuration());
+					answers.get(i).setEntryDate(String.format("%d-%d-%d", surveyExtraInfo.get(i).getDate().getDate(), surveyExtraInfo.get(i).getDate().getDay(), surveyExtraInfo.get(i).getDate().getMonth()));
+				});
+			
 			dbService.getDao(SurveyAnswerDAO.class).addAnswerList(answers);
 		} catch(JdbiException jex) {
 			throw new CustomSqlException("Exception: " + jex.getMessage());
@@ -109,9 +116,11 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	@Override
 	public Answer getAnswerByFilledId(String filledId) {
 		try {
+			String surveyor = ""; 
 			List<QuestionOption> questionOption = dbService.getDao(SurveyAnswerDAO.class).getAllQuestionWithOptions();
 			List<Integer> questionWithOptions = questionOption.stream().map(questionOpt -> questionOpt.getQuestionId()).collect(Collectors.toList());
 			Answer answer = dbService.getDao(SurveyAnswerDAO.class).getAnswerByFilledId(filledId);
+			surveyor = dbService.getDao(UserDAO.class).getUserFullNameById(answer.getAddedBy());
 			IntStream.rangeClosed(1, 60).forEach(i -> {
 				if(questionWithOptions.contains(i)) {
 					try {

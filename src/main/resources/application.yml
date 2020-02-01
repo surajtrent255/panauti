@@ -44,5 +44,5 @@ rest:
   protocol: http
   domain: 103.233.58.121
   port: 8888
-  resource-location: resouce
+  resource-location: resource
 

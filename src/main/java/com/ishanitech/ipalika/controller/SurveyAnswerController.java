@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerExtraInfoDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
+import com.ishanitech.ipalika.service.ReportService;
 import com.ishanitech.ipalika.service.SurveyAnswerService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +29,11 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class SurveyAnswerController {
 	private final SurveyAnswerService surveyAnswerService;
-
-	public SurveyAnswerController(SurveyAnswerService surveyAnswerService) {
+	private final ReportService reportService;
+	
+	public SurveyAnswerController(SurveyAnswerService surveyAnswerService, ReportService reportService) {
 		this.surveyAnswerService = surveyAnswerService;
+		this.reportService = reportService;
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
@@ -52,9 +56,9 @@ public class SurveyAnswerController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/new")
 	public void addSurveyAnswers(HttpServletResponse http,
-			@RequestBody RequestDTO<List<AnswerDTO>, Object> surveyAnswerInfo) throws CustomSqlException {
-		if (surveyAnswerInfo.getData() != null) {
-			surveyAnswerService.addAnswers(surveyAnswerInfo.getData());
+			@RequestBody List<AnswerDTO> surveyAnswerInfo) throws CustomSqlException {
+		if (surveyAnswerInfo != null) {
+			surveyAnswerService.addAnswers(surveyAnswerInfo);
 		} else {
 			throw new NullPointerException("Invalid data");
 		}

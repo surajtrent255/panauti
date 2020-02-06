@@ -159,6 +159,7 @@ CREATE TABLE `answer` (
 	`a_58` TEXT NULL,
 	`a_59` TEXT NULL,
 	`a_60` TEXT NULL,
+	`deleted` bit(1) NOT NULL DEFAULT b'0',
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `filled_id` (`filled_id`)
 );
@@ -192,6 +193,7 @@ CREATE TABLE `favourite_place` (
 	`fav_place_photo` TEXT,
 	`fav_place_location` TEXT,
 	`fav_place_ward` TEXT,
+	`deleted` bit(1) NOT NULL DEFAULT b'0',
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `fav_place_id_UNIQUE` (`fav_place_id`)
 );
@@ -213,6 +215,7 @@ CREATE TABLE `family_member` (
 	`member_id` VARCHAR(50) NOT NULL DEFAULT '0',
 	`is_dead` BIT(1) DEFAULT b'0',
 	`date_of_birth` VARCHAR(45) DEFAULT NULL,
+	`deleted` bit(1) NOT NULL DEFAULT b'0',
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `member_id_UNIQUE` (`member_id`)
 );

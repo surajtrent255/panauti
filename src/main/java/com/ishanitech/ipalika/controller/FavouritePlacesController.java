@@ -5,8 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalika.dto.FavouritePlaceDTO;
-import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.service.FavouritePlacesService;
@@ -60,5 +62,26 @@ public class FavouritePlacesController {
 		log.info("incomming request");
 		favouritePlacesService.addFavouritePlace(favouritePlaceInfo);
 	}
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@GetMapping("/detail/{placeId}")
+	public ResponseDTO<FavouritePlaceDTO> getFavouritePlaceByPlaceId(@PathVariable("placeId") String placeId) throws CustomSqlException {
+		return new ResponseDTO<FavouritePlaceDTO>(favouritePlacesService.getFavouritePlaceByPlaceId(placeId));
+	}
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@DeleteMapping("/{placeId}")
+	public void deleteFavouritePlaceByPlaceId(@PathVariable("placeId") String placeId) throws CustomSqlException {
+		favouritePlacesService.deleteFavouritePlaceByPlaceId(placeId);
+	}
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@PutMapping("/{placeId}")
+	public void updateFavouritePlaceByPlaceId(HttpServletResponse http,
+			@RequestBody FavouritePlaceDTO favouritePlaceInfo, @PathVariable("placeId") String placeId) throws CustomSqlException {
+		favouritePlacesService.updateFavouritePlaceByPlaceId(favouritePlaceInfo, placeId);
+	}
+		
+	
 
 }

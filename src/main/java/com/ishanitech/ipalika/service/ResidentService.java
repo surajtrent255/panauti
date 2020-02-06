@@ -12,4 +12,6 @@ public interface ResidentService {
 
 	FamilyMemberDTO getMemberDetailsFromMemberId(String memberId);
 
+	void deleteResidentByFamilyId(String familyId);
+
 }

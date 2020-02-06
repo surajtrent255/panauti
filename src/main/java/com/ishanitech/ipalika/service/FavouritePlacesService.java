@@ -16,4 +16,10 @@ public interface FavouritePlacesService {
 //	public void addFavouritePlace(FavouritePlaceDTO favouritePlaceInfo);
 
 	public void addFavouritePlace(List<FavouritePlaceDTO> favouritePlaceInfo);
+
+	public FavouritePlaceDTO getFavouritePlaceByPlaceId(String placeId);
+
+	public void deleteFavouritePlaceByPlaceId(String placeId);
+
+	public void updateFavouritePlaceByPlaceId(FavouritePlaceDTO favouritePlaceInfo, String placeId);
 }

@@ -28,7 +28,7 @@ public class FavouritePlaceConverter extends BaseConverter<FavouritePlace, Favou
 		favPlaceDTO.setFilledId(entity.getFavPlaceId());
 		favPlaceDTO.setPlaceName(entity.getFavPlaceName());
 		favPlaceDTO.setPlaceDescription(entity.getFavPlaceDesc());
-		favPlaceDTO.setPlaceImage(String.format("%s%s", "http://103.233.58.121:8888/resource", entity.getFavPlacePhoto()));
+		favPlaceDTO.setPlaceImage(String.format("%s%s", "http://localhost:8888/resource/", entity.getFavPlacePhoto()));
 		favPlaceDTO.setPlaceGPS(entity.getFavPlaceLocation());
 		favPlaceDTO.setPlaceWard(entity.getFavPlaceWard());
 		return favPlaceDTO;

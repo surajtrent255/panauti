@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,6 +65,13 @@ public class ResidentController {
 	public ResponseDTO<FamilyMemberDTO> getFamilyMemberByMemberId(@PathVariable("memberId") String memberId) {
 		return new ResponseDTO<FamilyMemberDTO> (residentService.getMemberDetailsFromMemberId(memberId));
 	}
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@DeleteMapping("/{familyId}")
+	public void deleteResidentByFamilyId(@PathVariable("familyId") String familyId) throws CustomSqlException {
+		residentService.deleteResidentByFamilyId(familyId);
+	}
+	
 	
 	
 }

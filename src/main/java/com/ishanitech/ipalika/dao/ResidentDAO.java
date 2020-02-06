@@ -8,6 +8,7 @@ import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.locator.UseClasspathSqlLocator;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import com.ishanitech.ipalika.model.FamilyMember;
 
@@ -52,7 +53,7 @@ public interface ResidentDAO {
 			+ " ON fm.qualification_id = aq.qualification_id "
 			+ " INNER JOIN gender g "
 			+ " ON fm.gender_id = g.gender_id "
-			+ " WHERE fm.family_id = :familyId ")
+			+ " WHERE fm.family_id = :familyId AND fm.deleted = 0 ")
 	@RegisterBeanMapper(FamilyMember.class)
 	List<FamilyMember> getAllFamilyMembersFromFamilyId(@Bind("familyId") String familyId);
 
@@ -81,6 +82,11 @@ public interface ResidentDAO {
 			+ " WHERE fm.member_id = :memberId ")
 	@RegisterBeanMapper(FamilyMember.class)
 	FamilyMember getMemberDetailsFromMemberId(@Bind("memberId") String memberId);
+
+
+
+	@SqlUpdate("UPDATE answer a, family_member fm SET a.deleted = 1, fm.deleted = 1 WHERE a.filled_id = fm.family_id AND fm.family_id =:familyId ")
+	void deleteResidentByFamilyId(@Bind("familyId") String familyId);
 	
 	
 }

@@ -14,9 +14,9 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.UseRowReducer;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 
+import com.ishanitech.ipalika.dto.ResidentDTO;
 import com.ishanitech.ipalika.model.Answer;
 import com.ishanitech.ipalika.model.Option;
-import com.ishanitech.ipalika.model.Question;
 import com.ishanitech.ipalika.model.QuestionOption;
 
 /**
@@ -45,9 +45,11 @@ public interface SurveyAnswerDAO {
 	/**
 	 * @return
 	 */
-	@SqlQuery("SELECT filled_id as filledId, a_1 AS answer1, a_2 AS answer2, a_3 AS answer3, a_4 AS answer4, a_12 AS answer12, a_47 AS answer_47 FROM answer GROUP BY filled_id")
-	@RegisterBeanMapper(Answer.class)
-	List<Answer> getResidents();
+	@SqlQuery("SELECT filled_id as filledId, a_1 AS houseOwner, a_2 AS tole, a_3 AS houseNo, a_4 AS phoneNo, a_12 AS kittaNo, a_47 as imageUrl, "
+			+ " (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id) AS totalFamilyMembers "
+			+ " FROM answer a")
+	@RegisterBeanMapper(ResidentDTO.class)
+	List<ResidentDTO> getResidents();
 	
 	@UseClasspathSqlLocator
 	@SqlQuery("answer_full_detail")

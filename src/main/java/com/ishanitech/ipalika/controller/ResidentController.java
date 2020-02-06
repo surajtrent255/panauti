@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ishanitech.ipalika.dto.FamilyMemberDTO;
 import com.ishanitech.ipalika.dto.ResidentDTO;
+import com.ishanitech.ipalika.dto.ResidentDetailDTO;
 import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
-import com.ishanitech.ipalika.model.Answer;
 import com.ishanitech.ipalika.service.ResidentService;
 import com.ishanitech.ipalika.service.SurveyAnswerService;
 
@@ -40,8 +40,8 @@ public class ResidentController {
 	
 	//returns full information of the resident by its filled id.
 	@GetMapping("/detail/{filledId}")
-	public ResponseDTO<Answer> getFullInformationOfResident(Model model, @PathVariable("filledId") String filledId) {
-		return new ResponseDTO<Answer>(surveyAnswerService.getAnswerByFilledId(filledId));
+	public ResponseDTO<ResidentDetailDTO> getFullInformationOfResident(Model model, @PathVariable("filledId") String filledId) {
+		return new ResponseDTO<ResidentDetailDTO>(surveyAnswerService.getAnswerByFilledId(filledId));
 	}
 	
 	

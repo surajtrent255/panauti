@@ -55,7 +55,6 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 
 	@Override
 	public void addFavouritePlace(List<FavouritePlaceDTO> favouritePlaceInfo) {
-//		FavouritePlaceConverter favPlaceConverter = new FavouritePlaceConverter();
 		List<String> filledIdsInDatabase = dbService.getDao(FavouritePlaceDAO.class).getAllFilledIds();
 		log.info("#########################");
 		log.info(filledIdsInDatabase.toString());
@@ -71,6 +70,48 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 			throw new CustomSqlException("Exception: " + jex.getMessage());
 		}
 	}
+
+
+
+	@Override
+	public FavouritePlaceDTO getFavouritePlaceByPlaceId(String placeId) {
+		FavouritePlaceDTO favPlace = new FavouritePlaceDTO();
+		try {
+			FavouritePlace favPlaceInfo = dbService.getDao(FavouritePlaceDAO.class)
+					.getFavouritePlaceByPlaceId(placeId);
+			favPlace = new FavouritePlaceConverter().fromEntity(favPlaceInfo);
+			return favPlace;
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
+		}
+	}
+
+
+
+	@Override
+	public void deleteFavouritePlaceByPlaceId(String placeId) {
+		try {
+			dbService.getDao(FavouritePlaceDAO.class).deleteFavouritePlaceByPlaceId(placeId);
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception : " + jex.getLocalizedMessage());
+		}
+	}
+
+	@Override
+	public void updateFavouritePlaceByPlaceId(FavouritePlaceDTO favouritePlaceInfo, String placeId) {
+		
+		FavouritePlace favPlace = new FavouritePlaceConverter().fromDto(favouritePlaceInfo);
+
+		try {
+			dbService.getDao(FavouritePlaceDAO.class).updateFavouritePlaceByPlaceId(favPlace, placeId);
+		} catch(JdbiException jex) {
+			throw new CustomSqlException("Exception: " + jex.getMessage());
+		}
+	}
+
+	
+	
+
 
 //	@Override
 //	public void addFavouritePlace(FavouritePlaceDTO favouritePlaceInfo) {

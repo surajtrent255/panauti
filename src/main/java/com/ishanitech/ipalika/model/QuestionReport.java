@@ -3,7 +3,7 @@ package com.ishanitech.ipalika.model;
 import lombok.Data;
 
 @Data
-public class AnswerReport {
+public class QuestionReport {
 	private int id;
 	private int questionId;
 	private double option1;

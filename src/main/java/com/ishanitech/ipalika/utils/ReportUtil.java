@@ -3,11 +3,11 @@ package com.ishanitech.ipalika.utils;
 import java.util.stream.Stream;
 
 import com.ishanitech.ipalika.dto.QuestionType;
-import com.ishanitech.ipalika.model.AnswerReport;
+import com.ishanitech.ipalika.model.QuestionReport;
 
 public class ReportUtil {
-	public static AnswerReport generateReport(int questionId, String[] fullData, QuestionType type) {
-		AnswerReport report = new AnswerReport();
+	public static QuestionReport generateReport(int questionId, String[] fullData, QuestionType type) {
+		QuestionReport report = new QuestionReport();
 		report.setQuestionId(questionId);
 		report.setTotal(0);
 		report.setOption1(0);
@@ -30,7 +30,6 @@ public class ReportUtil {
 			case CHECKBOX_N:
 				Stream.of(fullData).forEach(dat -> {
 					String treamedData = dat.trim();
-					System.out.println(treamedData);
 					if(treamedData.startsWith("0")) {
 						report.setOption1(report.getOption1() + Integer.parseInt(treamedData.substring(treamedData.indexOf(":") + 1)));
 					}
@@ -100,7 +99,6 @@ public class ReportUtil {
 			case RADIO:
 				Stream.of(fullData).forEach(dat -> {
 					double treamedData = Integer.parseInt(dat.trim());
-					System.out.println(treamedData);
 					if(treamedData == 0) {
 						report.setOption1(report.getOption1() + 1);
 					}

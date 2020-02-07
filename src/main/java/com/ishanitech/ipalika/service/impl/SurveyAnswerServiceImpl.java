@@ -159,6 +159,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 				}
 			});
 			answer.setAnswer47(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer47()));
+			answer.setAnswer49(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer49()));
 			residentDetail.setResidentDetail(answer);
 			return residentDetail;
 		} catch(JdbiException jex) {

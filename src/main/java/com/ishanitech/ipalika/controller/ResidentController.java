@@ -53,6 +53,14 @@ public class ResidentController {
 		residentService.addResidentMembers(familyMemberInfo);
 	}
 	
+	//Add single member to the family
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/member")
+	public void addResidentSingle(HttpServletResponse http, @RequestBody FamilyMemberDTO familyMemberInfo) throws CustomSqlException {
+		residentService.addResidentSingle(familyMemberInfo);
+	}
+	
+	
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@GetMapping("/family/{familyId}")

@@ -76,4 +76,15 @@ public class ResidentServiceImpl implements ResidentService {
 		
 	}
 
+	@Override
+	public void addResidentSingle(FamilyMemberDTO familyMemberInfo) {
+		FamilyMember familyMembers = new FamilyMemberConverter().fromDto(familyMemberInfo);
+		
+		try {
+			dbService.getDao(ResidentDAO.class).addFamilyMemberSingle(familyMembers);
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
+		}
+	}
+
 }

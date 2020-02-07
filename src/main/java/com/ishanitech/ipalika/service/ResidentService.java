@@ -14,4 +14,6 @@ public interface ResidentService {
 
 	void deleteResidentByFamilyId(String familyId);
 
+	void addResidentSingle(FamilyMemberDTO familyMemberInfo);
+
 }

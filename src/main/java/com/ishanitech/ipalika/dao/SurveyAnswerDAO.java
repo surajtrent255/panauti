@@ -45,14 +45,13 @@ public interface SurveyAnswerDAO {
 	/**
 	 * @return
 	 */
-	@SqlQuery("SELECT filled_id as filledId, a_1 AS houseOwner, a_2 AS tole, a_3 AS houseNo, a_4 AS phoneNo, a_12 AS kittaNo, a_47 as imageUrl, "
+	@SqlQuery("SELECT filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_3 AS houseNo, answer_4 AS phoneNo, answer_12 AS kittaNo, answer_47 as imageUrl, "
 			+ " (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id) AS totalFamilyMembers "
 			+ " FROM answer a")
 	@RegisterBeanMapper(ResidentDTO.class)
 	List<ResidentDTO> getResidents();
 	
-	@UseClasspathSqlLocator
-	@SqlQuery("answer_full_detail")
+	@SqlQuery("SELECT * FROM answer WHERE filled_id = :filledId")
 	@RegisterBeanMapper(Answer.class)
 	Answer getAnswerByFilledId(@Bind("filledId") String filledId);
 	

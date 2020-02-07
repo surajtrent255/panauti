@@ -188,6 +188,7 @@ CREATE TABLE `favourite_place` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`fav_place_id` VARCHAR(100) NOT NULL,
 	`fav_place_name` TEXT,
+	`fav_place_type` TEXT,
 	`fav_place_desc` TEXT,
 	`fav_place_photo` TEXT,
 	`fav_place_location` TEXT,

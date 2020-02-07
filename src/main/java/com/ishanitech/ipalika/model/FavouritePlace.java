@@ -15,5 +15,6 @@ public class FavouritePlace {
 	private String favPlacePhoto;
 	private String favPlaceLocation;
 	private String favPlaceWard;
+	private String favPlaceType;
 	
 }

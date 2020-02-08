@@ -19,6 +19,8 @@ public class FavouritePlaceConverter extends BaseConverter<FavouritePlace, Favou
 		favPlace.setFavPlacePhoto(dto.getPlaceImage());
 		favPlace.setFavPlaceLocation(dto.getPlaceGPS());
 		favPlace.setFavPlaceWard(dto.getPlaceWard());
+		favPlace.setFavPlaceType(dto.getPlaceType());
+		
 		return favPlace;
 	}
 
@@ -31,6 +33,7 @@ public class FavouritePlaceConverter extends BaseConverter<FavouritePlace, Favou
 		favPlaceDTO.setPlaceImage(String.format("%s%s", "http://localhost:8888/resource/", entity.getFavPlacePhoto()));
 		favPlaceDTO.setPlaceGPS(entity.getFavPlaceLocation());
 		favPlaceDTO.setPlaceWard(entity.getFavPlaceWard());
+		favPlaceDTO.setPlaceType(entity.getFavPlaceType());
 		return favPlaceDTO;
 	}
 	

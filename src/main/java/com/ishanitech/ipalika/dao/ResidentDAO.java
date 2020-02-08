@@ -87,6 +87,10 @@ public interface ResidentDAO {
 
 	@SqlUpdate("UPDATE answer a, family_member fm SET a.deleted = 1, fm.deleted = 1 WHERE a.filled_id = fm.family_id AND fm.family_id =:familyId ")
 	void deleteResidentByFamilyId(@Bind("familyId") String familyId);
+
+
+	@SqlUpdate("INSERT INTO family_member (family_id, full_name, relation_id, age, gender_id, marital_status, qualification_id, occupation, has_voter_id, migration, health_status, member_id, date_of_birth) VALUE(:mainId, :name, :relation, :age, :gender, :maritalStatus, :education, :occupation, :voterCard, :address, :healthCondition, :memberId, :dateOfBirth)")
+	void addFamilyMemberSingle(@BindBean FamilyMember familyMembers);
 	
 	
 }

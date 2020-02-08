@@ -28,8 +28,10 @@ CREATE TABLE IF NOT EXISTS `role` (
 );
 
 INSERT INTO `role` (`id`, `role`) VALUES
-    (1, 'ADMIN'),
-    (2, 'STAFF');
+    (1, 'SUPER_ADMIN'),
+    (2, 'CENTRAL_ADMIN'),
+	(3, 'WARD_ADMIN'),
+	(4, 'SURVEYOR');
 
 CREATE TABLE IF NOT EXISTS `user_role` (
 	`user_id` INT(11) NOT NULL,
@@ -37,8 +39,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 	PRIMARY KEY (`user_id`, `role_id`)
 );
 
-INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 1),
-(1, 2);
+INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 1);
 
 
 CREATE TABLE IF NOT EXISTS `form` (

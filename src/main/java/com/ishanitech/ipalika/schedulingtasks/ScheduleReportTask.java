@@ -17,8 +17,8 @@ public class ScheduleReportTask {
 	}
 
 	//Run Report Generation Service Everyday at midnight
-	//@Scheduled(cron = "0 0 0 * * ?")
-	@Scheduled(fixedRate = 60000)
+	@Scheduled(cron = "0 0 0 * * ?")
+	//@Scheduled(fixedRate = 60000)
 	public void generateReport() {
 		log.info("Generate Report Called");
 		reportService.generateReport();

@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.jdbi.v3.sqlobject.config.KeyColumn;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.config.ValueColumn;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
@@ -46,12 +47,13 @@ public interface ReportDAO {
 	@ValueColumn("total")
 	Map<Integer, Double> getPopulationByGenderId();
 	
-	@SqlUpdate("REPLACE INTO population_report(based_on, option_1, option_2, option_3, option_4) " + 
+	@SqlUpdate("REPLACE INTO population_report(based_on, option_1, option_2, option_3, option_4, total) " + 
 			"	VALUES (\"AgeGroup\", (SELECT COUNT(*) FROM family_member WHERE age < 1), " + 
 			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 0 AND 15), " + 
 			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 16 AND 59), " + 
-			"	(SELECT COUNT(*) FROM family_member WHERE age > 59))")
-	void insertAgeGroupReport();
+			"	(SELECT COUNT(*) FROM family_member WHERE age > 59), " +
+			"   :total)")
+	void insertAgeGroupReport(@Bind("total") double total);
 	
 	@SqlQuery("SELECT aq.qualification_id, COUNT(*) AS total FROM family_member fm " + 
 			"INNER JOIN academic_qualification aq " + 
@@ -87,7 +89,7 @@ public interface ReportDAO {
 		Map<Integer, Double> populationByGender = getPopulationByGenderId();
 		Map<Integer, Double> populationByQualification = getPopulationByQualificationId();
 		List<PopulationReport> populationReports = new ArrayList<>();
-		insertAgeGroupReport(); //inserts age group report
+		insertAgeGroupReport(totalPopulation); //inserts age group report
 		PopulationReport genderReport = new PopulationReport();
 		genderReport.setBasedOn("Gender");
 		genderReport.setOption1(Double.valueOf(0));

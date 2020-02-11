@@ -109,6 +109,20 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		}
 	}
 
+
+
+	@Override
+	public void addSingleFavouritePlace(FavouritePlaceDTO favouritePlaceInfo) {
+		FavouritePlace favPlace = new FavouritePlaceConverter().fromDto(favouritePlaceInfo);
+		
+		try {
+			dbService.getDao(FavouritePlaceDAO.class).addFavouritePlaceSingle(favPlace);
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
+		}
+		
+	}
+
 	
 	
 

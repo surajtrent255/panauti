@@ -13,8 +13,6 @@ public interface FavouritePlacesService {
 
 	public void addFavouritePlaceImage(MultipartFile image);
 
-//	public void addFavouritePlace(FavouritePlaceDTO favouritePlaceInfo);
-
 	public void addFavouritePlace(List<FavouritePlaceDTO> favouritePlaceInfo);
 
 	public FavouritePlaceDTO getFavouritePlaceByPlaceId(String placeId);
@@ -22,4 +20,6 @@ public interface FavouritePlacesService {
 	public void deleteFavouritePlaceByPlaceId(String placeId);
 
 	public void updateFavouritePlaceByPlaceId(FavouritePlaceDTO favouritePlaceInfo, String placeId);
+
+	public void addSingleFavouritePlace(FavouritePlaceDTO favouritePlaceInfo);
 }

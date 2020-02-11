@@ -1,5 +1,6 @@
 package com.ishanitech.ipalika.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,5 +30,12 @@ public class FormDetailController {
 	@GetMapping("/{formId}")
 	public ResponseDTO<List<FormDetail>> getFormDetailsById(@PathVariable("formId") Integer formId) throws EntityNotFoundException {
 		return new ResponseDTO<List<FormDetail>>(formDetailService.getFormDetailById(formId));
+	}
+	
+	@GetMapping("/districts")
+	public List<String> getListofDistricts() throws EntityNotFoundException {
+		List<String> districtList = new ArrayList<String>();
+		districtList = formDetailService.getListofDistricts();
+		return districtList;
 	}
 }

@@ -63,6 +63,14 @@ public class FavouritePlacesController {
 		favouritePlacesService.addFavouritePlace(favouritePlaceInfo);
 	}
 	
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/single")
+	public void addSingleFavouritePlace(HttpServletResponse http, @RequestBody FavouritePlaceDTO favouritePlaceInfo) throws CustomSqlException
+	{
+		favouritePlacesService.addSingleFavouritePlace(favouritePlaceInfo);
+	}
+	
 	@ResponseStatus(HttpStatus.CREATED)
 	@GetMapping("/detail/{placeId}")
 	public ResponseDTO<FavouritePlaceDTO> getFavouritePlaceByPlaceId(@PathVariable("placeId") String placeId) throws CustomSqlException {

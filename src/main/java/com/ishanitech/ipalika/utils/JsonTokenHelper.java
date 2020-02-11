@@ -151,7 +151,7 @@ public class JsonTokenHelper {
 				User user = userService.getUserByUsername(username);
 				UserConverter userConverter = new UserConverter();
 				CustomUserDetails loggedInUser = new CustomUserDetails(userConverter.fromEntity(user));
-				return new UsernamePasswordAuthenticationToken(user, null, loggedInUser.getAuthorities());
+				return new UsernamePasswordAuthenticationToken(loggedInUser, null, loggedInUser.getAuthorities());
 			}
 			return null;
 		}

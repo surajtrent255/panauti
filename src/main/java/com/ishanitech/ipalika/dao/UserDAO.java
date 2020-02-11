@@ -57,6 +57,10 @@ public interface UserDAO {
 			+ " :registeredDate)")
 	public int addUser(@BindBean User user);
 	
+	@SqlQuery("SELECT * FROM user WHERE id = :userId")
+	@RegisterBeanMapper(User.class)
+	public User getUserById(@Bind("userId") int userId);
+	
 	/**
 	 * Inserts currently inserted user's role into user_role table.
 	 * @param userId
@@ -64,6 +68,24 @@ public interface UserDAO {
 	 */
 	@SqlUpdate("INSERT INTO user_role(`user_id`, `role_id`) VALUES(:userId, :roleId)")
 	public void addUserRole(@Bind("userId") int userId, @Bind("roleId") int roleId);
+	
+	/**
+	 * @return fullName String containing first middle and last name
+	 */
+	@SqlQuery("SELECT CONCAT(`first_name`, `middle_name`, `last_name`)  FROM user WHERE id =:id")
+	public String getUserFullNameById(@Bind("id") int id);
+
+	@SqlUpdate("UPDATE user SET deleted = true WHERE id = :userId")
+	public void deleteUser(@Bind("userId") int userId);
+	
+	@SqlUpdate("UPDATE user SET enabled = false WHERE id = :userId")
+	public void disableUser(@Bind("userId") int userId);
+	
+	@SqlUpdate("UPDATE user SET password = :password WHERE id = :userId")
+	public void changePassword(@Bind("password") String password, @Bind("userId") int userId);
+	
+	@SqlUpdate("UPDATE user SET username = :username, first_name = :firstName, middle_name = :middleName, last_name = :lastName, mobile_number = :mobileNumber WHERE id = :userId")
+	public void updateUserInfo(@BindBean User user, @Bind("userId") int userId);
 	
 	@SqlQuery(" SELECT u.id AS u_id, "
 			+ " username AS u_username, "
@@ -89,7 +111,7 @@ public interface UserDAO {
 	@Transaction
 	default void addUserAndRole(User user) {
 		int userId = addUser(user);
-		addUserRole(userId, 2); //staff id is 2
+		addUserRole(userId, 4); //surveyor id is 4
 	}
 	
 
@@ -112,12 +134,4 @@ public interface UserDAO {
 		}
 		
 	}
-
-
-	/**
-	 * @return
-	 */
-	@SqlQuery("SELECT CONCAT(`first_name`, `middle_name`, `last_name`)  FROM user WHERE id =:id")
-	public String getUserFullNameById(@Bind("id") int id);
-
 }

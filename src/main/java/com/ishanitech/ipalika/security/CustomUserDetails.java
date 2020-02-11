@@ -2,13 +2,18 @@ package com.ishanitech.ipalika.security;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ishanitech.ipalika.dto.UserDTO;
+
+import lombok.Data;
+import lombok.ToString;
 
 /**
  * {@code CustomUserDetails} gives the information about the 
@@ -17,6 +22,8 @@ import com.ishanitech.ipalika.dto.UserDTO;
  * @author Umesh Bhujel <yoomesbhujel@gmail.com>
  * @since 1.0
  */
+@Data
+@ToString
 public class CustomUserDetails implements UserDetails{
 	private static final long serialVersionUID = 6534708822085674206L;
 	private UserDTO user;
@@ -25,8 +32,10 @@ public class CustomUserDetails implements UserDetails{
 	public CustomUserDetails(UserDTO user) {
 		super();
 		this.user = user;
-		this.authorities = AuthorityUtils.createAuthorityList(user.getRoles().toString());
-	
+		this.authorities = user.getRoles().stream()
+				.map(authority -> {
+					return new SimpleGrantedAuthority(String.format("ROLE_%s", authority));
+				}).collect(Collectors.toList());
 	}
 
 	@JsonIgnore

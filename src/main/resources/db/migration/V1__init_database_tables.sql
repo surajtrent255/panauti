@@ -271,3 +271,10 @@ CREATE TABLE `question_report` (
 	UNIQUE INDEX `question_id` (`question_id`)
 );
 
+CREATE TABLE `districts` (
+  `district_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `district_name_eng` VARCHAR(50) NOT NULL,
+  `district_name_nep` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`district_id`)
+);
+

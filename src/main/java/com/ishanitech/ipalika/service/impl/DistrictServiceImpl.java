@@ -33,7 +33,6 @@ public class DistrictServiceImpl implements DistrictService {
 		} catch(UnableToExecuteStatementException ex) {
 			log.info("#### Error: " + ex.getMessage());
 		}
-		
 		throw new EntityNotFoundException("NO RESULTS!");
 	}
 

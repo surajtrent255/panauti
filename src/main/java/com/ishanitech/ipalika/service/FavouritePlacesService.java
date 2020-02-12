@@ -21,4 +21,6 @@ public interface FavouritePlacesService {
 	public void updateFavouritePlaceByPlaceId(FavouritePlaceDTO favouritePlaceInfo, String placeId);
 
 	public void addSingleFavouritePlace(FavouritePlaceDTO favouritePlaceInfo);
+
+	public List<String> getTypesofFavouritePlaces();
 }

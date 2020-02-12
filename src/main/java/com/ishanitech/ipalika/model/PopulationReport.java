@@ -5,7 +5,6 @@ import org.jdbi.v3.core.mapper.reflect.ColumnName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @NoArgsConstructor

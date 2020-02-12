@@ -49,20 +49,6 @@ public class FormDetailServiceImpl implements FormDetailService {
 	}
 
 
-	@Override
-	public List<String> getListofDistricts() {
-		OptionDao optionDao = dbService.getDao(OptionDao.class);
-		try {
-			List<String> districtList = optionDao.getListofDistricts();
-			
-			if(districtList.size() > 0) {
-				return districtList;
-			}
-		} catch(UnableToExecuteStatementException ex) {
-			log.info("#### Error: " + ex.getMessage());
-		}
-		
-		throw new EntityNotFoundException("NO RESULTS!");
-	}
+	
 
 }

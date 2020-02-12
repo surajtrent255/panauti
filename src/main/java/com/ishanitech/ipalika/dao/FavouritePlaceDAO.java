@@ -69,6 +69,10 @@ public interface FavouritePlaceDAO {
 	@SqlUpdate("INSERT INTO favourite_place (fav_place_id, fav_place_name, fav_place_desc, fav_place_photo, fav_place_location, fav_place_ward, fav_place_type) VALUE(:favPlaceId, :favPlaceName, :favPlaceDesc, :favPlacePhoto, :favPlaceLocation, :favPlaceWard, :favPlaceType)")
 	void addFavouritePlaceSingle(@BindBean FavouritePlace favPlace);
 
+	
+	@SqlQuery("SELECT place_type_nep FROM favourite_place_type")
+	List<String> getTypesofFavouritePlaces();
+
 
 	
 	

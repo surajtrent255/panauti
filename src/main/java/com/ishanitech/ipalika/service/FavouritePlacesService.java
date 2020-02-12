@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalika.dto.FavouritePlaceDTO;
-import com.ishanitech.ipalika.dto.RequestDTO;
 
 public interface FavouritePlacesService {
 
@@ -22,4 +21,6 @@ public interface FavouritePlacesService {
 	public void updateFavouritePlaceByPlaceId(FavouritePlaceDTO favouritePlaceInfo, String placeId);
 
 	public void addSingleFavouritePlace(FavouritePlaceDTO favouritePlaceInfo);
+
+	public List<String> getTypesofFavouritePlaces();
 }

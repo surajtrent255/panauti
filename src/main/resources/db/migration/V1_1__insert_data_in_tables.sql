@@ -324,3 +324,15 @@ INSERT INTO `family_relation` (`relation_id`, `relation_nepali`, `relation_engli
 	(76,'Tehrathum','तेह्रथुम'),
 	(77,'Udayapur','उदयपुर');
 	
+	
+	INSERT INTO `favourite_place_type` (`type_id`, `place_type_nep`, `place_type_eng`) VALUES
+	(1, 'मन्दिर', 'Temple'),
+	(2, 'पार्क', 'Park'),
+	(3, 'पोखरी', 'Pond'),
+	(4, 'स्मारक', 'Monument'),
+	(5, 'मूर्ति', 'Statue');
+	
+	INSERT INTO `marital_status` (`marital_status_id`, `marital_status_nep`, `marital_status_eng`) VALUES
+	(1, 'विवाहित', 'Married'),
+	(2, 'अविवाहित', 'Single');
+	

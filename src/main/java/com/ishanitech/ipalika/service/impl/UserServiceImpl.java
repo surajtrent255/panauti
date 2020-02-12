@@ -2,8 +2,6 @@ package com.ishanitech.ipalika.service.impl;
 
 
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Map;
 
 import org.jdbi.v3.core.JdbiException;

@@ -1,6 +1,5 @@
 package com.ishanitech.ipalika.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -93,10 +92,8 @@ public class FavouritePlacesController {
 		
 	@ResponseStatus(HttpStatus.CREATED)
 	@GetMapping("/types")
-	public List<String> getTypesofFavouritePlaces() throws CustomSqlException {
-		List<String> favPlaceTypeList = new ArrayList<String>();
-		favPlaceTypeList = favouritePlacesService.getTypesofFavouritePlaces();
-		return favPlaceTypeList;
+	public ResponseDTO<List<String>> getTypesofFavouritePlaces() throws CustomSqlException {
+		return new ResponseDTO<List<String>> (favouritePlacesService.getTypesofFavouritePlaces());
 	}
 
 }

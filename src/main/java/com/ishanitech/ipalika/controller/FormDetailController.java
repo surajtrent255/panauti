@@ -37,9 +37,7 @@ public class FormDetailController {
 	}
 	
 	@GetMapping("/districts")
-	public List<String> getListofDistricts() throws EntityNotFoundException {
-		List<String> districtList = new ArrayList<String>();
-		districtList = districtService.getListofDistricts();
-		return districtList;
+	public ResponseDTO<List<String>> getListofDistricts() throws EntityNotFoundException {
+		return new ResponseDTO<List<String>> (districtService.getListofDistricts());
 	}
 }

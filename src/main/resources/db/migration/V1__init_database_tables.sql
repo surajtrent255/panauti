@@ -84,6 +84,7 @@ INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('10', 'RA
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('11', 'RATING');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('12', 'CHECKBOX_N');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('13', 'DROPDOWN');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('14', 'DISTRICT');
 
 CREATE TABLE IF NOT EXISTS `options` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,

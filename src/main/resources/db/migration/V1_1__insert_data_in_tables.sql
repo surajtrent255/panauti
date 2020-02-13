@@ -203,8 +203,6 @@ INSERT INTO `question` (`id`, `question_id`, `description`, `group`, `required`,
 	
 
 
--- Dumping data for table ipalika.family_relation: ~15 rows (approximately)
-/*!40000 ALTER TABLE `family_relation` DISABLE KEYS */;
 INSERT INTO `family_relation` (`relation_id`, `relation_nepali`, `relation_english`) VALUES
 	(1, 'आफु', 'self'),
 	(2, 'हजुर बुबा', 'grandfather'),

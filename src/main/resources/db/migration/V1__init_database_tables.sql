@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `family_member` (
 	`qualification_id` INT(11) NOT NULL,
 	`occupation` VARCHAR(50) NOT NULL,
 	`has_voter_id` BIT(1) NOT NULL DEFAULT b'0',
-	`migration` VARCHAR(50) NOT NULL DEFAULT '0',
+	`migration` INT(11) NOT NULL DEFAULT '0',
 	`health_status` VARCHAR(50) NOT NULL DEFAULT '0',
 	`member_id` VARCHAR(50) NOT NULL DEFAULT '0',
 	`is_dead` BIT(1) DEFAULT b'0',

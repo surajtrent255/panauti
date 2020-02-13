@@ -16,8 +16,7 @@ public enum QuestionType {
 	RADIO_D("RADIO_D"),
 	FAMILY_MEMBER("FAMILY_MEMBER"),
 	CHECKBOX_N("CHECKBOX_N"),
-	DROPDOWN("DROPDOWN"),
-	DISTRICT("DISTRICT");
+	DROPDOWN("DROPDOWN");
 	
 	@JsonValue
 	private final String questionType;

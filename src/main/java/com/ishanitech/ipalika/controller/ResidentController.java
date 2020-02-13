@@ -80,6 +80,12 @@ public class ResidentController {
 		residentService.deleteResidentByFamilyId(familyId);
 	}
 	
+	@ResponseStatus(HttpStatus.CREATED)
+	@GetMapping("/memberFormDetails")
+	public ResponseDTO<List<String>> getMemberFormDetails() throws CustomSqlException {
+		return new ResponseDTO<List<String>> (residentService.getListofRelation());
+	}
+	
 	
 	
 }

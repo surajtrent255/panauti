@@ -1,6 +1,5 @@
 package com.ishanitech.ipalika.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ishanitech.ipalika.config.properties.RestBaseProperty;
 import com.ishanitech.ipalika.converter.impl.AnswerConverter;
 import com.ishanitech.ipalika.converter.impl.SurveyAnswerConverter;
+import com.ishanitech.ipalika.dao.DistrictDAO;
 import com.ishanitech.ipalika.dao.SurveyAnswerDAO;
 import com.ishanitech.ipalika.dao.UserDAO;
 import com.ishanitech.ipalika.dto.AnswerDTO;
@@ -158,6 +159,10 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 					}
 				}
 			});
+			
+			//Setting the district of the resident manually
+			answer.setAnswer12(dbService.getDao(DistrictDAO.class).getDistrictNameNepaliByDistrictId(Integer.parseInt(answer.getAnswer12())));
+			//Setting the image of the houseowner and the document
 			answer.setAnswer47(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer47()));
 			answer.setAnswer49(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer49()));
 			residentDetail.setResidentDetail(answer);
@@ -228,6 +233,9 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 				return questionOption.getOptions().get(0).getOptionText() + "(" + rawanswer +")";
 			}
 			
+		case DROPDOWN:
+			return questionOption.getOptions().get(Integer.parseInt(rawanswer)).getOptionText();
+		
 		default:
 			return "";
 		}

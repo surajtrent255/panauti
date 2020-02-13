@@ -13,13 +13,13 @@ public class FamilyMember {
     private String mainId;			//family Id (Form field id)
     private String name;
     private String occupation;
-    private String relation;
-    private String education;
+    private int relation;
+    private int education;
     private int age;
-    private String gender;
+    private int gender;
     private int maritalStatus;
     private Boolean voterCard;
-    private String address;
+    private int address;
     private String healthCondition;
     private String dateOfBirth;
     private Boolean isDead;

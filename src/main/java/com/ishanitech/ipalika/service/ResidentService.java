@@ -16,4 +16,6 @@ public interface ResidentService {
 
 	void addResidentSingle(FamilyMemberDTO familyMemberInfo);
 
+	List<String> getListofRelation();
+
 }

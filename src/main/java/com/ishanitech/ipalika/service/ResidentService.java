@@ -3,6 +3,7 @@ package com.ishanitech.ipalika.service;
 import java.util.List;
 
 import com.ishanitech.ipalika.dto.FamilyMemberDTO;
+import com.ishanitech.ipalika.dto.MemberFormDetailsDTO;
 
 public interface ResidentService {
 
@@ -16,6 +17,6 @@ public interface ResidentService {
 
 	void addResidentSingle(FamilyMemberDTO familyMemberInfo);
 
-	List<String> getListofRelation();
+	MemberFormDetailsDTO getMemberFormDetails();
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ishanitech.ipalika.dto.FamilyMemberDTO;
+import com.ishanitech.ipalika.dto.MemberFormDetailsDTO;
 import com.ishanitech.ipalika.dto.ResidentDTO;
 import com.ishanitech.ipalika.dto.ResidentDetailDTO;
 import com.ishanitech.ipalika.dto.ResponseDTO;
@@ -82,8 +83,8 @@ public class ResidentController {
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@GetMapping("/memberFormDetails")
-	public ResponseDTO<List<String>> getMemberFormDetails() throws CustomSqlException {
-		return new ResponseDTO<List<String>> (residentService.getListofRelation());
+	public ResponseDTO<MemberFormDetailsDTO> getMemberFormDetails() throws CustomSqlException {
+		return new ResponseDTO<MemberFormDetailsDTO> (residentService.getMemberFormDetails());
 	}
 	
 	

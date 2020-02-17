@@ -30,6 +30,7 @@ public class User implements Serializable{
 	
 	private Date registeredDate;
 	private String mobileNumber;
+	private int wardNo;
 	
 	private String password;
 	private boolean enabled;

@@ -34,7 +34,6 @@ public class ResidentController {
 		this.residentService = residentService;
 	}
 
-
 	@GetMapping
 	public ResponseDTO<List<ResidentDTO>>getResidents() {
 		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.getResident());
@@ -45,7 +44,6 @@ public class ResidentController {
 	public ResponseDTO<ResidentDetailDTO> getFullInformationOfResident(Model model, @PathVariable("filledId") String filledId) {
 		return new ResponseDTO<ResidentDetailDTO>(surveyAnswerService.getAnswerByFilledId(filledId));
 	}
-	
 	
 	//Adds the family members to a resident
 	@ResponseStatus(HttpStatus.CREATED)
@@ -60,8 +58,6 @@ public class ResidentController {
 	public void addResidentSingle(HttpServletResponse http, @RequestBody FamilyMemberDTO familyMemberInfo) throws CustomSqlException {
 		residentService.addResidentSingle(familyMemberInfo);
 	}
-	
-	
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@GetMapping("/family/{familyId}")
@@ -80,13 +76,9 @@ public class ResidentController {
 	public void deleteResidentByFamilyId(@PathVariable("familyId") String familyId) throws CustomSqlException {
 		residentService.deleteResidentByFamilyId(familyId);
 	}
-	
 	@ResponseStatus(HttpStatus.CREATED)
 	@GetMapping("/memberFormDetails")
 	public ResponseDTO<MemberFormDetailsDTO> getMemberFormDetails() throws CustomSqlException {
 		return new ResponseDTO<MemberFormDetailsDTO> (residentService.getMemberFormDetails());
 	}
-	
-	
-	
 }

@@ -23,5 +23,6 @@ public class UserDTO implements Serializable {
 	private boolean enabled;
 	private boolean firstLogin;
 	private boolean expired;
+	private int wardNo;
 	private List<String> roles;
 }

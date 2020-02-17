@@ -42,7 +42,8 @@ public interface UserDAO {
 			+ " `first_login`, "
 			+ " `enabled`, "
 			+ " `expired`, "
-			+ " `registered_date`) "
+			+ " `registered_date`,"
+			+ " `ward_no`) "
 			+ " VALUES (:firstName, "
 			+ " :middleName, "
 			+ " :lastName, "
@@ -54,7 +55,8 @@ public interface UserDAO {
 			+ " :firstLogin, "
 			+ " :enabled, "
 			+ " :expired, "
-			+ " :registeredDate)")
+			+ " :registeredDate, "
+			+ " :wardNo )")
 	public int addUser(@BindBean User user);
 	
 	@SqlQuery("SELECT * FROM user WHERE id = :userId")
@@ -100,6 +102,7 @@ public interface UserDAO {
 			+ " enabled AS u_enabled, "
 			+ " expired AS u_expired, "
 			+ " registered_date AS u_registered_date, "
+			+ " ward_no AS u_ward_no,"
 			+ " r.id AS r_id, "
 			+ " r.role as r_role FROM user u INNER JOIN user_role ur ON u.id = ur.user_id "
 			+ " INNER JOIN role r ON r.id = ur.role_id "

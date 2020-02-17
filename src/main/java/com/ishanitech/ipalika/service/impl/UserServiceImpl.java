@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	@Secured({"SUPER_ADMIN", "CENTRAL_ADMIN"})
+	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
 	@Override
 	public void disableUser(int userId) {
 		try {
@@ -127,10 +127,10 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	@PreAuthorize("#userId == authentication.principal.userId")
+	@PreAuthorize("#userId == authentication.principal.user.userId")
 	@Override
 	public void changePassword(String newPassword, int userId) {
-		String encryptedPassword = this.encoder.encode(newPassword);
+		String encryptedPassword = this.encoder.encode(newPassword.replaceAll("\"", ""));
 		try {
 			dbService.getDao(UserDAO.class).changePassword(encryptedPassword, userId);
 		} catch(JdbiException jex) {

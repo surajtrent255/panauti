@@ -36,6 +36,7 @@ public class UserConverter extends BaseConverter<User, UserDTO> {
 				user.setLastName(fullName[1]);
 			}
 		}
+		user.setWardNo(dto.getWardNo());
 		user.setUsername(dto.getUsername());
 		user.setEmail(dto.getEmail());
 		user.setPassword(dto.getPassword());
@@ -65,6 +66,7 @@ public class UserConverter extends BaseConverter<User, UserDTO> {
 		userDTO.setEnabled(entity.isEnabled());
 		userDTO.setExpired(entity.isExpired());
 		userDTO.setFirstLogin(entity.isFirstLogin());
+		userDTO.setWardNo(entity.getWardNo());
 		userDTO.setRoles(entity.getRole().stream().map(role -> role.getRole()).collect(Collectors.toList()));
 		return userDTO;
 	}

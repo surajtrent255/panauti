@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 	`enabled` BIT(1) NOT NULL DEFAULT b'1',
 	`expired` BIT(1) NOT NULL DEFAULT b'1',
 	`registered_date` TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+	`ward_no` INT(11) NOT NULL DEFAULT 1,
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `username` (`username`),
 	UNIQUE INDEX `mobile_number` (`mobile_number`),
@@ -22,16 +23,19 @@ INSERT INTO `user` (`id`, `first_name`, `middle_name`, `last_name`, `username`, 
  VALUES
 (1, 'Umesh', 'B.', 'Bhujel', 'yoomes', 'yoomesbhujel@gmail.com', '$2a$11$H9wDLxAPTX5qp0doFKank.w6vgB7xPo1CJojH2AC0ovBY4Iu31oTS', '9849931288', 0, 0, 1, 0, CURRENT_TIMESTAMP());
 
+
 CREATE TABLE IF NOT EXISTS `role` (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    role VARCHAR(15) NOT NULL
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`role` VARCHAR(15) NOT NULL,
+	`role_nepali` VARCHAR(15) NOT NULL,
+	PRIMARY KEY (`id`)
 );
 
-INSERT INTO `role` (`id`, `role`) VALUES
-    (1, 'SUPER_ADMIN'),
-    (2, 'CENTRAL_ADMIN'),
-	(3, 'WARD_ADMIN'),
-	(4, 'SURVEYOR');
+INSERT INTO `role` (`id`, `role`, `role_nepali`) VALUES
+    (1, 'SUPER_ADMIN','सुपर एडमिन' ),
+    (2, 'CENTRAL_ADMIN', 'केन्द्रिय एडमिन'),
+	(3, 'WARD_ADMIN', 'वडा एडमिन'),
+	(4, 'SURVEYOR', 'तथ्यांक संकलक');
 
 CREATE TABLE IF NOT EXISTS `user_role` (
 	`user_id` INT(11) NOT NULL,
@@ -292,5 +296,14 @@ CREATE TABLE IF NOT EXISTS `marital_status` (
   `marital_status_nep` VARCHAR(50) NOT NULL,
   `marital_status_eng` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`marital_status_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `ward` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`location` VARCHAR(100) NOT NULL DEFAULT '0',
+	`name` VARCHAR(100) NOT NULL DEFAULT '0',
+	`main_person` VARCHAR(100) NOT NULL DEFAULT '0',
+	`contact_no` VARCHAR(10) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
 );
 

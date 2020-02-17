@@ -83,6 +83,8 @@ INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('9', 'RAD
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('10', 'RATING_M');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('11', 'RATING');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('12', 'CHECKBOX_N');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('13', 'DROPDOWN');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('14', 'DISTRICT');
 
 CREATE TABLE IF NOT EXISTS `options` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -166,7 +168,7 @@ CREATE TABLE `answer` (
 	UNIQUE INDEX `filled_id` (`filled_id`)
 );
 
-CREATE TABLE `favourite_place` (
+CREATE TABLE IF NOT EXISTS `favourite_place` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`fav_place_id` VARCHAR(100) NOT NULL,
 	`fav_place_name` TEXT,
@@ -181,7 +183,7 @@ CREATE TABLE `favourite_place` (
 );
 
 
-CREATE TABLE `family_member` (
+CREATE TABLE IF NOT EXISTS `family_member` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`family_id` VARCHAR(50) NOT NULL,
 	`full_name` VARCHAR(50) NOT NULL,
@@ -192,35 +194,35 @@ CREATE TABLE `family_member` (
 	`qualification_id` INT(11) NOT NULL,
 	`occupation` VARCHAR(50) NOT NULL,
 	`has_voter_id` BIT(1) NOT NULL DEFAULT b'0',
-	`migration` VARCHAR(50) NOT NULL DEFAULT '0',
+	`migration` INT(11) NOT NULL DEFAULT '0',
 	`health_status` VARCHAR(50) NOT NULL DEFAULT '0',
 	`member_id` VARCHAR(50) NOT NULL DEFAULT '0',
-	`is_dead` BIT(1) DEFAULT b'0',
-	`date_of_birth` VARCHAR(45) DEFAULT NULL,
+	`is_dead` BIT(1) NOT NULL DEFAULT b'0',
+	`date_of_birth` VARCHAR(45) NOT NULL,
 	`deleted` bit(1) NOT NULL DEFAULT b'0',
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `member_id_UNIQUE` (`member_id`)
 );
 
 
-CREATE TABLE `family_relation` (
-	`relation_id` int(11) NOT NULL AUTO_INCREMENT,
-	`relation_nepali` varchar(50) NOT NULL DEFAULT '0',
-	`relation_english` varchar(50) NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `family_relation` (
+	`relation_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`relation_nepali` VARCHAR(50) NOT NULL DEFAULT '0',
+	`relation_english` VARCHAR(50) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`relation_id`)
 );
 
-CREATE TABLE `gender` (
-	`gender_id` int(11) NOT NULL AUTO_INCREMENT,
-	`gender_english` varchar(45) DEFAULT NULL,
-	`gender_nepali` varchar(45) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `gender` (
+	`gender_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`gender_nepali` VARCHAR(45) DEFAULT NULL,
+	`gender_english` VARCHAR(45) DEFAULT NULL,
 	PRIMARY KEY (`gender_id`)
 );
 
-CREATE TABLE `academic_qualification` (
-  `qualification_id` int(11) NOT NULL AUTO_INCREMENT,
-  `qualification_nep` varchar(50) DEFAULT NULL,
-  `qualification_eng` varchar(50) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `academic_qualification` (
+  `qualification_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `qualification_nep` VARCHAR(50) DEFAULT NULL,
+  `qualification_eng` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`qualification_id`)
 );
 
@@ -269,5 +271,26 @@ CREATE TABLE `question_report` (
 	`total` DOUBLE NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `question_id` (`question_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `districts` (
+  `district_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `district_name_nep` VARCHAR(50) NOT NULL,
+  `district_name_eng` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`district_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `favourite_place_type` (
+  `type_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `place_type_nep` VARCHAR(50) NOT NULL,
+  `place_type_eng` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`type_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `marital_status` (
+  `marital_status_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `marital_status_nep` VARCHAR(50) NOT NULL,
+  `marital_status_eng` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`marital_status_id`)
 );
 

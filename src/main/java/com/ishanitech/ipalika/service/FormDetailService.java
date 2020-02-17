@@ -11,4 +11,5 @@ import com.ishanitech.ipalika.model.FormDetail;
 public interface FormDetailService {
 
 	List<FormDetail> getFormDetailById(Integer formId);
+
 }

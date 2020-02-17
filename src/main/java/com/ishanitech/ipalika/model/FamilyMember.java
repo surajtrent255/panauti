@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class FamilyMember {
 	@JsonIgnore
-	private long id;
+	private int id;
 	private String memberId;
     private String mainId;			//family Id (Form field id)
     private String name;
@@ -16,9 +16,9 @@ public class FamilyMember {
     private String education;
     private int age;
     private String gender;
-    private int maritalStatus;
+    private String maritalStatus;
     private Boolean voterCard;
-    private String address;
+    private int address;
     private String healthCondition;
     private String dateOfBirth;
     private Boolean isDead;

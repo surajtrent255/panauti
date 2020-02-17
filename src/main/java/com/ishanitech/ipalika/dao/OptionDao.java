@@ -17,4 +17,5 @@ public interface OptionDao {
 	
 	@SqlQuery("SELECT o.option_text FROM options o WHERE o.question_id = :questionID")
 	public List<String> getAllOptionByQuestionId(@Bind("questionID") Integer questionId);
+
 }

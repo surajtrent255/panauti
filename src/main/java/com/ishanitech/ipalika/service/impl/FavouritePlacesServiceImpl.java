@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.jdbi.v3.core.JdbiException;
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +13,7 @@ import com.ishanitech.ipalika.converter.impl.FavouritePlaceConverter;
 import com.ishanitech.ipalika.dao.FavouritePlaceDAO;
 import com.ishanitech.ipalika.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
+import com.ishanitech.ipalika.exception.EntityNotFoundException;
 import com.ishanitech.ipalika.model.FavouritePlace;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.FavouritePlacesService;
@@ -109,21 +111,35 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		}
 	}
 
-	
-	
 
 
-//	@Override
-//	public void addFavouritePlace(FavouritePlaceDTO favouritePlaceInfo) {
-//		FavouritePlaceConverter favPlaceConverter = new FavouritePlaceConverter();
-//		FavouritePlace favPlace = favPlaceConverter.fromDto(favouritePlaceInfo);
-//	
-//		try {
-//			dbService.getDao(FavouritePlaceDAO.class).addFavouritePlace(favPlace);
-//		} catch(JdbiException jex) {
-//			throw new CustomSqlException("Exception " + jex.getMessage());
-//		}
-//	
-//	}
+	@Override
+	public void addSingleFavouritePlace(FavouritePlaceDTO favouritePlaceInfo) {
+		FavouritePlace favPlace = new FavouritePlaceConverter().fromDto(favouritePlaceInfo);
+		
+		try {
+			dbService.getDao(FavouritePlaceDAO.class).addFavouritePlaceSingle(favPlace);
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
+		}
+		
+	}
+
+
+
+	@Override
+	public List<String> getTypesofFavouritePlaces() {
+		FavouritePlaceDAO favPlaceDAO = dbService.getDao(FavouritePlaceDAO.class);
+		try {
+			List<String> favPlaceTypeList = favPlaceDAO.getTypesofFavouritePlaces();
+			
+			if(favPlaceTypeList.size() > 0) {
+				return favPlaceTypeList;
+			}
+		} catch(UnableToExecuteStatementException ex) {
+			log.info("#### Error: " + ex.getMessage());
+		}
+		throw new EntityNotFoundException("No Results!!!");
+	}
 
 }

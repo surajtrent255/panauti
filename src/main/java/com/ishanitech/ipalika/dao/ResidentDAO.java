@@ -32,8 +32,8 @@ public interface ResidentDAO {
 	@SqlQuery("SELECT fm.full_name AS name, "
 			+ " fr.relation_nepali AS relation, "
 			+ " fm.age AS age, "
-			+ " g.gender_english AS gender, "
-			+ " fm.marital_status AS maritalStatus, "
+			+ " g.gender_nepali AS gender, "
+			+ " ms.marital_status_nep AS maritalStatus, "
 			+ " aq.qualification_nep AS education, "
 			+ " fm.occupation AS occupation,"
 			+ " fm.has_voter_id AS voterCard,"
@@ -49,6 +49,8 @@ public interface ResidentDAO {
 			+ " ON fm.qualification_id = aq.qualification_id "
 			+ " INNER JOIN gender g "
 			+ " ON fm.gender_id = g.gender_id "
+			+ " INNER JOIN marital_status ms"
+			+ " ON fm.marital_status = ms.marital_status_id"
 			+ " WHERE fm.family_id = :familyId AND fm.deleted = 0 ")
 	@RegisterBeanMapper(FamilyMember.class)
 	List<FamilyMember> getAllFamilyMembersFromFamilyId(@Bind("familyId") String familyId);
@@ -56,8 +58,8 @@ public interface ResidentDAO {
 	@SqlQuery("SELECT fm.full_name AS name, "
 			+ " fr.relation_nepali AS relation, "
 			+ " fm.age AS age, "
-			+ " g.gender_english AS gender, "
-			+ " fm.marital_status AS maritalStatus, "
+			+ " g.gender_nepali AS gender, "
+			+ " ms.marital_status_nep AS maritalStatus, "
 			+ " aq.qualification_nep AS education, "
 			+ " fm.occupation AS occupation,"
 			+ " fm.has_voter_id AS voterCard,"
@@ -72,7 +74,9 @@ public interface ResidentDAO {
 			+ " INNER JOIN academic_qualification aq "
 			+ " ON fm.qualification_id = aq.qualification_id "
 			+ " INNER JOIN gender g "
-			+ " ON fm.gender_id = g.gender_id "
+			+ " ON fm.gender_id = g.gender_id"
+			+ " INNER JOIN marital_status ms"
+			+ " ON fm.marital_status = ms.marital_status_id"
 			+ " WHERE fm.member_id = :memberId ")
 	@RegisterBeanMapper(FamilyMember.class)
 	FamilyMember getMemberDetailsFromMemberId(@Bind("memberId") String memberId);
@@ -82,6 +86,23 @@ public interface ResidentDAO {
 
 	@SqlUpdate("INSERT INTO family_member (family_id, full_name, relation_id, age, gender_id, marital_status, qualification_id, occupation, has_voter_id, migration, health_status, member_id, date_of_birth) VALUE(:mainId, :name, :relation, :age, :gender, :maritalStatus, :education, :occupation, :voterCard, :address, :healthCondition, :memberId, :dateOfBirth)")
 	void addFamilyMemberSingle(@BindBean FamilyMember familyMembers);
+
+
+	@SqlQuery("SELECT relation_nepali FROM family_relation")
+	List<String> getListofRelation();
+
+	@SqlQuery("SELECT qualification_nep FROM academic_qualification")
+	List<String> getListofQualification();
+
+	@SqlQuery("SELECT gender_nepali FROM gender")
+	List<String> getListofGender();
+
+	@SqlQuery("SELECT marital_status_nep FROM marital_status")
+	List<String> getListofMaritalStatus();
+	
+	
+	
+	
 	
 	
 }

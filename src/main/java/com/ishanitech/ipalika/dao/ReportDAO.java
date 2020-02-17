@@ -42,7 +42,7 @@ public interface ReportDAO {
 			"	INNER JOIN gender g " + 
 			"	ON g.gender_id = fa.gender_id " + 
 			"	GROUP BY fa.gender_id " + 
-			"	ASC ORDER BY g.gender_id;")
+			"	ORDER BY g.gender_id ASC;")
 	@KeyColumn("gender_id")
 	@ValueColumn("total")
 	Map<Integer, Double> getPopulationByGenderId();
@@ -57,7 +57,7 @@ public interface ReportDAO {
 	
 	@SqlQuery("SELECT aq.qualification_id, COUNT(*) AS total FROM family_member fm " + 
 			"INNER JOIN academic_qualification aq " + 
-			"ON aq.qualification_id = fm.qualification_id GROUP BY aq.qualification_nep ASC ORDER BY aq.qualification_id;")
+			"ON aq.qualification_id = fm.qualification_id GROUP BY aq.qualification_nep ORDER BY aq.qualification_id ASC;")
 	@KeyColumn("qualification_id")
 	@ValueColumn("total")
 	Map<Integer, Double> getPopulationByQualificationId();

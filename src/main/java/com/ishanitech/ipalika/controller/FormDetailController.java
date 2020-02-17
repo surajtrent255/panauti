@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.exception.EntityNotFoundException;
 import com.ishanitech.ipalika.model.FormDetail;
+import com.ishanitech.ipalika.service.DistrictService;
 import com.ishanitech.ipalika.service.FormDetailService;
 
 /**
@@ -21,13 +22,21 @@ import com.ishanitech.ipalika.service.FormDetailService;
 @RequestMapping("/form-detail")
 public class FormDetailController {
 	FormDetailService formDetailService;
+	DistrictService districtService;
 	
-	public FormDetailController(FormDetailService formDetailService) {
+	public FormDetailController(FormDetailService formDetailService, DistrictService districtService) {
 		this.formDetailService = formDetailService;
+		this.districtService = districtService;
+		
 	}
 
 	@GetMapping("/{formId}")
 	public ResponseDTO<List<FormDetail>> getFormDetailsById(@PathVariable("formId") Integer formId) throws EntityNotFoundException {
 		return new ResponseDTO<List<FormDetail>>(formDetailService.getFormDetailById(formId));
+	}
+	
+	@GetMapping("/districts")
+	public ResponseDTO<List<String>> getListofDistricts() throws EntityNotFoundException {
+		return new ResponseDTO<List<String>> (districtService.getListofDistricts());
 	}
 }

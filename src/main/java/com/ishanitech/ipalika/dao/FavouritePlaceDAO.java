@@ -11,8 +11,6 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 
-import com.ishanitech.ipalika.dto.FavouritePlaceDTO;
-import com.ishanitech.ipalika.model.Answer;
 import com.ishanitech.ipalika.model.FavouritePlace;
 
 /**
@@ -65,6 +63,15 @@ public interface FavouritePlaceDAO {
 			+ " fav_place_ward =:favPlaceWard "
 			+ " WHERE fav_place_id =:placeId")
 	void updateFavouritePlaceByPlaceId(@BindBean FavouritePlace favPlace, @Bind("placeId") String placeId);
+
+	
+	
+	@SqlUpdate("INSERT INTO favourite_place (fav_place_id, fav_place_name, fav_place_desc, fav_place_photo, fav_place_location, fav_place_ward, fav_place_type) VALUE(:favPlaceId, :favPlaceName, :favPlaceDesc, :favPlacePhoto, :favPlaceLocation, :favPlaceWard, :favPlaceType)")
+	void addFavouritePlaceSingle(@BindBean FavouritePlace favPlace);
+
+	
+	@SqlQuery("SELECT place_type_nep FROM favourite_place_type")
+	List<String> getTypesofFavouritePlaces();
 
 
 	

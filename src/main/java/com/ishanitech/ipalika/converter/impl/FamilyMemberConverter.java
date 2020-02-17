@@ -20,9 +20,9 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 		familyMember.setRelation(dto.getRelation());
 		familyMember.setEducation(dto.getEducation());
 		familyMember.setGender(dto.getGender());
-		familyMember.setMaritalStatus(Integer.parseInt(dto.getMaritalStatus()));
+		familyMember.setMaritalStatus(dto.getMaritalStatus());
 		familyMember.setVoterCard(Boolean.parseBoolean(dto.getVoterCard()));
-		familyMember.setAddress(dto.getAddress());
+		familyMember.setAddress(Integer.parseInt(dto.getAddress()));
 		familyMember.setHealthCondition(dto.getHealthCondition());
 		familyMember.setDateOfBirth(dto.getDateOfBirth());
 		familyMember.setIsDead(dto.getIsDead());
@@ -42,9 +42,9 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 		familyMemberDTO.setRelation(entity.getRelation());
 		familyMemberDTO.setEducation(entity.getEducation());
 		familyMemberDTO.setGender(entity.getGender());
-		familyMemberDTO.setMaritalStatus(String.valueOf(entity.getMaritalStatus()));
+		familyMemberDTO.setMaritalStatus(entity.getMaritalStatus());
 		familyMemberDTO.setVoterCard(String.valueOf(entity.getVoterCard()));
-		familyMemberDTO.setAddress(entity.getAddress());
+		familyMemberDTO.setAddress(String.valueOf(entity.getAddress()));
 		familyMemberDTO.setHealthCondition(entity.getHealthCondition());
 		familyMemberDTO.setDateOfBirth(entity.getDateOfBirth());
 		familyMemberDTO.setIsDead(entity.getIsDead());

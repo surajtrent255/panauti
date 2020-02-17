@@ -5,16 +5,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.jdbi.v3.core.JdbiException;
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.springframework.stereotype.Service;
 
 import com.ishanitech.ipalika.converter.impl.FamilyMemberConverter;
 import com.ishanitech.ipalika.dao.ResidentDAO;
 import com.ishanitech.ipalika.dto.FamilyMemberDTO;
+import com.ishanitech.ipalika.dto.MemberFormDetailsDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
+import com.ishanitech.ipalika.exception.EntityNotFoundException;
 import com.ishanitech.ipalika.model.FamilyMember;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.ResidentService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ResidentServiceImpl implements ResidentService {
 	
@@ -85,6 +91,74 @@ public class ResidentServiceImpl implements ResidentService {
 		} catch (JdbiException jex) {
 			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
 		}
+	}
+
+//	@Override
+//	public List<String> getListofRelation() {
+//		ResidentDAO residentDao = dbService.getDao(ResidentDAO.class);
+//		try {
+//			List<String> relationList = residentDao.getListofRelation();
+//			
+//			if(relationList.size() > 0) {
+//				return relationList;
+//			}
+//		} catch(UnableToExecuteStatementException ex) {
+//			log.info("#### Error: " + ex.getMessage());
+//		}
+//		throw new EntityNotFoundException("No Results!!!");
+//		
+//	}
+
+	@Override
+	public MemberFormDetailsDTO getMemberFormDetails() {
+		MemberFormDetailsDTO memberFormDetails = new MemberFormDetailsDTO();
+		ResidentDAO residentDao = dbService.getDao(ResidentDAO.class);
+
+		try {
+			List<String> relationList = residentDao.getListofRelation();
+
+			if (relationList.size() > 0) {
+				memberFormDetails.setRelation(relationList);
+			}
+		} catch (UnableToExecuteStatementException ex) {
+			log.info("#### Error: " + ex.getMessage());
+			throw new EntityNotFoundException("No Relation details!!!");
+		}
+		
+		try {
+			List<String> qualificationList = residentDao.getListofQualification();
+
+			if (qualificationList.size() > 0) {
+				memberFormDetails.setEducation(qualificationList);
+			}
+		} catch (UnableToExecuteStatementException ex) {
+			log.info("#### Error: " + ex.getMessage());
+			throw new EntityNotFoundException("No Qualification details!!!");
+		}
+		
+		try {
+			List<String> genderList = residentDao.getListofGender();
+
+			if (genderList.size() > 0) {
+				memberFormDetails.setGender(genderList);
+			}
+		} catch (UnableToExecuteStatementException ex) {
+			log.info("#### Error: " + ex.getMessage());
+			throw new EntityNotFoundException("No Gender Details!!!");
+		}
+		
+		try {
+			List<String> maritalStatusList = residentDao.getListofMaritalStatus();
+
+			if (maritalStatusList.size() > 0) {
+				memberFormDetails.setMaritalStatus(maritalStatusList);
+			}
+		} catch (UnableToExecuteStatementException ex) {
+			log.info("#### Error: " + ex.getMessage());
+			throw new EntityNotFoundException("No Marital Status details!!!");
+		}
+		
+		return memberFormDetails;
 	}
 
 }

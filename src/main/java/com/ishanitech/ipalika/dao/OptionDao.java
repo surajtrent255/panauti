@@ -16,6 +16,6 @@ public interface OptionDao {
 	public void addOptions(@BindBean Collection<Option> options);
 	
 	@SqlQuery("SELECT o.option_text FROM options o WHERE o.question_id = :questionID")
-	public List<String> getAllOptionByQuestionId(@Bind("questionID") Integer questionId);
+	public List<String> getAllOptionByQuestionId(@Bind("questionID") String questionId);
 
 }

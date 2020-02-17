@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `options` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`option_id` INT NOT NULL,
 	`option_text` VARCHAR(100) NOT NULL,
-	`question_id` INT(11) NOT NULL,
+	`question_id` VARCHAR(100) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 

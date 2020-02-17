@@ -35,7 +35,7 @@ public class FormDetailServiceImpl implements FormDetailService {
 		try {
 			List<FormDetail> formDetails = dao.getAllFormDetails(formId);
 			formDetails.forEach(formDetail -> {
-				formDetail.setOptions(optionDao.getAllOptionByQuestionId(formDetail.getQuestionId()));
+				formDetail.setOptions(optionDao.getAllOptionByQuestionId(formDetail.getId()));
 			});
 			
 			if(formDetails.size() > 0) {

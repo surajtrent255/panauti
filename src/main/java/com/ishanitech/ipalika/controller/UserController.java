@@ -51,7 +51,7 @@ public class UserController {
 	}
 	
 	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
-	@PostMapping("/{userId}")
+	@PutMapping("/{userId}/disable")
 	public void disableUser(@PathVariable("userId") int userId) {
 		userService.disableUser(userId);
 	}
@@ -64,7 +64,7 @@ public class UserController {
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
-	@PutMapping("/{userId}/passoword")
+	@PutMapping("/{userId}/password")
 	public void changePassword(@RequestBody String password, @PathVariable("userId") int userId) {
 		userService.changePassword(password, userId);
 	}

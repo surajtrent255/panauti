@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class FamilyMember {
-
 	@JsonIgnore
 	private long id;
 	private String memberId;
@@ -23,5 +22,4 @@ public class FamilyMember {
     private String healthCondition;
     private String dateOfBirth;
     private Boolean isDead;
-	
 }

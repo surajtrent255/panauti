@@ -14,9 +14,9 @@ import com.ishanitech.ipalika.model.FamilyMember;
 
 /**
  * 
- * @author Tanchhowpa
- *	email: rev.x17@gmail.com
- *	Jan 30, 2020 1:31:41 PM
+ * 	@author Tanchhowpa
+ *	@email rev.x17@gmail.com
+ *	@since 1.0
  */
 
 public interface ResidentDAO {
@@ -24,14 +24,10 @@ public interface ResidentDAO {
 	
 	@SqlQuery("SELECT member_id FROM family_member")
 	List<String> getAllMemberIds();
-
-	
 	
 	@UseClasspathSqlLocator
 	@SqlBatch("insert_family_members")
 	void addFamilyMembers(@BindBean List<FamilyMember> familyMembers);
-
-
 
 	@SqlQuery("SELECT fm.full_name AS name, "
 			+ " fr.relation_nepali AS relation, "
@@ -56,8 +52,6 @@ public interface ResidentDAO {
 			+ " WHERE fm.family_id = :familyId AND fm.deleted = 0 ")
 	@RegisterBeanMapper(FamilyMember.class)
 	List<FamilyMember> getAllFamilyMembersFromFamilyId(@Bind("familyId") String familyId);
-
-	
 	
 	@SqlQuery("SELECT fm.full_name AS name, "
 			+ " fr.relation_nepali AS relation, "
@@ -83,11 +77,8 @@ public interface ResidentDAO {
 	@RegisterBeanMapper(FamilyMember.class)
 	FamilyMember getMemberDetailsFromMemberId(@Bind("memberId") String memberId);
 
-
-
 	@SqlUpdate("UPDATE answer a, family_member fm SET a.deleted = 1, fm.deleted = 1 WHERE a.filled_id = fm.family_id AND fm.family_id =:familyId ")
 	void deleteResidentByFamilyId(@Bind("familyId") String familyId);
-
 
 	@SqlUpdate("INSERT INTO family_member (family_id, full_name, relation_id, age, gender_id, marital_status, qualification_id, occupation, has_voter_id, migration, health_status, member_id, date_of_birth) VALUE(:mainId, :name, :relation, :age, :gender, :maritalStatus, :education, :occupation, :voterCard, :address, :healthCondition, :memberId, :dateOfBirth)")
 	void addFamilyMemberSingle(@BindBean FamilyMember familyMembers);

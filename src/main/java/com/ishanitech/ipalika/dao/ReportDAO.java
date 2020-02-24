@@ -47,11 +47,13 @@ public interface ReportDAO {
 	@ValueColumn("total")
 	Map<Integer, Double> getPopulationByGenderId();
 	
-	@SqlUpdate("REPLACE INTO population_report(based_on, option_1, option_2, option_3, option_4, total) " + 
-			"	VALUES (\"AgeGroup\", (SELECT COUNT(*) FROM family_member WHERE age < 1), " + 
-			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 0 AND 15), " + 
-			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 16 AND 59), " + 
-			"	(SELECT COUNT(*) FROM family_member WHERE age > 59), " +
+	@SqlUpdate("REPLACE INTO population_report(based_on, option_1, option_2, option_3, option_4, option_5, option_6, total) " + 
+			"	VALUES (\"AgeGroup\", (SELECT COUNT(*) FROM family_member WHERE age < 6), " + 
+			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 6 AND 16), " + 
+			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 17 AND 32), " + 
+			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 33 AND 54), " + 
+			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 55 AND 65), " + 
+			"	(SELECT COUNT(*) FROM family_member WHERE age > 65), " +
 			"   :total)")
 	void insertAgeGroupReport(@Bind("total") double total);
 	

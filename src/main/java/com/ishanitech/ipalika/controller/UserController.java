@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ishanitech.ipalika.dto.UserDTO;
+import com.ishanitech.ipalika.dto.UserRegistrationDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.security.CustomUserDetails;
 import com.ishanitech.ipalika.service.UserService;
@@ -37,11 +38,10 @@ public class UserController {
 	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public void createUser(@RequestBody UserDTO user) throws CustomSqlException {
+	public void createUser(@RequestBody UserRegistrationDTO user) throws CustomSqlException {
 		userService.addUser(user);
 	}
 	
-	//@PreAuthorize("hasRole('ROLE_SUPER_ADMIN') OR hasRole('ROLE_CENTRAL_ADMIN')")
 	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
 	@DeleteMapping("/{userId}")
 	public void deleteUser(@PathVariable("userId") int userId, @AuthenticationPrincipal CustomUserDetails user) {

@@ -112,9 +112,9 @@ public interface UserDAO {
 	
 	
 	@Transaction
-	default void addUserAndRole(User user) {
+	default void addUserAndRole(User user, int accountType) {
 		int userId = addUser(user);
-		addUserRole(userId, 4); //surveyor id is 4
+		addUserRole(userId, accountType); 
 	}
 	
 

@@ -2,6 +2,7 @@ package com.ishanitech.ipalika.service.impl;
 
 
 
+import java.util.Date;
 import java.util.Map;
 
 import org.jdbi.v3.core.JdbiException;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 import com.ishanitech.ipalika.converter.impl.UserConverter;
 import com.ishanitech.ipalika.dao.UserDAO;
 import com.ishanitech.ipalika.dto.UserDTO;
+import com.ishanitech.ipalika.dto.UserRegistrationDTO;
 import com.ishanitech.ipalika.exception.EntityNotFoundException;
+import com.ishanitech.ipalika.model.Role;
 import com.ishanitech.ipalika.model.User;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.UserService;
@@ -59,12 +62,37 @@ public class UserServiceImpl implements UserService {
 
 	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
 	@Override
-	public void addUser(UserDTO userDto) {
+	public void addUser(UserRegistrationDTO userDto) {
 		UserDAO userDao = dbService.getDao(UserDAO.class);
-		User user = new UserConverter().fromDto(userDto);
-		user.setPassword(encoder.encode(user.getPassword()));
+		User user = new User(); //UserConverter().fromDto(userDto);
+		user.setEmail(userDto.getEmail());
+		user.setEnabled(true);
+		user.setExpired(false);
+		user.setFirstLogin(false);
+		user.setUsername(userDto.getUsername());
+		user.setMobileNumber(userDto.getMobileNumber());
+		user.setWardNo(userDto.getWardNo());
+		user.setRegisteredDate(new Date());
+		user.setLocked(false);
+		Role role = new Role();
+		role.setId(userDto.getAccountType());
+		user.setPassword(encoder.encode(userDto.getPassword()));
+		String[] fullName = splitFirstMiddleAndLastName(userDto.getFullName());
+		if(fullName != null && fullName.length > 0) {
+			if(fullName.length == 3) {
+				user.setFirstName(fullName[0]);
+				user.setMiddleName(fullName[1]);
+				user.setLastName(fullName[2]);
+			}
+			
+			if(fullName.length == 2) {
+				user.setFirstName(fullName[0]);
+				user.setMiddleName(null);
+				user.setLastName(fullName[1]);
+			}
+		}
 		 try {
-			 userDao.addUserAndRole(user);
+			 userDao.addUserAndRole(user, userDto.getAccountType());
 		 } catch (JdbiException jex) {
 			 log.error(String.format("Error occured while inserting a user: %s", jex.getLocalizedMessage()));
 		 }
@@ -152,6 +180,10 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		throw new EntityNotFoundException("User not found");
+	}
+	
+	private String[] splitFirstMiddleAndLastName(String fullName) {
+		return fullName.split(" ");
 	}
 
 }

@@ -244,4 +244,13 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	private String replaceArrayBracket(String rawString) {
 		return rawString.replace("[", "").replace("]", "");
 	}
+
+	@Override
+	public List<ResidentDTO> searchResident(String searchKey) {
+		List<ResidentDTO> residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByKey(searchKey);
+		residents.forEach(resident -> {
+			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
+		});
+		return residents;
+	}
 }

@@ -23,4 +23,6 @@ public interface FavouritePlacesService {
 	public void addSingleFavouritePlace(FavouritePlaceDTO favouritePlaceInfo);
 
 	public List<String> getTypesofFavouritePlaces();
+
+	public void deleteFileDemo(String demoFileName);
 }

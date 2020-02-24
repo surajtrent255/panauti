@@ -142,4 +142,11 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		throw new EntityNotFoundException("No Results!!!");
 	}
 
+
+
+	@Override
+	public void deleteFileDemo(String demoFileName) {
+		fileUtilService.deleteFile(demoFileName);
+	}
+
 }

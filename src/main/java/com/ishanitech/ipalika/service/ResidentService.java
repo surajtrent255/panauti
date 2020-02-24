@@ -19,4 +19,6 @@ public interface ResidentService {
 
 	MemberFormDetailsDTO getMemberFormDetails();
 
+	void editMemberInfo(FamilyMemberDTO familyMemberInfo, String memberId);
+
 }

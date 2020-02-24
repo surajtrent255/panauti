@@ -95,5 +95,13 @@ public class FavouritePlacesController {
 	public ResponseDTO<List<String>> getTypesofFavouritePlaces() throws CustomSqlException {
 		return new ResponseDTO<List<String>> (favouritePlacesService.getTypesofFavouritePlaces());
 	}
+	
+	
+	//This needs to be refined
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("editImage/{placeId}")
+	public void deleteFileDemo(HttpServletResponse http,@PathVariable("placeId") String placeId) {
+		favouritePlacesService.deleteFileDemo(placeId);
+	}
 
 }

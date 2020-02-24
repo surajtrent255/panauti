@@ -84,10 +84,10 @@ public class ResidentServiceImpl implements ResidentService {
 
 	@Override
 	public void addResidentSingle(FamilyMemberDTO familyMemberInfo) {
-		FamilyMember familyMembers = new FamilyMemberConverter().fromDto(familyMemberInfo);
+		FamilyMember familyMember = new FamilyMemberConverter().fromDto(familyMemberInfo);
 		
 		try {
-			dbService.getDao(ResidentDAO.class).addFamilyMemberSingle(familyMembers);
+			dbService.getDao(ResidentDAO.class).addFamilyMemberSingle(familyMember);
 		} catch (JdbiException jex) {
 			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
 		}
@@ -159,6 +159,18 @@ public class ResidentServiceImpl implements ResidentService {
 		}
 		
 		return memberFormDetails;
+	}
+
+	@Override
+	public void editMemberInfo(FamilyMemberDTO familyMemberInfo, String memberId) {
+		FamilyMember familyMember = new FamilyMemberConverter().fromDto(familyMemberInfo);
+		
+		try {
+			dbService.getDao(ResidentDAO.class).editFamilyMemberInfo(familyMember, memberId);
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
+		}
+		
 	}
 
 }

@@ -99,10 +99,21 @@ public interface ResidentDAO {
 
 	@SqlQuery("SELECT marital_status_nep FROM marital_status")
 	List<String> getListofMaritalStatus();
-	
-	
-	
-	
+
+	@SqlUpdate("UPDATE family_member SET"
+			+ " full_name =:name, "
+			+ " relation_id =:relation, "
+			+ " age =:age, "
+			+ " gender_id =:gender, "
+			+ " marital_status =:maritalStatus, "
+			+ " qualification_id =:education, "
+			+ " occupation =: occupation, "
+			+ " has_voter_id =:voterCard, "
+			+ " migration =:address, "
+			+ " health_status =:healthCondition, "
+			+ " date_of_birth =:dateOfBirth"
+			+ " WHERE member_id =:memberId")
+	void editFamilyMemberInfo(@BindBean FamilyMember familyMember, @Bind("memberId") String memberId);
 	
 	
 }

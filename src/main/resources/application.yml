@@ -26,7 +26,7 @@ spring:
 ############## File Uploading Directory #################
 file:
   upload:
-    directory: /Users/ishanitech/ipalika/
+    directory: /ipasal/ipalika/
     
 rest:
   protocol: http

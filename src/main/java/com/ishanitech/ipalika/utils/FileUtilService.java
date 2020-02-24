@@ -1,16 +1,20 @@
 package com.ishanitech.ipalika.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalika.config.properties.FileStorageProperties;
 import com.ishanitech.ipalika.exception.FileStorageException;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * {@code FileUtils} is a file utility class whose function is to do all the operation related to files management.
@@ -18,6 +22,7 @@ import com.ishanitech.ipalika.exception.FileStorageException;
  * @since 1.0
  */
 
+@Slf4j
 @Component
 public class FileUtilService {
 	private final Path storageLocation;
@@ -52,5 +57,25 @@ public class FileUtilService {
 			throw new FileStorageException(String.format("Couldn't store the file %s!", fileName));
 		}
 	}
+	
+	
+	
+	@Transactional
+    public void deleteFile(String fileName)
+    {
+         try { 
+             File file = new File(this.storageLocation.resolve(fileName).toString());
+             log.info(file.getName());
+             if(file.delete()) { 
+                System.out.println(file.getName() + " is deleted!");
+             } else {
+                System.out.println("Delete operation is failed.");
+                }
+          }
+            catch(Exception e)
+            {
+                System.out.println("Failed to Delete image !!");
+            }
+    }
 	
 }

@@ -164,7 +164,10 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 			answer.setAnswer12(dbService.getDao(DistrictDAO.class).getDistrictNameNepaliByDistrictId(Integer.parseInt(answer.getAnswer12())));
 			//Setting the image of the houseowner and the document
 			answer.setAnswer47(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer47()));
+			answer.setAnswer48(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer48()));
 			answer.setAnswer49(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer49()));
+			answer.setAnswer50(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer50()));
+			answer.setAnswer52(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer52()));
 			residentDetail.setResidentDetail(answer);
 			return residentDetail;
 		} catch(JdbiException jex) {
@@ -178,7 +181,9 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	 * @return String in Nepali form.
 	 */
 	private String extractAnswer(Object rawAnswer, QuestionOption questionOption) {
+		log.info("#########################");
 		String rawanswer = rawAnswer.toString();
+		log.info(rawanswer);
 		switch(questionOption.getQuestionType()) {
 		case CHECKBOX:
 			if(rawanswer.contains(",")) {

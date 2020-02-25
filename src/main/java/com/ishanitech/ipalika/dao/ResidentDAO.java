@@ -107,7 +107,7 @@ public interface ResidentDAO {
 			+ " gender_id =:gender, "
 			+ " marital_status =:maritalStatus, "
 			+ " qualification_id =:education, "
-			+ " occupation =: occupation, "
+			+ " occupation =:occupation, "
 			+ " has_voter_id =:voterCard, "
 			+ " migration =:address, "
 			+ " health_status =:healthCondition, "

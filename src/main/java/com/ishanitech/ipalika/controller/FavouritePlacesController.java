@@ -26,82 +26,78 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
- * @author Tanchhowpa
- *	email: rev.x17@gmail.com
- *	Jan 29, 2020 10:16:40 AM
+ * @author Tanchhowpa email: rev.x17@gmail.com Jan 29, 2020 10:16:40 AM
  */
 
 @Slf4j
 @RequestMapping("/favourite-place")
 @RestController
 public class FavouritePlacesController {
-	
+
 	private final FavouritePlacesService favouritePlacesService;
 
 	public FavouritePlacesController(FavouritePlacesService favouritePlacesService) {
 		this.favouritePlacesService = favouritePlacesService;
 	}
-	
-	@ResponseStatus(HttpStatus.CREATED)
+
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping
 	public ResponseDTO<List<FavouritePlaceDTO>> getFavouritePlaces() {
-		return new ResponseDTO<List<FavouritePlaceDTO>> (favouritePlacesService.getFavouritePlaces());
-	}
-	
-	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("/image")
-	public void uploadImageForFavouritePlace(@RequestParam("picture") MultipartFile image) {
-		log.info(String.format("Image name: %s", image.getOriginalFilename()));
-		favouritePlacesService.addFavouritePlaceImage(image);
+		return new ResponseDTO<List<FavouritePlaceDTO>>(favouritePlacesService.getFavouritePlaces());
 	}
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public void addFavouritePlace(HttpServletResponse http,
-			@RequestBody List<FavouritePlaceDTO> favouritePlaceInfo ) throws CustomSqlException {
+	public void addFavouritePlace(HttpServletResponse http, @RequestBody List<FavouritePlaceDTO> favouritePlaceInfo)
+			throws CustomSqlException {
 		log.info("incomming request");
 		favouritePlacesService.addFavouritePlace(favouritePlaceInfo);
 	}
 	
-	
-	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("/single")
-	public void addSingleFavouritePlace(HttpServletResponse http, @RequestBody FavouritePlaceDTO favouritePlaceInfo) throws CustomSqlException
-	{
-		favouritePlacesService.addSingleFavouritePlace(favouritePlaceInfo);
-	}
-	
-	@ResponseStatus(HttpStatus.CREATED)
-	@GetMapping("/detail/{placeId}")
-	public ResponseDTO<FavouritePlaceDTO> getFavouritePlaceByPlaceId(@PathVariable("placeId") String placeId) throws CustomSqlException {
-		return new ResponseDTO<FavouritePlaceDTO>(favouritePlacesService.getFavouritePlaceByPlaceId(placeId));
-	}
-	
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping("/{placeId}")
 	public void deleteFavouritePlaceByPlaceId(@PathVariable("placeId") String placeId) throws CustomSqlException {
 		favouritePlacesService.deleteFavouritePlaceByPlaceId(placeId);
 	}
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/{placeId}")
 	public void updateFavouritePlaceByPlaceId(HttpServletResponse http,
-			@RequestBody FavouritePlaceDTO favouritePlaceInfo, @PathVariable("placeId") String placeId) throws CustomSqlException {
+			@RequestBody FavouritePlaceDTO favouritePlaceInfo, @PathVariable("placeId") String placeId)
+			throws CustomSqlException {
 		favouritePlacesService.updateFavouritePlaceByPlaceId(favouritePlaceInfo, placeId);
 	}
-		
-	@ResponseStatus(HttpStatus.CREATED)
-	@GetMapping("/types")
-	public ResponseDTO<List<String>> getTypesofFavouritePlaces() throws CustomSqlException {
-		return new ResponseDTO<List<String>> (favouritePlacesService.getTypesofFavouritePlaces());
+	
+	@ResponseStatus(HttpStatus.OK)
+	@GetMapping("/{placeId}")
+	public ResponseDTO<FavouritePlaceDTO> getFavouritePlaceByPlaceId(@PathVariable("placeId") String placeId)
+			throws CustomSqlException {
+		return new ResponseDTO<FavouritePlaceDTO>(favouritePlacesService.getFavouritePlaceByPlaceId(placeId));
 	}
-	
-	
-	//This needs to be refined
+
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("editImage/{placeId}")
-	public void deleteFileDemo(HttpServletResponse http,@PathVariable("placeId") String placeId) {
-		favouritePlacesService.deleteFileDemo(placeId);
+	@PostMapping("/image")
+	public void uploadImageForFavouritePlace(@RequestParam("picture") MultipartFile image) {
+		favouritePlacesService.addFavouritePlaceImage(image);
+	}
+
+	@ResponseStatus(HttpStatus.CREATED)
+	@DeleteMapping("/image/{placeId}")
+	public void deleteFileDemo(HttpServletResponse http, @PathVariable("placeId") String placeId) {
+		favouritePlacesService.deleteFile(placeId);
+	}
+
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/single")
+	public void addSingleFavouritePlace(HttpServletResponse http, @RequestBody FavouritePlaceDTO favouritePlaceInfo)
+			throws CustomSqlException {
+		favouritePlacesService.addSingleFavouritePlace(favouritePlaceInfo);
+	}
+
+	@ResponseStatus(HttpStatus.CREATED)
+	@GetMapping("/type")
+	public ResponseDTO<List<String>> getTypesofFavouritePlaces() throws CustomSqlException {
+		return new ResponseDTO<List<String>>(favouritePlacesService.getTypesofFavouritePlaces());
 	}
 
 }

@@ -58,9 +58,6 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 	@Override
 	public void addFavouritePlace(List<FavouritePlaceDTO> favouritePlaceInfo) {
 		List<String> filledIdsInDatabase = dbService.getDao(FavouritePlaceDAO.class).getAllFilledIds();
-		log.info("#########################");
-		log.info(filledIdsInDatabase.toString());
-		
 		List<FavouritePlace> favPlaces = new FavouritePlaceConverter().fromDto(favouritePlaceInfo)
 				.stream()
 				.filter(favPlace -> !filledIdsInDatabase.contains(favPlace.getFavPlaceId()))
@@ -93,7 +90,8 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 	@Override
 	public void deleteFavouritePlaceByPlaceId(String placeId) {
 		try {
-			dbService.getDao(FavouritePlaceDAO.class).deleteFavouritePlaceByPlaceId(placeId);
+			FavouritePlaceDAO favouritePlaceDAO = dbService.getDao(FavouritePlaceDAO.class);
+			favouritePlaceDAO.deleteFavouritePlaceByPlaceId(placeId);
 		} catch (JdbiException jex) {
 			throw new CustomSqlException("Exception : " + jex.getLocalizedMessage());
 		}
@@ -145,7 +143,7 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 
 
 	@Override
-	public void deleteFileDemo(String demoFileName) {
+	public void deleteFile(String demoFileName) {
 		fileUtilService.deleteFile(demoFileName);
 	}
 

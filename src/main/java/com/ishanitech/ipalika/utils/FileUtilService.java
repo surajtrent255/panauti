@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +46,11 @@ public class FileUtilService {
 	 * @author <b> Umesh Bhujel
 	 */
 	public String storeFile(MultipartFile image) {
-		String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+		//String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+		Date presentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+        String fileName = "JPEG_" + dateFormat.format(presentDate) + ".JPG";
+        
 		try {
 			if(fileName.contains("..")) {
 				throw new FileStorageException(String.format("Sorry your file %s contains invalid characters for pathname.!", fileName));

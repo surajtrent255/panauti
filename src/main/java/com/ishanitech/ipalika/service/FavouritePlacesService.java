@@ -24,5 +24,5 @@ public interface FavouritePlacesService {
 
 	public List<String> getTypesofFavouritePlaces();
 
-	public void deleteFileDemo(String demoFileName);
+	public void deleteFile(String demoFileName);
 }

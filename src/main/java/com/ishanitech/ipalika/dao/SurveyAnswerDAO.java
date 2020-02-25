@@ -51,6 +51,12 @@ public interface SurveyAnswerDAO {
 	@RegisterBeanMapper(ResidentDTO.class)
 	List<ResidentDTO> getResidents();
 	
+	@SqlQuery("SELECT filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_3 AS houseNo, answer_4 AS phoneNo, answer_12 AS kittaNo, answer_49 as imageUrl, " + 
+			" (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id) AS totalFamilyMembers " + 
+			" FROM answer a WHERE a.answer_1 LIKE CONCAT('%', :searchKey, '%')")
+	@RegisterBeanMapper(ResidentDTO.class)
+	List<ResidentDTO> searchResidentByKey(@Bind("searchKey") String searchKey);
+	
 	@SqlQuery("SELECT * FROM answer WHERE filled_id = :filledId")
 	@RegisterBeanMapper(Answer.class)
 	Answer getAnswerByFilledId(@Bind("filledId") String filledId);

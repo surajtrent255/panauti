@@ -1,5 +1,7 @@
 package com.ishanitech.ipalika.controller;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +28,9 @@ import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.service.ResidentService;
 import com.ishanitech.ipalika.service.SurveyAnswerService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RequestMapping("/resident")
 @RestController
 public class ResidentController {
@@ -35,8 +41,7 @@ public class ResidentController {
 		this.residentService = residentService;
 	}
 
-
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/memberFormDetails")
 	public ResponseDTO<MemberFormDetailsDTO> getMemberFormDetails() throws CustomSqlException {
 		return new ResponseDTO<MemberFormDetailsDTO> (residentService.getMemberFormDetails());
@@ -45,6 +50,12 @@ public class ResidentController {
 	@GetMapping
 	public ResponseDTO<List<ResidentDTO>>getResidents() {
 		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.getResident());
+	}
+	//Searches resident bases on searchKey. SearchKey = house owner name....
+	@PostMapping("/search")
+	public ResponseDTO<List<ResidentDTO>> searchResident(@RequestParam("searchKey") String searchKey) {
+		String searchkey = URLDecoder.decode(searchKey, StandardCharsets.UTF_8);
+		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchResident(searchkey));
 	}
 	
 	//returns full information of the resident by its filled id.

@@ -13,6 +13,7 @@ import com.ishanitech.ipalika.dto.SurveyAnswerExtraInfoDTO;
 
 public interface SurveyAnswerService {
 	public List<ResidentDTO> getResident();
+	public List<ResidentDTO> searchResident(String searchKey);
 	public ResidentDetailDTO getAnswerByFilledId(String filledId);
 	public void addAnswers(List<AnswerDTO> answers);
 	public void addSurveyAnswers(RequestDTO<List<SurveyAnswerDTO>, List<SurveyAnswerExtraInfoDTO>> surveyAnswerInfo);

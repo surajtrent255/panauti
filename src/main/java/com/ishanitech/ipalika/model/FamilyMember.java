@@ -20,6 +20,7 @@ public class FamilyMember {
     private Boolean voterCard;
     private int address;
     private String healthCondition;
-    private String dateOfBirth;
+    private String dateOfBirthAD;
+    private String dateOfBirthBS;
     private Boolean isDead;
 }

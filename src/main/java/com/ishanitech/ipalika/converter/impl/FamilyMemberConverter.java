@@ -24,7 +24,8 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 		familyMember.setVoterCard(Boolean.parseBoolean(dto.getVoterCard()));
 		familyMember.setAddress(Integer.parseInt(dto.getAddress()));
 		familyMember.setHealthCondition(dto.getHealthCondition());
-		familyMember.setDateOfBirth(dto.getDateOfBirth());
+		familyMember.setDateOfBirthAD(dto.getDateOfBirthAD());
+		familyMember.setDateOfBirthBS(dto.getDateOfBirthBS());
 		familyMember.setIsDead(dto.getIsDead());
 		familyMember.setAge(Integer.parseInt(dto.getAge()));
 		
@@ -46,7 +47,8 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 		familyMemberDTO.setVoterCard(String.valueOf(entity.getVoterCard()));
 		familyMemberDTO.setAddress(String.valueOf(entity.getAddress()));
 		familyMemberDTO.setHealthCondition(entity.getHealthCondition());
-		familyMemberDTO.setDateOfBirth(entity.getDateOfBirth());
+		familyMemberDTO.setDateOfBirthAD(entity.getDateOfBirthAD());
+		familyMemberDTO.setDateOfBirthBS(entity.getDateOfBirthBS());
 		familyMemberDTO.setIsDead(entity.getIsDead());
 		familyMemberDTO.setAge(String.valueOf(entity.getAge()));;
 		

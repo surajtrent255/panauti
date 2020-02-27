@@ -93,21 +93,6 @@ public class ResidentServiceImpl implements ResidentService {
 		}
 	}
 
-//	@Override
-//	public List<String> getListofRelation() {
-//		ResidentDAO residentDao = dbService.getDao(ResidentDAO.class);
-//		try {
-//			List<String> relationList = residentDao.getListofRelation();
-//			
-//			if(relationList.size() > 0) {
-//				return relationList;
-//			}
-//		} catch(UnableToExecuteStatementException ex) {
-//			log.info("#### Error: " + ex.getMessage());
-//		}
-//		throw new EntityNotFoundException("No Results!!!");
-//		
-//	}
 
 	@Override
 	public MemberFormDetailsDTO getMemberFormDetails() {

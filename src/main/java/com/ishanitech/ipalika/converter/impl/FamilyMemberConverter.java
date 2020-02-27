@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.ishanitech.ipalika.converter.BaseConverter;
 import com.ishanitech.ipalika.dto.FamilyMemberDTO;
 import com.ishanitech.ipalika.model.FamilyMember;
+import com.ishanitech.ipalika.utils.AgeCalculatorUtil;
 
 public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMemberDTO>{
 
@@ -50,9 +51,8 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 		familyMemberDTO.setDateOfBirthAD(entity.getDateOfBirthAD());
 		familyMemberDTO.setDateOfBirthBS(entity.getDateOfBirthBS());
 		familyMemberDTO.setIsDead(entity.getIsDead());
-		familyMemberDTO.setAge(String.valueOf(entity.getAge()));;
-		
-		
+		familyMemberDTO.setAge(AgeCalculatorUtil.calculateAge(entity.getDateOfBirthAD()));
+//		familyMemberDTO.setAge(String.valueOf(entity.getAge()));;
 		return familyMemberDTO;
 	}
 	

@@ -5,22 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class AgeCalculatorUtil {
 
 	
-	
 	public static String calculateAge(String dateOfBirth) {
 		String calculatedAge = "";
-		
-		
-//		String [] dateParts = dateOfBirth.split("-");
-//		String day = dateParts[0];
-//		String month = dateParts[1];
-//		String year = dateParts[2];
-		
 		
 		
 		DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
@@ -43,7 +34,20 @@ public class AgeCalculatorUtil {
  
         System.out.printf("\nDifference is %d years, %d months and %d days old\n\n", 
                     diff.getYears(), diff.getMonths(), diff.getDays());
-		calculatedAge = diff.getYears() + " years " + diff.getMonths() + " months " + diff.getDays() + " days "; 
+		
+        String extractedYear = convertToDevanagari(Integer.toString(diff.getYears()));
+        String extractedMonth = convertToDevanagari(Integer.toString(diff.getMonths()));
+        String extractedDay = convertToDevanagari(Integer.toString(diff.getDays()));
+        
+        
+        calculatedAge = extractedYear + " बर्ष  " + extractedMonth + " महिना " + extractedDay + " दिन "; 
+		
+        
 		return calculatedAge;
+	}
+	
+	private static String convertToDevanagari(String englishText) {
+		return englishText.replaceAll("0", "").replaceAll("1", "१").replaceAll("2", "२").replaceAll("3", "३").replaceAll("4", "४")
+				.replaceAll("5", "५").replaceAll("6", "६").replaceAll("7", "७").replaceAll("8", "८").replaceAll("9", "९");
 	}
 }

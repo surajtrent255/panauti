@@ -40,7 +40,8 @@ public interface ResidentDAO {
 			+ " fm.migration AS address, "
 			+ " fm.health_status AS healthCondition,"
 			+ " fm.member_id AS memberId, "
-			+ " fm.date_of_birth AS dateOfBirth, "
+			+ " fm.dob_ad AS dateOfBirthAD, "
+			+ " fm.dob_bs AS dateOfBirthBS, "
 			+ " fm.is_dead AS isDead "
 			+ " FROM family_member fm "
 			+ " INNER JOIN family_relation fr "
@@ -66,7 +67,8 @@ public interface ResidentDAO {
 			+ " fm.migration AS address, "
 			+ " fm.health_status AS healthCondition,"
 			+ " fm.member_id AS memberId, "
-			+ " fm.date_of_birth AS dateOfBirth, "
+			+ " fm.dob_ad AS dateOfBirthAD, "
+			+ " fm.dob_bs AS dateOfBirthBS, "
 			+ " fm.is_dead AS isDead "
 			+ " FROM family_member fm "
 			+ " INNER JOIN family_relation fr "
@@ -84,7 +86,7 @@ public interface ResidentDAO {
 	@SqlUpdate("UPDATE answer a, family_member fm SET a.deleted = 1, fm.deleted = 1 WHERE a.filled_id = fm.family_id AND fm.family_id =:familyId ")
 	void deleteResidentByFamilyId(@Bind("familyId") String familyId);
 
-	@SqlUpdate("INSERT INTO family_member (family_id, full_name, relation_id, age, gender_id, marital_status, qualification_id, occupation, has_voter_id, migration, health_status, member_id, date_of_birth) VALUE(:mainId, :name, :relation, :age, :gender, :maritalStatus, :education, :occupation, :voterCard, :address, :healthCondition, :memberId, :dateOfBirth)")
+	@SqlUpdate("INSERT INTO family_member (family_id, full_name, relation_id, age, gender_id, marital_status, qualification_id, occupation, has_voter_id, migration, health_status, member_id, dob_ad, dob_bs) VALUE(:mainId, :name, :relation, :age, :gender, :maritalStatus, :education, :occupation, :voterCard, :address, :healthCondition, :memberId, :dateOfBirthAD, :dateOfBirthBS)")
 	void addFamilyMemberSingle(@BindBean FamilyMember familyMembers);
 
 
@@ -107,11 +109,12 @@ public interface ResidentDAO {
 			+ " gender_id =:gender, "
 			+ " marital_status =:maritalStatus, "
 			+ " qualification_id =:education, "
-			+ " occupation =: occupation, "
+			+ " occupation =:occupation, "
 			+ " has_voter_id =:voterCard, "
 			+ " migration =:address, "
 			+ " health_status =:healthCondition, "
-			+ " date_of_birth =:dateOfBirth"
+			+ " dob_ad =:dateOfBirthAD, "
+			+ " dob_bs =:dateOfBirthBS "
 			+ " WHERE member_id =:memberId")
 	void editFamilyMemberInfo(@BindBean FamilyMember familyMember, @Bind("memberId") String memberId);
 	

@@ -163,11 +163,11 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 			//Setting the district of the resident manually
 			answer.setAnswer12(dbService.getDao(DistrictDAO.class).getDistrictNameNepaliByDistrictId(Integer.parseInt(answer.getAnswer12())));
 			//Setting the image of the houseowner and the document
+			answer.setAnswer46(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer46()));
 			answer.setAnswer47(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer47()));
 			answer.setAnswer48(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer48()));
 			answer.setAnswer49(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer49()));
-			answer.setAnswer50(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer50()));
-			answer.setAnswer52(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer52()));
+			answer.setAnswer51(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer51()));
 			residentDetail.setResidentDetail(answer);
 			return residentDetail;
 		} catch(JdbiException jex) {

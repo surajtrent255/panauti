@@ -203,7 +203,8 @@ CREATE TABLE IF NOT EXISTS `family_member` (
 	`health_status` VARCHAR(50) NOT NULL DEFAULT '0',
 	`member_id` VARCHAR(50) NOT NULL DEFAULT '0',
 	`is_dead` BIT(1) NOT NULL DEFAULT b'0',
-	`date_of_birth` VARCHAR(45) NOT NULL,
+	`dob_ad` VARCHAR(45) NOT NULL,
+	`dob_bs` VARCHAR(45) NOT NULL,
 	`deleted` bit(1) NOT NULL DEFAULT b'0',
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `member_id_UNIQUE` (`member_id`)

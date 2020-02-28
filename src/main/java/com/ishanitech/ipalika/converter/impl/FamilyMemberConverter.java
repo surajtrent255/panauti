@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.ishanitech.ipalika.converter.BaseConverter;
 import com.ishanitech.ipalika.dto.FamilyMemberDTO;
 import com.ishanitech.ipalika.model.FamilyMember;
+import com.ishanitech.ipalika.utils.AgeCalculatorUtil;
 
 public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMemberDTO>{
 
@@ -24,7 +25,8 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 		familyMember.setVoterCard(Boolean.parseBoolean(dto.getVoterCard()));
 		familyMember.setAddress(Integer.parseInt(dto.getAddress()));
 		familyMember.setHealthCondition(dto.getHealthCondition());
-		familyMember.setDateOfBirth(dto.getDateOfBirth());
+		familyMember.setDateOfBirthAD(dto.getDateOfBirthAD());
+		familyMember.setDateOfBirthBS(dto.getDateOfBirthBS());
 		familyMember.setIsDead(dto.getIsDead());
 		familyMember.setAge(Integer.parseInt(dto.getAge()));
 		
@@ -46,11 +48,11 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 		familyMemberDTO.setVoterCard(String.valueOf(entity.getVoterCard()));
 		familyMemberDTO.setAddress(String.valueOf(entity.getAddress()));
 		familyMemberDTO.setHealthCondition(entity.getHealthCondition());
-		familyMemberDTO.setDateOfBirth(entity.getDateOfBirth());
+		familyMemberDTO.setDateOfBirthAD(entity.getDateOfBirthAD());
+		familyMemberDTO.setDateOfBirthBS(entity.getDateOfBirthBS());
 		familyMemberDTO.setIsDead(entity.getIsDead());
-		familyMemberDTO.setAge(String.valueOf(entity.getAge()));;
-		
-		
+		familyMemberDTO.setAge(AgeCalculatorUtil.calculateAge(entity.getDateOfBirthAD()));
+//		familyMemberDTO.setAge(String.valueOf(entity.getAge()));;
 		return familyMemberDTO;
 	}
 	

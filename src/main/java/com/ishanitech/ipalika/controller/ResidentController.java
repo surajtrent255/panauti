@@ -84,34 +84,40 @@ public class ResidentController {
 		residentService.addResidentSingle(familyMemberInfo);
 	}
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/family/{familyId}")
 	public ResponseDTO<List<FamilyMemberDTO>> getAllFamilyMembersFromFamilyId(@PathVariable("familyId") String familyId) {
 		return new ResponseDTO<List<FamilyMemberDTO>>(residentService.getAllFamilyMembersFromFamilyId(familyId));
 	}
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/member/{memberId}")
 	public ResponseDTO<FamilyMemberDTO> getFamilyMemberByMemberId(@PathVariable("memberId") String memberId) {
 		return new ResponseDTO<FamilyMemberDTO> (residentService.getMemberDetailsFromMemberId(memberId));
 	}
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping("/{familyId}")
 	public void deleteResidentByFamilyId(@PathVariable("familyId") String familyId) throws CustomSqlException {
 		residentService.deleteResidentByFamilyId(familyId);
 	}
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/member/{memberId}")
 	public void editMemberInfo(HttpServletResponse http, @RequestBody FamilyMemberDTO familyMemberInfo, @PathVariable("memberId") String memberId) throws CustomSqlException {
 		residentService.editMemberInfo(familyMemberInfo, memberId);
 	}
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping("/member/{memberId}")
 	public void deleteMemberByMemberId(@PathVariable("memberId") String memberId) throws CustomSqlException {
 		residentService.deleteMemberByMemberId(memberId);
+	}
+	
+	@ResponseStatus(HttpStatus.OK)
+	@PutMapping("/member/dead/{memberId}")
+	public void setFamilyMemberDead(@PathVariable("memberId") String memberId) throws CustomSqlException {
+		residentService.setFamilyMemberDead(memberId);
 	}
 
 }

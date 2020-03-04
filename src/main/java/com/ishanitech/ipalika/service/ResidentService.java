@@ -23,4 +23,6 @@ public interface ResidentService {
 
 	void deleteMemberByMemberId(String memberId);
 
+	void setFamilyMemberDead(String memberId);
+
 }

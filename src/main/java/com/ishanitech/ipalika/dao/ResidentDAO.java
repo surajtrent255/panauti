@@ -52,7 +52,7 @@ public interface ResidentDAO {
 			+ " ON fm.gender_id = g.gender_id "
 			+ " INNER JOIN marital_status ms"
 			+ " ON fm.marital_status = ms.marital_status_id"
-			+ " WHERE fm.family_id = :familyId AND fm.deleted = 0 ")
+			+ " WHERE fm.family_id = :familyId AND fm.deleted = 0 AND fm.is_dead = 0")
 	@RegisterBeanMapper(FamilyMember.class)
 	List<FamilyMember> getAllFamilyMembersFromFamilyId(@Bind("familyId") String familyId);
 	
@@ -120,6 +120,7 @@ public interface ResidentDAO {
 
 	@SqlUpdate("UPDATE family_member fm SET fm.deleted = 1 WHERE fm.member_id =:memberId")
 	void deleteMemberByMemberId(@Bind("memberId") String memberId);
-	
-	
+
+	@SqlUpdate("UPDATE family_member fm SET fm.is_dead = 1 WHERE fm.member_id =:memberId")
+	void setFamilyMemberDead(@Bind("memberId") String memberId);
 }

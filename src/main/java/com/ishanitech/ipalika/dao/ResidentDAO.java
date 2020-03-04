@@ -117,6 +117,9 @@ public interface ResidentDAO {
 			+ " dob_bs =:dateOfBirthBS "
 			+ " WHERE member_id =:memberId")
 	void editFamilyMemberInfo(@BindBean FamilyMember familyMember, @Bind("memberId") String memberId);
+
+	@SqlUpdate("UPDATE family_member fm SET fm.deleted = 1 WHERE fm.member_id =:memberId")
+	void deleteMemberByMemberId(@Bind("memberId") String memberId);
 	
 	
 }

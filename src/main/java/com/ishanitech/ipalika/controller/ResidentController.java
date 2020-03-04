@@ -1,7 +1,7 @@
 package com.ishanitech.ipalika.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -54,7 +54,13 @@ public class ResidentController {
 	//Searches resident bases on searchKey. SearchKey = house owner name....
 	@PostMapping("/search")
 	public ResponseDTO<List<ResidentDTO>> searchResident(@RequestParam("searchKey") String searchKey) {
-		String searchkey = URLDecoder.decode(searchKey, StandardCharsets.UTF_8);
+		String searchkey = null;
+		try {
+			searchkey = URLDecoder.decode(searchKey, "Utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchResident(searchkey));
 	}
 	
@@ -101,6 +107,11 @@ public class ResidentController {
 	public void editMemberInfo(HttpServletResponse http, @RequestBody FamilyMemberDTO familyMemberInfo, @PathVariable("memberId") String memberId) throws CustomSqlException {
 		residentService.editMemberInfo(familyMemberInfo, memberId);
 	}
-
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@DeleteMapping("/member/{memberId}")
+	public void deleteMemberByMemberId(@PathVariable("memberId") String memberId) throws CustomSqlException {
+		residentService.deleteMemberByMemberId(memberId);
+	}
 
 }

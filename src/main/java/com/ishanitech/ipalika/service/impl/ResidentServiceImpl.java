@@ -158,4 +158,15 @@ public class ResidentServiceImpl implements ResidentService {
 		
 	}
 
+	@Override
+	public void deleteMemberByMemberId(String memberId) {
+		try {
+			dbService.getDao(ResidentDAO.class).deleteMemberByMemberId(memberId);
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
+		}
+		
+		
+	}
+
 }

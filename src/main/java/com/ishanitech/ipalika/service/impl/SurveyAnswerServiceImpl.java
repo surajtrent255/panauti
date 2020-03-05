@@ -128,6 +128,29 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	}
 
 	@Override
+	public Answer getRawAnswerByFilledId(String filledId) {
+		try {
+			ResidentDetailDTO residentDetail = new ResidentDetailDTO();
+			String surveyor = ""; 
+			List<QuestionOption> questionOption = dbService.getDao(SurveyAnswerDAO.class).getAllQuestionWithOptions();
+			List<Integer> questionWithOptions = questionOption.stream().map(questionOpt -> questionOpt.getQuestionId()).collect(Collectors.toList());
+			Answer answer = dbService.getDao(SurveyAnswerDAO.class).getAnswerByFilledId(filledId);
+			surveyor = dbService.getDao(UserDAO.class).getUserFullNameById(answer.getAddedBy());
+			residentDetail.setSurveyor(surveyor);
+			
+			//Setting the image of the houseowner and the document
+			answer.setAnswer46(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer46()));
+			answer.setAnswer47(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer47()));
+			answer.setAnswer48(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer48()));
+			answer.setAnswer49(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer49()));
+			answer.setAnswer51(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer51()));
+			return answer;
+		} catch(JdbiException jex) {
+			throw new CustomSqlException("Exception: " +jex.getLocalizedMessage());
+		}
+	}
+	
+	@Override
 	public ResidentDetailDTO getAnswerByFilledId(String filledId) {
 		try {
 			ResidentDetailDTO residentDetail = new ResidentDetailDTO();
@@ -258,4 +281,5 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 		});
 		return residents;
 	}
+
 }

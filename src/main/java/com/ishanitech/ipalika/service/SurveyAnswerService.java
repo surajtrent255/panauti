@@ -10,6 +10,7 @@ import com.ishanitech.ipalika.dto.ResidentDTO;
 import com.ishanitech.ipalika.dto.ResidentDetailDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerExtraInfoDTO;
+import com.ishanitech.ipalika.model.Answer;
 
 public interface SurveyAnswerService {
 	public List<ResidentDTO> getResident();
@@ -18,4 +19,5 @@ public interface SurveyAnswerService {
 	public void addAnswers(List<AnswerDTO> answers);
 	public void addSurveyAnswers(RequestDTO<List<SurveyAnswerDTO>, List<SurveyAnswerExtraInfoDTO>> surveyAnswerInfo);
 	public void addSurveyAnswerImage(MultipartFile image);
+	public Answer getRawAnswerByFilledId(String filledId);
 }

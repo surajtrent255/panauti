@@ -25,6 +25,7 @@ import com.ishanitech.ipalika.dto.ResidentDTO;
 import com.ishanitech.ipalika.dto.ResidentDetailDTO;
 import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
+import com.ishanitech.ipalika.model.Answer;
 import com.ishanitech.ipalika.service.ResidentService;
 import com.ishanitech.ipalika.service.SurveyAnswerService;
 
@@ -69,6 +70,12 @@ public class ResidentController {
 	public ResponseDTO<ResidentDetailDTO> getFullInformationOfResident(Model model, @PathVariable("filledId") String filledId) {
 		return new ResponseDTO<ResidentDetailDTO>(surveyAnswerService.getAnswerByFilledId(filledId));
 	}
+	
+	//returns information of the resident by its filled id.
+		@GetMapping("/detail/rawAnswers/{filledId}")
+		public ResponseDTO<Answer> getRawInformationOfResident(Model model, @PathVariable("filledId") String filledId) {
+			return new ResponseDTO<Answer>(surveyAnswerService.getRawAnswerByFilledId(filledId));
+		}
 	
 	//Adds the family members to a resident
 	@ResponseStatus(HttpStatus.CREATED)

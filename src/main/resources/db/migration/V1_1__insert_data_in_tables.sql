@@ -334,6 +334,9 @@ INSERT INTO `family_relation` (`relation_id`, `relation_nepali`, `relation_engli
 	(77,'Udayapur','उदयपुर');
 	
 	
+	INSERT INTO `ward` (`id`, `location`, `name`, `main_person`, `contact_no`) VALUES ('1', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`id`, `location`, `name`, `main_person`, `contact_no`) VALUES ('2', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');	
+
 	INSERT INTO `favourite_place_type` (`type_id`, `place_type_nep`, `place_type_eng`) VALUES
 	(1, 'मन्दिर', 'Temple'),
 	(2, 'पार्क', 'Park'),

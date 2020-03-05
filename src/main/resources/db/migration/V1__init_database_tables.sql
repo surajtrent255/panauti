@@ -44,6 +44,9 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 );
 
 INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 1);
+INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 2);
+INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 3);
+INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 4);
 
 
 CREATE TABLE IF NOT EXISTS `form` (

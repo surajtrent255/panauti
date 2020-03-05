@@ -46,10 +46,10 @@ public class FileUtilService {
 	 * @author <b> Umesh Bhujel
 	 */
 	public String storeFile(MultipartFile image) {
-		//String fileName = StringUtils.cleanPath(image.getOriginalFilename());
-		Date presentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
-        String fileName = "JPEG_" + dateFormat.format(presentDate) + ".JPG";
+		String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+//		Date presentDate = new Date();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+//        String fileName = "JPEG_" + dateFormat.format(presentDate) + ".JPG";
         
 		try {
 			if(fileName.contains("..")) {

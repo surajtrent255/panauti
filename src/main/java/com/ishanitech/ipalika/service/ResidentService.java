@@ -21,4 +21,8 @@ public interface ResidentService {
 
 	void editMemberInfo(FamilyMemberDTO familyMemberInfo, String memberId);
 
+	void deleteMemberByMemberId(String memberId);
+
+	void setFamilyMemberDead(String memberId);
+
 }

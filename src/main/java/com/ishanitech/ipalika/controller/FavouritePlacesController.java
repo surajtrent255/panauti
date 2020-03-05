@@ -81,7 +81,7 @@ public class FavouritePlacesController {
 		favouritePlacesService.addFavouritePlaceImage(image);
 	}
 
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping("/image/{placeId}")
 	public void deleteFileDemo(HttpServletResponse http, @PathVariable("placeId") String placeId) {
 		favouritePlacesService.deleteFile(placeId);
@@ -94,7 +94,7 @@ public class FavouritePlacesController {
 		favouritePlacesService.addSingleFavouritePlace(favouritePlaceInfo);
 	}
 
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/type")
 	public ResponseDTO<List<String>> getTypesofFavouritePlaces() throws CustomSqlException {
 		return new ResponseDTO<List<String>>(favouritePlacesService.getTypesofFavouritePlaces());

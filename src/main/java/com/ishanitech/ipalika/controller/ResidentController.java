@@ -1,7 +1,7 @@
 package com.ishanitech.ipalika.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -54,7 +54,13 @@ public class ResidentController {
 	//Searches resident bases on searchKey. SearchKey = house owner name....
 	@PostMapping("/search")
 	public ResponseDTO<List<ResidentDTO>> searchResident(@RequestParam("searchKey") String searchKey) {
-		String searchkey = URLDecoder.decode(searchKey, StandardCharsets.UTF_8);
+		String searchkey = null;
+		try {
+			searchkey = URLDecoder.decode(searchKey, "Utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchResident(searchkey));
 	}
 	
@@ -78,29 +84,40 @@ public class ResidentController {
 		residentService.addResidentSingle(familyMemberInfo);
 	}
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/family/{familyId}")
 	public ResponseDTO<List<FamilyMemberDTO>> getAllFamilyMembersFromFamilyId(@PathVariable("familyId") String familyId) {
 		return new ResponseDTO<List<FamilyMemberDTO>>(residentService.getAllFamilyMembersFromFamilyId(familyId));
 	}
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/member/{memberId}")
 	public ResponseDTO<FamilyMemberDTO> getFamilyMemberByMemberId(@PathVariable("memberId") String memberId) {
 		return new ResponseDTO<FamilyMemberDTO> (residentService.getMemberDetailsFromMemberId(memberId));
 	}
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping("/{familyId}")
 	public void deleteResidentByFamilyId(@PathVariable("familyId") String familyId) throws CustomSqlException {
 		residentService.deleteResidentByFamilyId(familyId);
 	}
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/member/{memberId}")
 	public void editMemberInfo(HttpServletResponse http, @RequestBody FamilyMemberDTO familyMemberInfo, @PathVariable("memberId") String memberId) throws CustomSqlException {
 		residentService.editMemberInfo(familyMemberInfo, memberId);
 	}
-
+	
+	@ResponseStatus(HttpStatus.OK)
+	@DeleteMapping("/member/{memberId}")
+	public void deleteMemberByMemberId(@PathVariable("memberId") String memberId) throws CustomSqlException {
+		residentService.deleteMemberByMemberId(memberId);
+	}
+	
+	@ResponseStatus(HttpStatus.OK)
+	@PutMapping("/member/dead/{memberId}")
+	public void setFamilyMemberDead(@PathVariable("memberId") String memberId) throws CustomSqlException {
+		residentService.setFamilyMemberDead(memberId);
+	}
 
 }

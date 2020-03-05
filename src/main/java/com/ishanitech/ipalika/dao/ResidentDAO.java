@@ -9,6 +9,7 @@ import org.jdbi.v3.sqlobject.locator.UseClasspathSqlLocator;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
+import org.jdbi.v3.sqlobject.transaction.Transaction;
 
 import com.ishanitech.ipalika.model.FamilyMember;
 
@@ -82,14 +83,10 @@ public interface ResidentDAO {
 			+ " WHERE fm.member_id = :memberId ")
 	@RegisterBeanMapper(FamilyMember.class)
 	FamilyMember getMemberDetailsFromMemberId(@Bind("memberId") String memberId);
-
-	@SqlUpdate("UPDATE answer a, family_member fm SET a.deleted = 1, fm.deleted = 1 WHERE a.filled_id = fm.family_id AND fm.family_id =:familyId ")
-	void deleteResidentByFamilyId(@Bind("familyId") String familyId);
-
+	
 	@SqlUpdate("INSERT INTO family_member (family_id, full_name, relation_id, age, gender_id, marital_status, qualification_id, occupation, has_voter_id, migration, health_status, member_id, dob_ad, dob_bs) VALUE(:mainId, :name, :relation, :age, :gender, :maritalStatus, :education, :occupation, :voterCard, :address, :healthCondition, :memberId, :dateOfBirthAD, :dateOfBirthBS)")
 	void addFamilyMemberSingle(@BindBean FamilyMember familyMembers);
-
-
+	
 	@SqlQuery("SELECT relation_nepali FROM family_relation")
 	List<String> getListofRelation();
 
@@ -123,4 +120,17 @@ public interface ResidentDAO {
 
 	@SqlUpdate("UPDATE family_member fm SET fm.is_dead = 1 WHERE fm.member_id =:memberId")
 	void setFamilyMemberDead(@Bind("memberId") String memberId);
+	
+	@SqlUpdate("UPDATE answer a SET a.deleted = 1 WHERE a.filled_id =:familyId")
+	void deleteFamilyDataByFamilyId(@Bind("familyId") String familyId);
+	
+	@SqlUpdate("UPDATE family_member fm SET fm.deleted = 1 WHERE fm.family_id =:familyId")
+	void deleteFamilyMembersByFamilyId(@Bind("familyId") String familyId);
+	
+	@Transaction
+	default void deleteResidentByFamilyId(String familyId) {
+		deleteFamilyDataByFamilyId(familyId);
+		deleteFamilyMembersByFamilyId(familyId);
+	}
+	
 }

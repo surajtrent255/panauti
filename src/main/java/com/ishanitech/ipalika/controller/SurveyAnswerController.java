@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,5 +66,17 @@ public class SurveyAnswerController {
 	public void uploadImageForSurveyAnswer(@RequestParam("picture") MultipartFile image) {
 		log.info(String.format("Image name: %s", image.getOriginalFilename()));
 		surveyAnswerService.addSurveyAnswerImage(image);
+	}
+	
+	
+	@ResponseStatus(HttpStatus.OK)
+	@PutMapping("/edit")
+	public void editSurveyAnswers(HttpServletResponse http,
+			@RequestBody AnswerDTO surveyAnswerInfo) throws CustomSqlException {
+		if (surveyAnswerInfo != null) {
+			surveyAnswerService.updateAnswers(surveyAnswerInfo);
+		} else {
+			throw new NullPointerException("Invalid data");
+		}
 	}
 }

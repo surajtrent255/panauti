@@ -11,6 +11,7 @@ import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.locator.UseClasspathSqlLocator;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.statement.UseRowReducer;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 
@@ -40,6 +41,16 @@ public interface SurveyAnswerDAO {
 	@Transaction
 	default void addAnswerList(List<Answer> answers) {
 		addAnswers(answers);
+	}
+	
+	
+	@UseClasspathSqlLocator
+	@SqlUpdate("update_answer")
+	public void updateAnswer(@BindBean Answer answers);
+	
+	@Transaction
+	default void updateSurveyAnswer(Answer answerModel) {
+		updateAnswer(answerModel);
 	}
 
 	/**

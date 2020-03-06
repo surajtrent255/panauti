@@ -17,6 +17,7 @@ public interface SurveyAnswerService {
 	public List<ResidentDTO> searchResident(String searchKey);
 	public ResidentDetailDTO getAnswerByFilledId(String filledId);
 	public void addAnswers(List<AnswerDTO> answers);
+	public void updateAnswers(AnswerDTO answer);
 	public void addSurveyAnswers(RequestDTO<List<SurveyAnswerDTO>, List<SurveyAnswerExtraInfoDTO>> surveyAnswerInfo);
 	public void addSurveyAnswerImage(MultipartFile image);
 	public Answer getRawAnswerByFilledId(String filledId);

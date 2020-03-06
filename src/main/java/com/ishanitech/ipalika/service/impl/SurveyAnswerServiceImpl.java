@@ -112,6 +112,20 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 			throw new CustomSqlException("Exception: " + jex.getMessage());
 		}
 	}
+	
+	@Override
+	public void updateAnswers(AnswerDTO answer) {
+		Answer answerModel = new AnswerConverter().fromDto(answer);
+		String filledId = answer.getFilledId();
+		
+		try {
+			dbService.getDao(SurveyAnswerDAO.class).updateSurveyAnswer(answerModel);
+		}catch(JdbiException jex) {
+			throw new CustomSqlException("Exception: " + jex.getMessage());
+		}
+		
+	}
+	
 
 	@Override
 	public List<ResidentDTO> getResident() {
@@ -281,5 +295,6 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 		});
 		return residents;
 	}
+
 
 }

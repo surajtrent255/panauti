@@ -93,6 +93,11 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	public void addSurveyAnswerImage(MultipartFile image) throws FileStorageException {
 		fileUtilService.storeFile(image);
 	}
+	
+	@Override
+	public void updateSurveyAnswerImage(MultipartFile image) {
+		fileUtilService.storeEditedFile(image);
+	}
 
 	/**
 	 * Adds answer to answer table.

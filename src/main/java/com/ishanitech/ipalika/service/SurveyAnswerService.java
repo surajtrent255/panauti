@@ -21,4 +21,5 @@ public interface SurveyAnswerService {
 	public void addSurveyAnswers(RequestDTO<List<SurveyAnswerDTO>, List<SurveyAnswerExtraInfoDTO>> surveyAnswerInfo);
 	public void addSurveyAnswerImage(MultipartFile image);
 	public Answer getRawAnswerByFilledId(String filledId);
+	public void updateSurveyAnswerImage(MultipartFile image);
 }

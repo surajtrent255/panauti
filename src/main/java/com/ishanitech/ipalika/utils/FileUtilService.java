@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -58,6 +59,22 @@ public class FileUtilService {
 			
 			Path targetLocation = this.storageLocation.resolve(fileName);
 			Files.copy(image.getInputStream(), targetLocation);
+			return fileName;
+		} catch(IOException ex) {
+			throw new FileStorageException(String.format("Couldn't store the file %s!", fileName));
+		}
+	}
+	
+	public String storeEditedFile(MultipartFile image) {
+		String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+        
+		try {
+			if(fileName.contains("..")) {
+				throw new FileStorageException(String.format("Sorry your file %s contains invalid characters for pathname.!", fileName));
+			}
+			
+			Path targetLocation = this.storageLocation.resolve(fileName);
+			Files.copy(image.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 			return fileName;
 		} catch(IOException ex) {
 			throw new FileStorageException(String.format("Couldn't store the file %s!", fileName));

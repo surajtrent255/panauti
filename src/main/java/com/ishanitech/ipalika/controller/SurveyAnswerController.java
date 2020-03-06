@@ -68,6 +68,13 @@ public class SurveyAnswerController {
 		surveyAnswerService.addSurveyAnswerImage(image);
 	}
 	
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/editImage")
+	public void uploadeditedImageForSurveyAnswer(@RequestParam("picture") MultipartFile image) {
+		log.info(String.format("Image name: %s", image.getOriginalFilename()));
+		surveyAnswerService.updateSurveyAnswerImage(image);
+	}
+	
 	
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/edit")

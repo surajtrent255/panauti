@@ -25,4 +25,6 @@ public interface ResidentService {
 
 	void setFamilyMemberDead(String memberId);
 
+	FamilyMemberDTO getMemberRawDataFromMemberId(String memberId);
+
 }

@@ -110,6 +110,12 @@ public class ResidentController {
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
+	@GetMapping("/member-data/{memberId}")
+	public ResponseDTO<FamilyMemberDTO> getFamilyMemberRawDataByMemberId(@PathVariable("memberId") String memberId) {
+		return new ResponseDTO<FamilyMemberDTO> (residentService.getMemberRawDataFromMemberId(memberId));
+	}
+	
+	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/member/{memberId}")
 	public void editMemberInfo(HttpServletResponse http, @RequestBody FamilyMemberDTO familyMemberInfo, @PathVariable("memberId") String memberId) throws CustomSqlException {
 		residentService.editMemberInfo(familyMemberInfo, memberId);

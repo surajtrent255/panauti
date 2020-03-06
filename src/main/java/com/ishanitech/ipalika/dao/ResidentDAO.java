@@ -133,4 +133,23 @@ public interface ResidentDAO {
 		deleteFamilyMembersByFamilyId(familyId);
 	}
 	
+	@SqlQuery("SELECT fm.full_name AS name, "
+			+ " fm.relation_id AS relation, "
+			+ " fm.age AS age, "
+			+ " fm.gender_id AS gender, "
+			+ " fm.marital_status AS maritalStatus, "
+			+ " fm.qualification_id AS education, "
+			+ " fm.occupation AS occupation,"
+			+ " fm.has_voter_id AS voterCard,"
+			+ " fm.migration AS address, "
+			+ " fm.health_status AS healthCondition,"
+			+ " fm.member_id AS memberId, "
+			+ " fm.dob_ad AS dateOfBirthAD, "
+			+ " fm.dob_bs AS dateOfBirthBS, "
+			+ " fm.is_dead AS isDead "
+			+ " FROM family_member fm "
+			+ " WHERE fm.member_id = :memberId ")
+	@RegisterBeanMapper(FamilyMember.class)
+	FamilyMember getMemberRawDataFromMemberId(@Bind("memberId") String memberId);
+	
 }

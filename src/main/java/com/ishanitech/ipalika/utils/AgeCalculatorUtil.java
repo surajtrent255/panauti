@@ -24,23 +24,21 @@ public class AgeCalculatorUtil {
 
 		formatter = new SimpleDateFormat("yyyy-mm-dd");
 		String adjustedDOB = formatter.format(date).toString();
-		System.out.println("adjustedDOB ###########3"  +  adjustedDOB);
 		
 		LocalDate DOB = LocalDate.parse(adjustedDOB);
 
 		LocalDate now = LocalDate.now();
  
         Period diff = Period.between(DOB, now);
- 
-        System.out.printf("\nDifference is %d years, %d months and %d days old\n\n", 
-                    diff.getYears(), diff.getMonths(), diff.getDays());
+//        System.out.printf("\nDifference is %d years, %d months and %d days old\n\n", 
+//                    diff.getYears(), diff.getMonths(), diff.getDays());
 		
         String extractedYear = convertToDevanagari(Integer.toString(diff.getYears()));
         String extractedMonth = convertToDevanagari(Integer.toString(diff.getMonths()));
         String extractedDay = convertToDevanagari(Integer.toString(diff.getDays()));
         
         
-        calculatedAge = extractedYear + " बर्ष  " + extractedMonth + " महिना " + extractedDay + " दिन "; 
+        calculatedAge = extractedYear + " बर्ष " + extractedMonth + " महिना " + extractedDay + " दिन "; 
 		
         
 		return calculatedAge;

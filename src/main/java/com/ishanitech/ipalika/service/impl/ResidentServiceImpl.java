@@ -149,7 +149,6 @@ public class ResidentServiceImpl implements ResidentService {
 	@Override
 	public void editMemberInfo(FamilyMemberDTO familyMemberInfo, String memberId) {
 		FamilyMember familyMember = new FamilyMemberConverter().fromDto(familyMemberInfo);
-		
 		try {
 			dbService.getDao(ResidentDAO.class).editFamilyMemberInfo(familyMember, memberId);
 		} catch (JdbiException jex) {

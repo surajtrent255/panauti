@@ -8,6 +8,7 @@ package com.ishanitech.ipalika.config;
 
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -20,12 +21,17 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 public class DatasourceConfig {
+	@Autowired
+	DataSourceBean dsb;
+	
+	
+	
 	@Primary
 	@Bean
 	HikariDataSource datasource() {
 		HikariConfig config = new HikariConfig();
-		config.setUsername("root");
-		config.setPassword("root");
+		config.setUsername(dsb.getUsername());
+		config.setPassword(dsb.getPassword());
 		config.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		config.setJdbcUrl("jdbc:mysql://localhost:3306/ipalika?autoReconnect=true&serverTimezone=UTC");
 		return new HikariDataSource(config);

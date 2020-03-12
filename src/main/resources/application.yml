@@ -24,6 +24,11 @@ spring:
 spring:
   profiles: dev
 ############## File Uploading Directory #################
+
+database:
+  username: root
+  password: root
+
 file:
   upload:
     directory: /ipasal/ipalika/
@@ -36,6 +41,10 @@ rest:
 ---
 spring:
   profiles: prod
+  
+database:
+  username: root
+  password: 24Pr1y@msh@  
   file:
   upload:
     directory: /home/ishani/ipalika/

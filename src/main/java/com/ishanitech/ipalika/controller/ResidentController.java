@@ -54,7 +54,7 @@ public class ResidentController {
 	}
 	//Searches resident bases on searchKey. SearchKey = house owner name....
 	@PostMapping("/search")
-	public ResponseDTO<List<ResidentDTO>> searchResident(@RequestParam("searchKey") String searchKey) {
+	public ResponseDTO<List<ResidentDTO>> searchResident(@RequestParam("searchKey") String searchKey, @RequestParam("wardNo") String wardNo) {
 		String searchkey = null;
 		try {
 			searchkey = URLDecoder.decode(searchKey, "Utf-8");
@@ -62,7 +62,12 @@ public class ResidentController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchResident(searchkey));
+		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchResident(searchkey, wardNo));
+	}
+	
+	@PostMapping("/search/ward")
+	public ResponseDTO<List<ResidentDTO>> searchResidentofWard(@RequestParam("wardNo") String wardNo) {
+		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchWardResident(wardNo));
 	}
 	
 	//returns full information of the resident by its filled id.

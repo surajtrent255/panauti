@@ -14,7 +14,8 @@ import com.ishanitech.ipalika.model.Answer;
 
 public interface SurveyAnswerService {
 	public List<ResidentDTO> getResident();
-	public List<ResidentDTO> searchResident(String searchKey);
+	public List<ResidentDTO> searchResident(String searchKey, String wardNo);
+	public List<ResidentDTO> searchWardResident(String wardNo);
 	public ResidentDetailDTO getAnswerByFilledId(String filledId);
 	public void addAnswers(List<AnswerDTO> answers);
 	public void updateAnswers(AnswerDTO answer);
@@ -22,4 +23,5 @@ public interface SurveyAnswerService {
 	public void addSurveyAnswerImage(MultipartFile image);
 	public Answer getRawAnswerByFilledId(String filledId);
 	public void updateSurveyAnswerImage(MultipartFile image);
+	
 }

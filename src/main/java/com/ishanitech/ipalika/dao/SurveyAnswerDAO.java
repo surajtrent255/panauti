@@ -64,9 +64,27 @@ public interface SurveyAnswerDAO {
 	
 	@SqlQuery("SELECT filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
 			" (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers " + 
+			" FROM answer a WHERE a.answer_1 LIKE CONCAT('%', :searchKey, '%') AND a.deleted = 0 AND a.answer_3 LIKE :wardNo")
+	@RegisterBeanMapper(ResidentDTO.class)
+	List<ResidentDTO> searchResidentByKey(@Bind("searchKey") String searchKey, @Bind("wardNo") String wardNo);
+	
+	@SqlQuery("SELECT filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
+			" (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers " + 
 			" FROM answer a WHERE a.answer_1 LIKE CONCAT('%', :searchKey, '%') AND a.deleted = 0")
 	@RegisterBeanMapper(ResidentDTO.class)
-	List<ResidentDTO> searchResidentByKey(@Bind("searchKey") String searchKey);
+	List<ResidentDTO> searchAllResidentByKey(@Bind("searchKey") String searchKey, @Bind("wardNo") String wardNo);
+	
+	@SqlQuery("SELECT filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
+			" (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers " + 
+			" FROM answer a WHERE a.deleted = 0")
+	@RegisterBeanMapper(ResidentDTO.class)
+	List<ResidentDTO> searchAllResidentByWard();
+	
+	@SqlQuery("SELECT filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
+			" (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers " + 
+			" FROM answer a WHERE a.deleted = 0 AND a.answer_3 LIKE :wardNo")
+	@RegisterBeanMapper(ResidentDTO.class)
+	List<ResidentDTO> searchResidentByWard(@Bind("wardNo") String wardNo);
 	
 	@SqlQuery("SELECT * FROM answer WHERE filled_id = :filledId")
 	@RegisterBeanMapper(Answer.class)

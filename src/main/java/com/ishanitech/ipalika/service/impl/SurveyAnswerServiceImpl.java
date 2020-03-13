@@ -293,8 +293,27 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	}
 
 	@Override
-	public List<ResidentDTO> searchResident(String searchKey) {
-		List<ResidentDTO> residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByKey(searchKey);
+	public List<ResidentDTO> searchResident(String searchKey, String wardNo) {
+		List<ResidentDTO> residents;
+		if(wardNo.equals("")) {
+			residents = dbService.getDao(SurveyAnswerDAO.class).searchAllResidentByKey(searchKey, wardNo);
+		}else {
+		residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByKey(searchKey, wardNo);
+		}
+		residents.forEach(resident -> {
+			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
+		});
+		return residents;
+	}
+
+	@Override
+	public List<ResidentDTO> searchWardResident(String wardNo) {
+		List<ResidentDTO> residents;
+		if(wardNo.equals("")) {
+			residents = dbService.getDao(SurveyAnswerDAO.class).searchAllResidentByWard();
+		}else {
+		residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(wardNo);
+		}
 		residents.forEach(resident -> {
 			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
 		});

@@ -24,6 +24,7 @@ import com.ishanitech.ipalika.dto.MemberFormDetailsDTO;
 import com.ishanitech.ipalika.dto.ResidentDTO;
 import com.ishanitech.ipalika.dto.ResidentDetailDTO;
 import com.ishanitech.ipalika.dto.ResponseDTO;
+import com.ishanitech.ipalika.dto.RoleWardDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.model.Answer;
 import com.ishanitech.ipalika.service.ResidentService;
@@ -48,9 +49,10 @@ public class ResidentController {
 		return new ResponseDTO<MemberFormDetailsDTO> (residentService.getMemberFormDetails());
 	}
 	
-	@GetMapping
-	public ResponseDTO<List<ResidentDTO>>getResidents() {
-		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.getResident());
+	@PostMapping
+	public ResponseDTO<List<ResidentDTO>>getResidents(@RequestBody RoleWardDTO roleWardDTO) {
+		log.info("Roles-->" + roleWardDTO);
+		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.getResident(roleWardDTO));
 	}
 	//Searches resident bases on searchKey. SearchKey = house owner name....
 	@PostMapping("/search")

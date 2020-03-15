@@ -8,12 +8,13 @@ import com.ishanitech.ipalika.dto.AnswerDTO;
 import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.dto.ResidentDTO;
 import com.ishanitech.ipalika.dto.ResidentDetailDTO;
+import com.ishanitech.ipalika.dto.RoleWardDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerExtraInfoDTO;
 import com.ishanitech.ipalika.model.Answer;
 
 public interface SurveyAnswerService {
-	public List<ResidentDTO> getResident();
+	public List<ResidentDTO> getResident(RoleWardDTO roleWardDTO);
 	public List<ResidentDTO> searchResident(String searchKey, String wardNo);
 	public List<ResidentDTO> searchWardResident(String wardNo);
 	public ResidentDetailDTO getAnswerByFilledId(String filledId);

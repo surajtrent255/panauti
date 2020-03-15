@@ -24,6 +24,7 @@ import com.ishanitech.ipalika.dto.FamilyMemberDTO;
 import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.dto.ResidentDTO;
 import com.ishanitech.ipalika.dto.ResidentDetailDTO;
+import com.ishanitech.ipalika.dto.RoleWardDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerExtraInfoDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
@@ -133,12 +134,17 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	
 
 	@Override
-	public List<ResidentDTO> getResident() {
+	public List<ResidentDTO> getResident(RoleWardDTO roleWardDTO) {
 		try {
 			/**List<Answer> residentsAllInfo = dbService.getDao(SurveyAnswerDAO.class).getResidents();
 			residents = new AnswerConverter().entityListToResidentList(residentsAllInfo);*/
 			//return residents;
-			List<ResidentDTO> residents = dbService.getDao(SurveyAnswerDAO.class).getResidents();
+			List<ResidentDTO> residents;
+			if(roleWardDTO.getRole() == 3) {
+				residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(Integer.toString(roleWardDTO.getWardNumber()));
+			}else {
+			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents();
+			}
 			residents.forEach(resident -> resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl())));
 			return residents;
 		} catch(JdbiException jex) {

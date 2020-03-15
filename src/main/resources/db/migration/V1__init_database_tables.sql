@@ -19,9 +19,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 	UNIQUE INDEX `email` (`email`)
 );
 
-INSERT INTO `user` (`id`, `first_name`, `middle_name`, `last_name`, `username`, `email`, `password`, `mobile_number`, `locked`, `first_login`, `enabled`, `expired`, `registered_date`)
+INSERT INTO `user` (`id`, `first_name`, `middle_name`, `last_name`, `username`, `email`, `password`, `mobile_number`, `locked`, `first_login`, `enabled`, `expired`, `registered_date`, `ward_no`)
  VALUES
-(1, 'Umesh', 'B.', 'Bhujel', 'yoomes', 'yoomesbhujel@gmail.com', '$2a$11$H9wDLxAPTX5qp0doFKank.w6vgB7xPo1CJojH2AC0ovBY4Iu31oTS', '9849931288', 0, 0, 1, 0, CURRENT_TIMESTAMP());
+(1, 'Umesh', 'B.', 'Bhujel', 'yoomes', 'yoomesbhujel@gmail.com', '$2a$11$H9wDLxAPTX5qp0doFKank.w6vgB7xPo1CJojH2AC0ovBY4Iu31oTS', '9849931288', 0, 0, 1, 0, CURRENT_TIMESTAMP(), 0),
+(2, 'Pujan', 'X.', 'KC', 'pujanov', 'pujanov69@gmail.com', '$2a$11$H9wDLxAPTX5qp0doFKank.w6vgB7xPo1CJojH2AC0ovBY4Iu31oTS', '9849399058', 0, 0, 1, 0, CURRENT_TIMESTAMP(), 1);
 
 
 CREATE TABLE IF NOT EXISTS `role` (
@@ -47,6 +48,7 @@ INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 1);
 INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 2);
 INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 3);
 INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (1, 4);
+INSERT INTO `user_role`(`user_id`, `role_id`) VALUES (2, 3);
 
 
 CREATE TABLE IF NOT EXISTS `form` (

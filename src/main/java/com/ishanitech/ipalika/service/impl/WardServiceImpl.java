@@ -6,9 +6,14 @@ package com.ishanitech.ipalika.service.impl;
 
 import java.util.List;
 
+import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Service;
 
+import com.ishanitech.ipalika.converter.impl.WardConverter;
 import com.ishanitech.ipalika.dao.WardDAO;
+import com.ishanitech.ipalika.dto.WardDTO;
+import com.ishanitech.ipalika.exception.CustomSqlException;
+import com.ishanitech.ipalika.model.Ward;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.servicer.WardService;
 
@@ -23,6 +28,33 @@ public class WardServiceImpl implements WardService {
 	@Override
 	public List<Integer> getAllWardNumbers() {
 		 return dbService.getDao(WardDAO.class).getAllWardNumbers();
+	}
+
+	@Override
+	public void addWard(WardDTO wardInfo) {
+		Ward ward = new WardConverter().fromDto(wardInfo);
+		
+		try {
+			dbService.getDao(WardDAO.class).addWard(ward);
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
+		}
+	}
+
+	@Override
+	public void updateWardInfoByWardNumber(WardDTO wardInfo, int wardNo) {
+		Ward ward = new WardConverter().fromDto(wardInfo);
+		
+		try {
+			dbService.getDao(WardDAO.class).updateWardInfoByWardNumber(ward, wardNo);
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception: " + jex.getMessage());
+		}
+	}
+
+	@Override
+	public void deleteWardByWardNumber(int wardNo) {
+		dbService.getDao(WardDAO.class).deleteWardByWardNumber(wardNo);		
 	}
 
 }

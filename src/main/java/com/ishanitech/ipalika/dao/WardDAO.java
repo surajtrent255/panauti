@@ -52,6 +52,10 @@ public interface WardDAO {
 			+ "main_person =:mainPerson, "
 			+ "contact_no =:contactNumber "
 			+ "WHERE ward_number =:wardNo")
-	void editWardDetailsByWardNumber(@BindBean Ward ward, @Bind("wardNo") int wardNo);
+	void updateWardInfoByWardNumber(@BindBean Ward ward, @Bind("wardNo") int wardNo);
+
+
+	@SqlUpdate("UPDATE ward w SET w.deleted = 1 WHERE w.ward_number =:wardNo")
+	void deleteWardByWardNumber(@Bind("wardNo") int wardNo);
 	
 }

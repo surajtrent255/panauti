@@ -38,9 +38,21 @@ rest:
   domain: localhost
   port: 8888
   resource-location: resource
+  
+logging:
+  loggin:
+    level:
+      root: ERROR
+  file: /ipasal/ipalika/logs/ipalika-rest-api.log  
 ---
 spring:
   profiles: prod
+  
+logging:
+  loggin:
+    level:
+      root: ERROR
+  file: /ipasal/ipalika/ipalika-logs/ipalika-rest-api.log
   
 database:
   username: root

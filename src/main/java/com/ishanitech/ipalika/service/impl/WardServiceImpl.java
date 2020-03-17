@@ -57,4 +57,18 @@ public class WardServiceImpl implements WardService {
 		dbService.getDao(WardDAO.class).deleteWardByWardNumber(wardNo);		
 	}
 
+	@Override
+	public WardDTO getWardByWardNumber(int wardNo) {
+		WardDTO ward = new WardDTO();
+		
+		try {
+			Ward wardInfo = dbService.getDao(WardDAO.class)
+					.getWardByWardNumber(wardNo);
+			ward = new WardConverter().fromEntity(wardInfo);
+			return ward;
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception : " + jex.getLocalizedMessage());
+		}
+	}
+
 }

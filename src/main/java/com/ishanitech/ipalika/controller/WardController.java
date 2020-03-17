@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.dto.WardDTO;
+import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.servicer.WardService;
 
 @RestController
@@ -49,5 +50,15 @@ public class WardController {
 	@DeleteMapping("/{wardNumber}")
 	public void deleteWardByWardNumber(@PathVariable("wardNumber") int wardNo) {
 		wardService.deleteWardByWardNumber(wardNo);
+	}
+	
+	@GetMapping("/{wardNumber}")
+	public ResponseDTO<WardDTO> getWardByWardNumber(@PathVariable("wardNumber") int wardNo) throws CustomSqlException {
+		return new ResponseDTO<WardDTO>(wardService.getWardByWardNumber(wardNo));
+	}
+	
+	@GetMapping("/all") 
+	public ResponseDTO<List<WardDTO>> getAllWardsInfo() throws CustomSqlException {
+		return new ResponseDTO<List<WardDTO>>(wardService.getAllwardsInfo());
 	}
 }

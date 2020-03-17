@@ -16,4 +16,8 @@ public interface WardService {
 	void updateWardInfoByWardNumber(WardDTO wardInfo, int wardNo);
 
 	void deleteWardByWardNumber(int wardNo);
+
+	WardDTO getWardByWardNumber(int wardNo);
+
+	List<WardDTO> getAllwardsInfo();
 }

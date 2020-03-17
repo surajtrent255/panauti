@@ -313,7 +313,6 @@ CREATE TABLE IF NOT EXISTS `ward` (
 	`ward_description` TEXT,
 	`main_person` VARCHAR(100) NOT NULL DEFAULT '0',
 	`contact_no` VARCHAR(10) NOT NULL DEFAULT '0',
-	`deleted` bit(1) NOT NULL DEFAULT b'0',
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `ward_number_UNIQUE` (`ward_number`)
 );

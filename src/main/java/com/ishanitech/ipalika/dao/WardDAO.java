@@ -6,6 +6,7 @@ package com.ishanitech.ipalika.dao;
 
 import java.util.List;
 
+import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
@@ -15,7 +16,7 @@ import com.ishanitech.ipalika.model.Ward;
 
 public interface WardDAO {
 
-	@SqlQuery("SELECT ward_number FROM ward w WHERE w.deleted = 0")
+	@SqlQuery("SELECT ward_number FROM ward w ORDER BY w.ward_number")
 	List<Integer> getAllWardNumbers();
 	
 	
@@ -34,19 +35,20 @@ public interface WardDAO {
 	void addWard(@BindBean Ward ward);
 	
 	@SqlQuery("SELECT w.ward_number AS wardNumber,"
-			+ "w.ward_location AS wardLocation, "
+			+ "w.location AS wardLocation, "
 			+ "w.name AS wardName, "
 			+ "w.ward_description AS wardDescription, "
-			+ "w.main_person AS wardPerson, "
-			+ "w.contact_no AS contactNumber"
+			+ "w.main_person AS mainPerson, "
+			+ "w.contact_no AS contactNumber "
 			+ "FROM ward w "
-			+ "WHERE w.wardNumber =:wardNo")
+			+ "WHERE w.ward_number =:wardNo")
+	@RegisterBeanMapper(Ward.class)
 	Ward getWardByWardNumber(@Bind("wardNo") int wardNo);
 	
 	
 	@SqlUpdate("UPDATE ward SET "
 			+ "ward_number =:wardNumber, "
-			+ "ward_location =:wardLocation, "
+			+ "location =:wardLocation, "
 			+ "name =:wardName, "
 			+ "ward_description =:wardDescription, "
 			+ "main_person =:mainPerson, "
@@ -55,8 +57,17 @@ public interface WardDAO {
 	void updateWardInfoByWardNumber(@BindBean Ward ward, @Bind("wardNo") int wardNo);
 
 
-//	@SqlUpdate("UPDATE ward w SET w.deleted = 1 WHERE w.ward_number =:wardNo")
 	@SqlUpdate("DELETE FROM ward WHERE ward_number =:wardNo")
 	void deleteWardByWardNumber(@Bind("wardNo") int wardNo);
+
+	@SqlQuery("SELECT w.ward_number AS wardNumber,"
+			+ "w.location AS wardLocation, "
+			+ "w.name AS wardName, "
+			+ "w.ward_description AS wardDescription, "
+			+ "w.main_person AS mainPerson, "
+			+ "w.contact_no AS contactNumber "
+			+ "FROM ward w ")
+	@RegisterBeanMapper(Ward.class)
+	List<Ward> getAllWardsInfo();
 	
 }

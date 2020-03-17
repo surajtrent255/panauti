@@ -18,4 +18,6 @@ public interface WardService {
 	void deleteWardByWardNumber(int wardNo);
 
 	WardDTO getWardByWardNumber(int wardNo);
+
+	List<WardDTO> getAllwardsInfo();
 }

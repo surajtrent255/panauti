@@ -3,10 +3,13 @@ package com.ishanitech.ipalika.service.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import com.ishanitech.ipalika.dao.SurveyAnswerDAO;
 import com.ishanitech.ipalika.dao.UserDAO;
 import com.ishanitech.ipalika.dto.AnswerDTO;
 import com.ishanitech.ipalika.dto.FamilyMemberDTO;
+import com.ishanitech.ipalika.dto.PaginationTypeClass;
 import com.ishanitech.ipalika.dto.RequestDTO;
 import com.ishanitech.ipalika.dto.ResidentDTO;
 import com.ishanitech.ipalika.dto.ResidentDetailDTO;
@@ -35,6 +39,7 @@ import com.ishanitech.ipalika.model.SurveyAnswer;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.ResidentService;
 import com.ishanitech.ipalika.service.SurveyAnswerService;
+import com.ishanitech.ipalika.utils.CustomQueryCreator;
 import com.ishanitech.ipalika.utils.FileUtilService;
 import com.ishanitech.ipalika.utils.ImageUtilService;
 
@@ -134,16 +139,17 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	
 
 	@Override
-	public List<ResidentDTO> getResident(RoleWardDTO roleWardDTO) {
+	public List<ResidentDTO> getResident(RoleWardDTO roleWardDTO, HttpServletRequest request) {
 		try {
 			/**List<Answer> residentsAllInfo = dbService.getDao(SurveyAnswerDAO.class).getResidents();
 			residents = new AnswerConverter().entityListToResidentList(residentsAllInfo);*/
 			//return residents;
 			List<ResidentDTO> residents;
+			String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
 			if(roleWardDTO.getRole() == 3) {
-				residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(Integer.toString(roleWardDTO.getWardNumber()));
+				residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(Integer.toString(roleWardDTO.getWardNumber()), caseQuery);
 			}else {
-			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents();
+			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
 			}
 			residents.forEach(resident -> resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl())));
 			return residents;
@@ -299,12 +305,14 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	}
 
 	@Override
-	public List<ResidentDTO> searchResident(String searchKey, String wardNo) {
+	public List<ResidentDTO> searchResident(HttpServletRequest request, String searchKey, String wardNo) {
+		
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
 		List<ResidentDTO> residents;
 		if(wardNo.equals("")) {
-			residents = dbService.getDao(SurveyAnswerDAO.class).searchAllResidentByKey(searchKey, wardNo);
+			residents = dbService.getDao(SurveyAnswerDAO.class).searchAllResidentByKey(searchKey, wardNo, caseQuery);
 		}else {
-		residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByKey(searchKey, wardNo);
+		residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByKey(searchKey, wardNo, caseQuery);
 		}
 		residents.forEach(resident -> {
 			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
@@ -313,18 +321,53 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	}
 
 	@Override
-	public List<ResidentDTO> searchWardResident(String wardNo) {
+	public List<ResidentDTO> searchWardResident(String wardNo, HttpServletRequest request) {
+		
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
 		List<ResidentDTO> residents;
 		if(wardNo.equals("")) {
-			residents = dbService.getDao(SurveyAnswerDAO.class).searchAllResidentByWard();
+			residents = dbService.getDao(SurveyAnswerDAO.class).searchAllResidentByWard(caseQuery);
 		}else {
-		residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(wardNo);
+		residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(wardNo, caseQuery);
 		}
 		residents.forEach(resident -> {
 			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
 		});
 		return residents;
 	}
+
+	@Override
+	public List<ResidentDTO> getNextLotResident(RoleWardDTO roleWardDTO, HttpServletRequest request) {
+		try {
+			List<ResidentDTO> residents;
+			String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
+			if(roleWardDTO.getRole() == 3) {
+				log.info("CaseQueryWardAdmin--->"+ caseQuery);
+				residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(Integer.toString(roleWardDTO.getWardNumber()), caseQuery);
+			}else {
+			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
+			log.info("CaseQueryCentralAdmin--->"+ caseQuery);
+			}
+			residents.forEach(resident -> resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl())));
+			
+			if(request.getParameter("action").equals("prev")) {
+				
+				List<ResidentDTO> orderedresidents = reverseList(residents);
+				residents = orderedresidents;
+			}
+			
+			return residents;
+		} catch(JdbiException jex) {
+			throw new CustomSqlException("Exception: " +jex.getLocalizedMessage());
+		}
+	}
+	
+	  public static<T> List<T> reverseList(List<T> list)
+	  {
+	    List<T> reverse = new ArrayList<>(list);
+	    Collections.reverse(reverse);
+	    return reverse;
+	  }
 
 
 }

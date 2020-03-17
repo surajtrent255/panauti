@@ -6,8 +6,10 @@ import java.util.Map;
 import org.jdbi.v3.core.result.LinkedHashMapRowReducer;
 import org.jdbi.v3.core.result.RowView;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.config.UseTemplateEngine;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.locator.UseClasspathSqlLocator;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
@@ -56,35 +58,35 @@ public interface SurveyAnswerDAO {
 	/**
 	 * @return
 	 */
-	@SqlQuery("SELECT filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, "
-			+ " (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers "
-			+ " FROM answer a WHERE a.deleted = 0")
+	@SqlQuery("SELECT id as id, filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
+	 "(SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers " + 
+			" FROM answer a WHERE a.deleted = 0 <caseQuery>")
 	@RegisterBeanMapper(ResidentDTO.class)
-	List<ResidentDTO> getResidents();
+	List<ResidentDTO> getResidents(@Define("caseQuery") String caseQuery);
 	
-	@SqlQuery("SELECT filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
+	@SqlQuery("SELECT id as id, filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
 			" (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers " + 
-			" FROM answer a WHERE a.answer_1 LIKE CONCAT('%', :searchKey, '%') AND a.deleted = 0 AND a.answer_3 LIKE :wardNo")
+			" FROM answer a WHERE a.answer_1 LIKE CONCAT('%', :searchKey, '%') AND a.deleted = 0 AND a.answer_3 LIKE :wardNo <caseQuery>")
 	@RegisterBeanMapper(ResidentDTO.class)
-	List<ResidentDTO> searchResidentByKey(@Bind("searchKey") String searchKey, @Bind("wardNo") String wardNo);
+	List<ResidentDTO> searchResidentByKey(@Bind("searchKey") String searchKey, @Bind("wardNo") String wardNo, @Define("caseQuery") String caseQuery);
 	
-	@SqlQuery("SELECT filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
+	@SqlQuery("SELECT id as id, filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
 			" (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers " + 
-			" FROM answer a WHERE a.answer_1 LIKE CONCAT('%', :searchKey, '%') AND a.deleted = 0")
+			" FROM answer a WHERE a.answer_1 LIKE CONCAT('%', :searchKey, '%') AND a.deleted = 0 <caseQuery>")
 	@RegisterBeanMapper(ResidentDTO.class)
-	List<ResidentDTO> searchAllResidentByKey(@Bind("searchKey") String searchKey, @Bind("wardNo") String wardNo);
+	List<ResidentDTO> searchAllResidentByKey(@Bind("searchKey") String searchKey, @Bind("wardNo") String wardNo, @Define("caseQuery") String caseQuery);
 	
-	@SqlQuery("SELECT filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
+	@SqlQuery("SELECT id as id, filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
 			" (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers " + 
-			" FROM answer a WHERE a.deleted = 0")
+			" FROM answer a WHERE a.deleted = 0 <caseQuery>")
 	@RegisterBeanMapper(ResidentDTO.class)
-	List<ResidentDTO> searchAllResidentByWard();
+	List<ResidentDTO> searchAllResidentByWard(@Define("caseQuery") String caseQuery);
 	
-	@SqlQuery("SELECT filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
+	@SqlQuery("SELECT id as id, filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
 			" (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers " + 
-			" FROM answer a WHERE a.deleted = 0 AND a.answer_3 LIKE :wardNo")
+			" FROM answer a WHERE a.deleted = 0 AND a.answer_3 LIKE :wardNo <caseQuery>")
 	@RegisterBeanMapper(ResidentDTO.class)
-	List<ResidentDTO> searchResidentByWard(@Bind("wardNo") String wardNo);
+	List<ResidentDTO> searchResidentByWard(@Bind("wardNo") String wardNo, @Define("caseQuery") String caseQuery);
 	
 	@SqlQuery("SELECT * FROM answer WHERE filled_id = :filledId")
 	@RegisterBeanMapper(Answer.class)

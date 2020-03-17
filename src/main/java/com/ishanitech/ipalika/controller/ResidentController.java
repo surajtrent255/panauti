@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
@@ -50,13 +51,13 @@ public class ResidentController {
 	}
 	
 	@PostMapping
-	public ResponseDTO<List<ResidentDTO>>getResidents(@RequestBody RoleWardDTO roleWardDTO) {
+	public ResponseDTO<List<ResidentDTO>>getResidents(@RequestBody RoleWardDTO roleWardDTO, HttpServletRequest request) {
 		log.info("Roles-->" + roleWardDTO);
-		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.getResident(roleWardDTO));
+		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.getResident(roleWardDTO, request));
 	}
 	//Searches resident bases on searchKey. SearchKey = house owner name....
 	@PostMapping("/search")
-	public ResponseDTO<List<ResidentDTO>> searchResident(@RequestParam("searchKey") String searchKey, @RequestParam("wardNo") String wardNo) {
+	public ResponseDTO<List<ResidentDTO>> searchResident(HttpServletRequest request, @RequestParam("searchKey") String searchKey, @RequestParam("wardNo") String wardNo) {
 		String searchkey = null;
 		try {
 			searchkey = URLDecoder.decode(searchKey, "Utf-8");
@@ -64,12 +65,24 @@ public class ResidentController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchResident(searchkey, wardNo));
+		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchResident(request, searchkey, wardNo));
 	}
 	
 	@PostMapping("/search/ward")
-	public ResponseDTO<List<ResidentDTO>> searchResidentofWard(@RequestParam("wardNo") String wardNo) {
-		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchWardResident(wardNo));
+	public ResponseDTO<List<ResidentDTO>> searchResidentofWard(@RequestParam("wardNo") String wardNo, HttpServletRequest request) {
+		log.info("PageddLImitedd---->" + request.getParameter("pageSize") + " NoWorries!");
+		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchWardResident(wardNo, request));
+	}
+	
+	@PostMapping("/nextLot")
+	public ResponseDTO<List<ResidentDTO>> getNextLotResident(@RequestBody RoleWardDTO roleWardDTO, HttpServletRequest request) {
+		log.info("wardyyyzNo--->" + request.getParameter("wardNo"));
+		log.info("SearchKey--->" + request.getParameter("searchKey"));
+		log.info("PageSize--->" + request.getParameter("pageSize"));
+		log.info("Action--->" + request.getParameter("action"));
+		log.info("LastSeenId--->" + request.getParameter("last_seen"));
+		//return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchWardResident(wardNo, request));
+		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.getNextLotResident(roleWardDTO, request));	
 	}
 	
 	//returns full information of the resident by its filled id.

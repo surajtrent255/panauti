@@ -369,5 +369,15 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	    return reverse;
 	  }
 
+	@Override
+	public List<ResidentDTO> getWardResidentByPageLimit(HttpServletRequest request) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
+		List<ResidentDTO> residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
+		residents.forEach(resident -> {
+			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
+		});
+		return residents;
+	}
+
 
 }

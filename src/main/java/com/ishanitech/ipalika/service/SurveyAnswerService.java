@@ -27,5 +27,6 @@ public interface SurveyAnswerService {
 	public Answer getRawAnswerByFilledId(String filledId);
 	public void updateSurveyAnswerImage(MultipartFile image);
 	public List<ResidentDTO> getNextLotResident(RoleWardDTO roleWardDTO, HttpServletRequest request);
+	public List<ResidentDTO> getWardResidentByPageLimit(HttpServletRequest request);
 	
 }

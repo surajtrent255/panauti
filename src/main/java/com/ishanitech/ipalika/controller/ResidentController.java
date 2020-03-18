@@ -74,6 +74,12 @@ public class ResidentController {
 		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchWardResident(wardNo, request));
 	}
 	
+	@PostMapping("/pageLimit")
+	public ResponseDTO<List<ResidentDTO>> getResidentbyPageLimit(@RequestParam("wardNo") String wardNo, HttpServletRequest request) {
+		log.info("PageddLImitedd---->" + request.getParameter("pageSize") + " NoWorries!");
+		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.getWardResidentByPageLimit(request));
+	}
+	
 	@PostMapping("/nextLot")
 	public ResponseDTO<List<ResidentDTO>> getNextLotResident(@RequestBody RoleWardDTO roleWardDTO, HttpServletRequest request) {
 		log.info("wardyyyzNo--->" + request.getParameter("wardNo"));

@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomQueryCreator {
 
-	private static final String STOCK_FILTER = "";
     private static final Integer LAST_SEEN_ID = 0;
     private static final Integer PAGE_SIZE = 10;
     private static final String ACTION = "first";
@@ -21,11 +20,11 @@ public class CustomQueryCreator {
 	// Generates the dynamic query based on filters and query parameters
     public static String generateQueryWithCase(HttpServletRequest request, PaginationTypeClass ptc) {
         String caseQuery = "";
-        String stockFilter;
         Integer lastSeenId;
         String action;
         Integer pageSize;
         String searchKey;
+        String wardNo;
         
         if (checkParameter("last_seen", request)) {
             lastSeenId = Integer.parseInt(getParameterFromRequestObject("last_seen", request));
@@ -51,27 +50,26 @@ public class CustomQueryCreator {
             searchKey = SEARCH_KEY;
         }
         
+        if (checkParameter("wardNo", request)) {
+            wardNo = (String) getParameterFromRequestObject("wardNo", request);
+        } else {
+            wardNo = "";
+        }
+        
         switch(ptc) {
         	case RESIDENTS:
-        		if (checkParameter("stockFilter", request)) {
-                    stockFilter = (String) getParameterFromRequestObject("stockFilter", request);
-                } else {
-                    stockFilter = STOCK_FILTER;
-                }
-        		switch (stockFilter.toLowerCase()) {
-	                case "in-stock":
-	                    caseQuery += " AND p.available_items > 0 ";
-	                    break;
-	
-	                case "out-of-stock":
-	                    caseQuery += " AND p.available_items < 0 ";
-	                    break;
-	
-	                default:
-	                    break;
+        		
+
+        		switch (wardNo) {
+                case "":
+                    break;
+
+                default:
+                	caseQuery += " AND a.answer_3 LIKE '" + wardNo + "' ";
+                    break;
         		}
         		
-        		//a.answer_1 LIKE CONCAT('%', :searchKey, '%')
+        		
         		switch (searchKey) {
                 case "":
                     break;

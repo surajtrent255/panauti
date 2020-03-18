@@ -1,14 +1,20 @@
 package com.ishanitech.ipalika.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.ishanitech.ipalika.dto.PaginationTypeClass;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class CustomQueryCreator {
 
 	private static final String STOCK_FILTER = "";
     private static final Integer LAST_SEEN_ID = 0;
-    private static final Integer PAGE_SIZE = 3;
+    private static final Integer PAGE_SIZE = 10;
     private static final String ACTION = "first";
     private static final String SEARCH_KEY = "";
     
@@ -66,11 +72,21 @@ public class CustomQueryCreator {
         		}
         		
         		//a.answer_1 LIKE CONCAT('%', :searchKey, '%')
-        		switch (searchKey.toLowerCase()) {
+        		switch (searchKey) {
                 case "":
                     break;
 
                 default:
+                	log.info("SearchKey--->Embbzz-->"+ searchKey);
+                	if(searchKey.contains("%")) {
+                	try {
+                	    String result = java.net.URLDecoder.decode(searchKey, StandardCharsets.UTF_8.name());
+                	    searchKey = result;
+                	} catch (UnsupportedEncodingException e) {
+                	    // not going to happen - value came from JDK's own StandardCharsets
+                	}
+                	}
+                	log.info("SearchKey--->Embbzz-->Converted-->"+ searchKey);
                 	caseQuery += " AND a.answer_1 LIKE '%" + searchKey + "%'";
                     break;
         		}

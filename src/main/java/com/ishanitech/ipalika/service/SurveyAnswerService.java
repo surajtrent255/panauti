@@ -28,5 +28,6 @@ public interface SurveyAnswerService {
 	public void updateSurveyAnswerImage(MultipartFile image);
 	public List<ResidentDTO> getNextLotResident(RoleWardDTO roleWardDTO, HttpServletRequest request);
 	public List<ResidentDTO> getWardResidentByPageLimit(HttpServletRequest request);
+	public List<ResidentDTO> getSortedResident(HttpServletRequest request);
 	
 }

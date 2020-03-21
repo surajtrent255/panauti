@@ -91,6 +91,17 @@ public class ResidentController {
 		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.getNextLotResident(roleWardDTO, request));	
 	}
 	
+	@PostMapping("/sortBy")
+	public ResponseDTO<List<ResidentDTO>> getSortedResident(HttpServletRequest request) {
+		log.info("wardyyyzNo--->" + request.getParameter("wardNo"));
+		log.info("SearchKey--->" + request.getParameter("searchKey"));
+		log.info("PageSize--->" + request.getParameter("pageSize"));
+		log.info("SortBy--->" + request.getParameter("sortBy"));
+		log.info("SortByOrder--->" + request.getParameter("sortByOrder"));
+		//return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.searchWardResident(wardNo, request));
+		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.getSortedResident(request));	
+	}
+	
 	//returns full information of the resident by its filled id.
 	@GetMapping("/detail/{filledId}")
 	public ResponseDTO<ResidentDetailDTO> getFullInformationOfResident(Model model, @PathVariable("filledId") String filledId) {

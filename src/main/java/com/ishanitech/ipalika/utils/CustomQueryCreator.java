@@ -16,6 +16,8 @@ public class CustomQueryCreator {
     private static final Integer PAGE_SIZE = 10;
     private static final String ACTION = "first";
     private static final String SEARCH_KEY = "";
+    private static final String SORT_BY = "";
+    private static final String SORR_BY_ORDER = "";
     
 	// Generates the dynamic query based on filters and query parameters
     public static String generateQueryWithCase(HttpServletRequest request, PaginationTypeClass ptc) {
@@ -25,6 +27,10 @@ public class CustomQueryCreator {
         Integer pageSize;
         String searchKey;
         String wardNo;
+        String sortBy;
+        String sortByOrder;
+        String currentPageNo;
+        int currentPage;
         
         if (checkParameter("last_seen", request)) {
             lastSeenId = Integer.parseInt(getParameterFromRequestObject("last_seen", request));
@@ -54,6 +60,26 @@ public class CustomQueryCreator {
             wardNo = (String) getParameterFromRequestObject("wardNo", request);
         } else {
             wardNo = "";
+        }
+        
+        if (checkParameter("sortBy", request)) {
+            sortBy = (String) getParameterFromRequestObject("sortBy", request);
+        } else {
+            sortBy = "";
+        }
+        
+        if (checkParameter("sortByOrder", request)) {
+            sortByOrder = (String) getParameterFromRequestObject("sortByOrder", request);
+        } else {
+            sortByOrder = "";
+        }
+        
+        if (checkParameter("currentPage", request)) {
+            currentPageNo = (String) getParameterFromRequestObject("currentPage", request);
+            currentPage = Integer.parseInt(currentPageNo);
+        } else {
+            currentPageNo = "";
+            currentPage = 0;
         }
         
         switch(ptc) {
@@ -89,7 +115,7 @@ public class CustomQueryCreator {
                     break;
         		}
         		
-        		
+        		if(sortBy.equals("")) {
         		switch (action.toLowerCase()) {
                 case "next":
                     if (lastSeenId > 0) {
@@ -107,6 +133,68 @@ public class CustomQueryCreator {
                     caseQuery += " ORDER BY a.id DESC ";
                     break;
         		}
+        		}else {
+        			switch (sortBy.toLowerCase()) {
+                    case "ownername":
+                            //caseQuery += " AND a.id < " + lastSeenId;
+                            caseQuery += " ORDER BY a.answer_1 " + sortByOrder + " ";
+                            if(currentPage >= 0) {
+                            caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                            }else {
+                            	caseQuery += " LIMIT 0";
+                            }
+                            	
+                        break;
+                    case "housenumber":
+                    	caseQuery += " ORDER BY a.answer_4 " + sortByOrder + " ";
+                        if(currentPage >= 0) {
+                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                        }else {
+                        	caseQuery += " LIMIT 0";
+                        }
+                        break;
+                    case "tole":
+                    	caseQuery += " ORDER BY a.answer_2 " + sortByOrder + " ";
+                        if(currentPage >= 0) {
+                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                        }else {
+                        	caseQuery += " LIMIT 0";
+                        }
+                        break;
+                        
+                    case "phonenumber":
+                    	caseQuery += " ORDER BY a.answer_5 " + sortByOrder + " ";
+                        if(currentPage >= 0) {
+                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                        }else {
+                        	caseQuery += " LIMIT 0";
+                        }
+                        break;
+                        
+                    case "kittanumber":
+                    	caseQuery += " ORDER BY a.answer_13 " + sortByOrder + " ";
+                        if(currentPage >= 0) {
+                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                        }else {
+                        	caseQuery += " LIMIT 0";
+                        }
+                        break;
+                    
+                    case "familysize":
+                    	caseQuery += " ORDER BY totalFamilyMembers " + sortByOrder + " ";
+                        if(currentPage >= 0) {
+                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                        }else {
+                        	caseQuery += " LIMIT 0";
+                        }
+                        break;
+                    default:
+                        caseQuery += " ORDER BY a.id DESC ";
+                        break;
+            		}
+        		}
+        		
+        		
         		break;
         	case FAV_PLACES:
         		switch(action.toLowerCase()) {
@@ -131,7 +219,9 @@ public class CustomQueryCreator {
         	default: 
         		break;
         }
+        if(sortBy.equals("")) {
         caseQuery += "LIMIT " + pageSize;
+        }
         return caseQuery;
     }
     

@@ -352,8 +352,10 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 			
 			if(request.getParameter("action").equals("prev")) {
 				
+				if(request.getParameter("sortBy") == null) {
 				List<ResidentDTO> orderedresidents = reverseList(residents);
 				residents = orderedresidents;
+				}
 			}
 			
 			return residents;
@@ -371,6 +373,16 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 
 	@Override
 	public List<ResidentDTO> getWardResidentByPageLimit(HttpServletRequest request) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
+		List<ResidentDTO> residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
+		residents.forEach(resident -> {
+			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
+		});
+		return residents;
+	}
+
+	@Override
+	public List<ResidentDTO> getSortedResident(HttpServletRequest request) {
 		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
 		List<ResidentDTO> residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
 		residents.forEach(resident -> {

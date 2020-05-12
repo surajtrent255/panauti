@@ -34,13 +34,14 @@ public interface ReportDAO {
 	@SqlQuery("SELECT <column> FROM answer")
 	List<String> getAllAnswerByAnswerId(@Define String column);
 	
-	@SqlQuery("SELECT count(*) AS total FROM family_member")
+	@SqlQuery("SELECT count(*) AS total FROM family_member fm WHERE fm.is_dead = 0 AND fm.deleted = 0")
 	double getTotalPopulation();
 	
 	@SqlQuery("SELECT g.gender_id, COUNT(id) AS total " + 
 			"	FROM family_member fa " + 
 			"	INNER JOIN gender g " + 
 			"	ON g.gender_id = fa.gender_id " + 
+			"	WHERE fa.deleted = 0 AND fa.is_dead = 0 " +
 			"	GROUP BY fa.gender_id " + 
 			"	ORDER BY g.gender_id ASC;")
 	@KeyColumn("gender_id")
@@ -48,18 +49,18 @@ public interface ReportDAO {
 	Map<Integer, Double> getPopulationByGenderId();
 	
 	@SqlUpdate("REPLACE INTO population_report(based_on, option_1, option_2, option_3, option_4, option_5, option_6, total) " + 
-			"	VALUES (\"AgeGroup\", (SELECT COUNT(*) FROM family_member WHERE age < 6), " + 
-			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 6 AND 16), " + 
-			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 17 AND 32), " + 
-			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 33 AND 54), " + 
-			"	(SELECT COUNT(*) FROM family_member WHERE age BETWEEN 55 AND 65), " + 
-			"	(SELECT COUNT(*) FROM family_member WHERE age > 65), " +
+			"	VALUES (\"AgeGroup\", (SELECT COUNT(*) FROM family_member fm WHERE age < 6 AND fm.is_dead = 0 AND fm.deleted = 0), " + 
+			"	(SELECT COUNT(*) FROM family_member fm WHERE age BETWEEN 6 AND 16 AND fm.is_dead = 0 AND fm.deleted = 0), " + 
+			"	(SELECT COUNT(*) FROM family_member fm WHERE age BETWEEN 17 AND 32 AND fm.is_dead = 0 AND fm.deleted = 0), " + 
+			"	(SELECT COUNT(*) FROM family_member fm WHERE age BETWEEN 33 AND 54 AND fm.is_dead = 0 AND fm.deleted = 0), " + 
+			"	(SELECT COUNT(*) FROM family_member fm WHERE age BETWEEN 55 AND 65 AND fm.is_dead = 0 AND fm.deleted = 0), " + 
+			"	(SELECT COUNT(*) FROM family_member fm WHERE age > 65 AND fm.is_dead = 0 AND fm.deleted = 0), " +
 			"   :total)")
 	void insertAgeGroupReport(@Bind("total") double total);
 	
 	@SqlQuery("SELECT aq.qualification_id, COUNT(*) AS total FROM family_member fm " + 
 			"INNER JOIN academic_qualification aq " + 
-			"ON aq.qualification_id = fm.qualification_id GROUP BY aq.qualification_nep ORDER BY aq.qualification_id ASC;")
+			"ON aq.qualification_id = fm.qualification_id WHERE fm.deleted = 0 AND fm.is_dead = 0 GROUP BY aq.qualification_nep ORDER BY aq.qualification_id ASC;")
 	@KeyColumn("qualification_id")
 	@ValueColumn("total")
 	Map<Integer, Double> getPopulationByQualificationId();

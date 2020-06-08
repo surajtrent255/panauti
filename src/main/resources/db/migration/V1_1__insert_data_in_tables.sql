@@ -341,9 +341,14 @@ INSERT INTO `family_relation` (`relation_id`, `relation_nepali`, `relation_engli
 	(1, 'मन्दिर', 'Temple'),
 	(2, 'पार्क', 'Park'),
 	(3, 'पोखरी', 'Pond'),
-	(4, 'स्मारक', 'Monument'),
-	(5, 'मूर्ति', 'Statue');
+	(4, 'इनार/ पँधेरी', 'well/watches'),
+	(5, 'स्तुपा/मूति', 'Statue'),
+	(6, 'विद्यालय', 'School'),
+	(7, 'संघ/संस्था', 'Organization'),
+	(8, 'गुँठी', 'Guthi'),
+	(9, 'अन्य', 'Other');
 	
+		
 	INSERT INTO `marital_status` (`marital_status_id`, `marital_status_nep`, `marital_status_eng`) VALUES
 	(1, 'विवाहित', 'Married'),
 	(2, 'अविवाहित', 'Single');

@@ -336,6 +336,19 @@ INSERT INTO `family_relation` (`relation_id`, `relation_nepali`, `relation_engli
 	
 	INSERT INTO `ward` (`id`, `ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES ('1', 1, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
 	INSERT INTO `ward` (`id`, `ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES ('2', 2, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (3, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (4, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (5, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (6, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (7, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (8, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (9, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (10, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (11, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (12, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (13, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+	INSERT INTO `ward` (`ward_number`, `location`, `name`, `ward_description`, `main_person`, `contact_no`) VALUES (14, 'xxxx', 'xxxx', 'xxxx', 'xxxxx', 'xxxxx');
+
 
 	INSERT INTO `favourite_place_type` (`type_id`, `place_type_nep`, `place_type_eng`) VALUES
 	(1, 'मन्दिर', 'Temple'),

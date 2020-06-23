@@ -11,6 +11,7 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 
+import com.ishanitech.ipalika.dto.FamilyMemberDTO;
 import com.ishanitech.ipalika.model.FamilyMember;
 
 /**
@@ -151,5 +152,35 @@ public interface ResidentDAO {
 			+ " WHERE fm.member_id = :memberId ")
 	@RegisterBeanMapper(FamilyMember.class)
 	FamilyMember getMemberRawDataFromMemberId(@Bind("memberId") String memberId);
+
+	@SqlQuery
+	List<FamilyMemberDTO> searchMemberByWard(String string, String caseQuery);
+
+	
+	@SqlQuery("SELECT fm.full_name AS name, "
+			+ " fr.relation_nepali AS relation, "
+			+ " fm.age AS age, "
+			+ " g.gender_nepali AS gender, "
+			+ " ms.marital_status_nep AS maritalStatus, "
+			+ " aq.qualification_nep AS education, "
+			+ " fm.occupation AS occupation,"
+			+ " fm.has_voter_id AS voterCard,"
+			+ " fm.migration AS address, "
+			+ " fm.health_status AS healthCondition,"
+			+ " fm.member_id AS memberId, "
+			+ " fm.dob_ad AS dateOfBirthAD, "
+			+ " fm.dob_bs AS dateOfBirthBS, "
+			+ " fm.is_dead AS isDead "
+			+ " FROM family_member fm "
+			+ " INNER JOIN family_relation fr "
+			+ " ON fm.relation_id = fr.relation_id "
+			+ " INNER JOIN academic_qualification aq "
+			+ " ON fm.qualification_id = aq.qualification_id "
+			+ " INNER JOIN gender g "
+			+ " ON fm.gender_id = g.gender_id "
+			+ " INNER JOIN marital_status ms"
+			+ " ON fm.marital_status = ms.marital_status_id"
+			+ " WHERE fm.family_id = :familyId AND fm.deleted = 0 AND fm.is_dead = 0")
+	List<FamilyMemberDTO> getMembers(String caseQuery);
 	
 }

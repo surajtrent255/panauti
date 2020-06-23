@@ -147,4 +147,11 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		fileUtilService.deleteFile(demoFileName);
 	}
 
+
+
+	@Override
+	public void updateFavouritePlaceImage(MultipartFile image) {
+		fileUtilService.storeEditedFile(image);
+	}
+
 }

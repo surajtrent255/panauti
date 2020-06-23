@@ -17,7 +17,7 @@ public class CustomQueryCreator {
     private static final String ACTION = "first";
     private static final String SEARCH_KEY = "";
     private static final String SORT_BY = "";
-    private static final String SORR_BY_ORDER = "";
+    private static final String SORT_BY_ORDER = "";
     
 	// Generates the dynamic query based on filters and query parameters
     public static String generateQueryWithCase(HttpServletRequest request, PaginationTypeClass ptc) {

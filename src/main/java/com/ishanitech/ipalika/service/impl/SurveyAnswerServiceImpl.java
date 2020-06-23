@@ -154,7 +154,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 			residents.forEach(resident -> resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl())));
 			return residents;
 		} catch(JdbiException jex) {
-			throw new CustomSqlException("Exception: " +jex.getLocalizedMessage());
+			throw new CustomSqlException("Exception: " + jex.getLocalizedMessage());
 		}
 	}
 
@@ -177,7 +177,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 			answer.setAnswer51(ImageUtilService.makeFullImageurl(restUrlProperty, answer.getAnswer51()));
 			return answer;
 		} catch(JdbiException jex) {
-			throw new CustomSqlException("Exception: " +jex.getLocalizedMessage());
+			throw new CustomSqlException("Exception: " + jex.getLocalizedMessage());
 		}
 	}
 	

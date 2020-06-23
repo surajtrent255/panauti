@@ -25,4 +25,6 @@ public interface FavouritePlacesService {
 	public List<String> getTypesofFavouritePlaces();
 
 	public void deleteFile(String demoFileName);
+
+	public void updateFavouritePlaceImage(MultipartFile image);
 }

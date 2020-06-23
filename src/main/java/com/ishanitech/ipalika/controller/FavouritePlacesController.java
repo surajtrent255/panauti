@@ -77,8 +77,14 @@ public class FavouritePlacesController {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/image")
-	public void uploadImageForFavouritePlace(@RequestParam("picture") MultipartFile image) {
+	public void uploadImageFavouritePlace(@RequestParam("picture") MultipartFile image) {
 		favouritePlacesService.addFavouritePlaceImage(image);
+	}
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/editImage")
+	public void uploadEditedImageFavouritePlace(@RequestParam("picture") MultipartFile image) {
+		favouritePlacesService.updateFavouritePlaceImage(image);
 	}
 
 	@ResponseStatus(HttpStatus.OK)

@@ -43,6 +43,7 @@ public interface FavouritePlaceDAO {
 	@SqlQuery("SELECT fp.fav_place_name AS favPlaceName, "
 			+ " fp.fav_place_desc AS favPlaceDesc, "
 			+ " fp.fav_place_photo AS favPlacePhoto, "
+			+ " fp.fav_place_type AS favPlaceType, "
 			+ " fp.fav_place_location AS favPlaceLocation, "
 			+ " fp.fav_place_ward AS favPlaceWard "
 			+ " FROM favourite_place fp "
@@ -59,7 +60,8 @@ public interface FavouritePlaceDAO {
 			+ " fav_place_name =:favPlaceName, "
 			+ " fav_place_desc =:favPlaceDesc, "
 			+ " fav_place_photo =:favPlacePhoto, "
-//			+ " fav_place_location =:favPlaceLocation,"
+			+ " fav_place_type =:favPlaceType, "
+			+ " fav_place_location =:favPlaceLocation,"
 			+ " fav_place_ward =:favPlaceWard "
 			+ " WHERE fav_place_id =:placeId")
 	void updateFavouritePlaceByPlaceId(@BindBean FavouritePlace favPlace, @Bind("placeId") String placeId);

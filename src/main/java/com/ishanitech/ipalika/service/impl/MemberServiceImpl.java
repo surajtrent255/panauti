@@ -1,5 +1,7 @@
 package com.ishanitech.ipalika.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +38,7 @@ public class MemberServiceImpl implements MemberService {
 		try {
 			List<FamilyMemberDTO> members;
 			
-			String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
+			String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAMILY_MEMBERS);
 			if(roleWardDTO.getRole() == 3) {
 				members = dbService.getDao(ResidentDAO.class).searchMemberByWard(Integer.toString(roleWardDTO.getWardNumber()), caseQuery);
 			} else {
@@ -48,6 +50,73 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+
+	@Override
+	public List<FamilyMemberDTO> searchMember(HttpServletRequest request, String extractedSearchKey, String wardNo) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAMILY_MEMBERS);
+		List<FamilyMemberDTO> members;
+		if(wardNo.equals("")) {
+			members = dbService.getDao(ResidentDAO.class).searchAllMemberByKey(extractedSearchKey, caseQuery);
+		} else {
+			members = dbService.getDao(ResidentDAO.class).searchMemberByKey(extractedSearchKey, wardNo, caseQuery);
+		}
+		return members;
+	}
+
+
+	@Override
+	public List<FamilyMemberDTO> searchMemberByWard(HttpServletRequest request, String wardNo) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAMILY_MEMBERS);
+		List<FamilyMemberDTO> members;
+		if(wardNo.equals("")) {
+			members = dbService.getDao(ResidentDAO.class).searchAllMemberByWard(caseQuery);
+		} else {
+			members = dbService.getDao(ResidentDAO.class).searchMemberByWard(wardNo, caseQuery);
+		}
+		return members;
+	}
+
+	@Override
+	public List<FamilyMemberDTO> getMemberByPageLimit(HttpServletRequest request) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAMILY_MEMBERS);
+		List<FamilyMemberDTO> members = dbService.getDao(ResidentDAO.class).getMembers(caseQuery);
+		return members;
+	}
+
+
+	@Override
+	public List<FamilyMemberDTO> getNextLotMember(HttpServletRequest request, RoleWardDTO roleWardDTO) {
+		try {
+			List<FamilyMemberDTO> members;
+			String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAMILY_MEMBERS);
+			if(roleWardDTO.getRole() == 3) {
+				members = dbService.getDao(ResidentDAO.class).searchMemberByWard(Integer.toString(roleWardDTO.getWardNumber()), caseQuery);
+			} else {
+				members = dbService.getDao(ResidentDAO.class).getMembers(caseQuery);
+			}
+			
+			if(request.getParameter("action").equals("prev")) {
+				if(request.getParameter("sortBy") == null) {
+					List<FamilyMemberDTO> orderedMembers = reverseList(members);
+					members = orderedMembers;
+				}
+			}
+			return members;
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception: " + jex.getLocalizedMessage());
+		}
+	}
+
+	public static<T> List<T> reverseList(List<T> list) {
+		List<T> reverse = new ArrayList<>();
+		Collections.reverse(reverse);
+		return reverse;
+	}
 	
-	
+	@Override
+	public List<FamilyMemberDTO> getSortedMember(HttpServletRequest request) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAMILY_MEMBERS);
+		List<FamilyMemberDTO> members = dbService.getDao(ResidentDAO.class).getMembers(caseQuery);
+		return members;
+	}
 }

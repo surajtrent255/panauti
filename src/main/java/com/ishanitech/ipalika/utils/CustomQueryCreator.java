@@ -85,7 +85,6 @@ public class CustomQueryCreator {
         switch(ptc) {
         	case RESIDENTS:
         		
-
         		switch (wardNo) {
                 case "":
                     break;
@@ -196,6 +195,120 @@ public class CustomQueryCreator {
         		
         		
         		break;
+        		
+        		
+        	case FAMILY_MEMBERS:
+        		
+        		switch (wardNo) {
+                case "":
+                    break;
+
+                default:
+                	caseQuery += " AND a.answer_3 LIKE '" + wardNo + "' ";
+                    break;
+        		}
+        		
+        		
+        		switch (searchKey) {
+                case "":
+                    break;
+
+                default:
+                	log.info("SearchKey--->Embbzz-->"+ searchKey);
+                	if(searchKey.contains("%")) {
+                	try {
+                	    String result = java.net.URLDecoder.decode(searchKey, StandardCharsets.UTF_8.name());
+                	    searchKey = result;
+                	} catch (UnsupportedEncodingException e) {
+                	    // not going to happen - value came from JDK's own StandardCharsets
+                	}
+                	}
+                	log.info("SearchKey--->Embbzz-->Converted-->"+ searchKey);
+                	caseQuery += " AND fm.full_name LIKE '%" + searchKey + "%'";
+                    break;
+        		}
+        		
+        		if(sortBy.equals("")) {
+        		switch (action.toLowerCase()) {
+                case "next":
+                    if (lastSeenId > 0) {
+                        caseQuery += " AND fm.id < " + lastSeenId;
+                        caseQuery += " ORDER BY fm.id DESC ";
+                    }
+                    break;
+                case "prev":
+                    if (lastSeenId > 0) {
+                        caseQuery += " AND fm.id > " + lastSeenId;
+                        caseQuery += " ORDER BY fm.id ASC ";
+                    }
+                    break;
+                default:
+                    caseQuery += " ORDER BY fm.id DESC ";
+                    break;
+        		}
+        		}else {
+        			switch (sortBy.toLowerCase()) {
+                    case "fullname":
+                            //caseQuery += " AND a.id < " + lastSeenId;
+                            caseQuery += " ORDER BY fm.full_name " + sortByOrder + " ";
+                            if(currentPage >= 0) {
+                            caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                            }else {
+                            	caseQuery += " LIMIT 0";
+                            }
+                            	
+                        break;
+                    case "age":
+                    	caseQuery += " ORDER BY fm.age " + sortByOrder + " ";
+                        if(currentPage >= 0) {
+                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                        }else {
+                        	caseQuery += " LIMIT 0";
+                        }
+                        break;
+//                    case "tole":
+//                    	caseQuery += " ORDER BY a.answer_2 " + sortByOrder + " ";
+//                        if(currentPage >= 0) {
+//                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+//                        }else {
+//                        	caseQuery += " LIMIT 0";
+//                        }
+//                        break;
+//                        
+//                    case "phonenumber":
+//                    	caseQuery += " ORDER BY a.answer_5 " + sortByOrder + " ";
+//                        if(currentPage >= 0) {
+//                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+//                        }else {
+//                        	caseQuery += " LIMIT 0";
+//                        }
+//                        break;
+//                        
+//                    case "kittanumber":
+//                    	caseQuery += " ORDER BY a.answer_13 " + sortByOrder + " ";
+//                        if(currentPage >= 0) {
+//                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+//                        }else {
+//                        	caseQuery += " LIMIT 0";
+//                        }
+//                        break;
+//                    
+//                    case "familysize":
+//                    	caseQuery += " ORDER BY totalFamilyMembers " + sortByOrder + " ";
+//                        if(currentPage >= 0) {
+//                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+//                        }else {
+//                        	caseQuery += " LIMIT 0";
+//                        }
+//                        break;
+                    default:
+                        caseQuery += " ORDER BY fm.id DESC ";
+                        break;
+            		}
+        		}
+        		
+        		break;
+        		
         	case FAV_PLACES:
         		switch(action.toLowerCase()) {
 			    	case "next":

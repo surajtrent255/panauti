@@ -5,6 +5,7 @@ import java.util.List;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.locator.UseClasspathSqlLocator;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
@@ -153,8 +154,63 @@ public interface ResidentDAO {
 	@RegisterBeanMapper(FamilyMember.class)
 	FamilyMember getMemberRawDataFromMemberId(@Bind("memberId") String memberId);
 
-	@SqlQuery
-	List<FamilyMemberDTO> searchMemberByWard(String string, String caseQuery);
+	@SqlQuery("SELECT fm.full_name AS name, "
+			+ " fr.relation_nepali AS relation, "
+			+ " fm.age AS age, "
+			+ " g.gender_nepali AS gender, "
+			+ " ms.marital_status_nep AS maritalStatus, "
+			+ " aq.qualification_nep AS education, "
+			+ " fm.occupation AS occupation,"
+			+ " fm.has_voter_id AS voterCard,"
+			+ " fm.migration AS address, "
+			+ " fm.health_status AS healthCondition,"
+			+ " fm.member_id AS memberId, "
+			+ " fm.dob_ad AS dateOfBirthAD, "
+			+ " fm.dob_bs AS dateOfBirthBS, "
+			+ " fm.is_dead AS isDead, "
+			+ " fm.family_id AS mainId "
+			+ " FROM family_member fm "
+			+ " INNER JOIN family_relation fr "
+			+ " ON fm.relation_id = fr.relation_id "
+			+ " INNER JOIN academic_qualification aq "
+			+ " ON fm.qualification_id = aq.qualification_id "
+			+ " INNER JOIN gender g "
+			+ " ON fm.gender_id = g.gender_id "
+			+ " INNER JOIN marital_status ms"
+			+ " ON fm.marital_status = ms.marital_status_id"
+			+ " INNER JOIN answer a"
+			+ " ON fm.family_id = a.filled_id WHERE fm.deleted = 0 AND fm.is_dead = 0 <caseQuery>")
+	@RegisterBeanMapper(FamilyMemberDTO.class)
+	List<FamilyMemberDTO> getMembers(@Define("caseQuery")String caseQuery);
+
+	@SqlQuery("SELECT fm.full_name AS name, "
+			+ " fr.relation_nepali AS relation, "
+			+ " fm.age AS age, "
+			+ " g.gender_nepali AS gender, "
+			+ " ms.marital_status_nep AS maritalStatus, "
+			+ " aq.qualification_nep AS education, "
+			+ " fm.occupation AS occupation,"
+			+ " fm.has_voter_id AS voterCard,"
+			+ " fm.migration AS address, "
+			+ " fm.health_status AS healthCondition,"
+			+ " fm.member_id AS memberId, "
+			+ " fm.dob_ad AS dateOfBirthAD, "
+			+ " fm.dob_bs AS dateOfBirthBS, "
+			+ " fm.is_dead AS isDead, "
+			+ " fm.family_id AS mainId "
+			+ " FROM family_member fm "
+			+ " INNER JOIN family_relation fr "
+			+ " ON fm.relation_id = fr.relation_id "
+			+ " INNER JOIN academic_qualification aq "
+			+ " ON fm.qualification_id = aq.qualification_id "
+			+ " INNER JOIN gender g "
+			+ " ON fm.gender_id = g.gender_id "
+			+ " INNER JOIN marital_status ms"
+			+ " ON fm.marital_status = ms.marital_status_id"
+			+ " INNER JOIN answer a"
+			+ " ON fm.family_id = a.filled_id WHERE fm.full_name LIKE CONCAT('%', :searchKey, '%') AND fm.deleted = 0 AND fm.is_dead = 0 <caseQuery>")
+	@RegisterBeanMapper(FamilyMemberDTO.class)
+	List<FamilyMemberDTO> searchAllMemberByKey(@Bind("searchKey") String searchKey, @Define("caseQuery") String caseQuery);
 
 	
 	@SqlQuery("SELECT fm.full_name AS name, "
@@ -170,7 +226,8 @@ public interface ResidentDAO {
 			+ " fm.member_id AS memberId, "
 			+ " fm.dob_ad AS dateOfBirthAD, "
 			+ " fm.dob_bs AS dateOfBirthBS, "
-			+ " fm.is_dead AS isDead "
+			+ " fm.is_dead AS isDead, "
+			+ " fm.family_id AS mainId "
 			+ " FROM family_member fm "
 			+ " INNER JOIN family_relation fr "
 			+ " ON fm.relation_id = fr.relation_id "
@@ -180,7 +237,67 @@ public interface ResidentDAO {
 			+ " ON fm.gender_id = g.gender_id "
 			+ " INNER JOIN marital_status ms"
 			+ " ON fm.marital_status = ms.marital_status_id"
-			+ " WHERE fm.family_id = :familyId AND fm.deleted = 0 AND fm.is_dead = 0")
-	List<FamilyMemberDTO> getMembers(String caseQuery);
+			+ " INNER JOIN answer a"
+			+ " ON fm.family_id = a.filled_id WHERE fm.full_name LIKE CONCAT('%', :searchKey, '%') AND a.answer_3 LIKE :wardNo AND fm.deleted = 0 AND fm.is_dead = 0 <caseQuery>")
+	@RegisterBeanMapper(FamilyMemberDTO.class)
+	List<FamilyMemberDTO> searchMemberByKey(@Bind("searchKey") String searchKey, @Bind("wardNo") String wardNo, @Define("caseQuery") String caseQuery);
+	
+	@SqlQuery("SELECT fm.full_name AS name, "
+			+ " fr.relation_nepali AS relation, "
+			+ " fm.age AS age, "
+			+ " g.gender_nepali AS gender, "
+			+ " ms.marital_status_nep AS maritalStatus, "
+			+ " aq.qualification_nep AS education, "
+			+ " fm.occupation AS occupation,"
+			+ " fm.has_voter_id AS voterCard,"
+			+ " fm.migration AS address, "
+			+ " fm.health_status AS healthCondition,"
+			+ " fm.member_id AS memberId, "
+			+ " fm.dob_ad AS dateOfBirthAD, "
+			+ " fm.dob_bs AS dateOfBirthBS, "
+			+ " fm.is_dead AS isDead, "
+			+ " fm.family_id AS mainId "
+			+ " FROM family_member fm "
+			+ " INNER JOIN family_relation fr "
+			+ " ON fm.relation_id = fr.relation_id "
+			+ " INNER JOIN academic_qualification aq "
+			+ " ON fm.qualification_id = aq.qualification_id "
+			+ " INNER JOIN gender g "
+			+ " ON fm.gender_id = g.gender_id "
+			+ " INNER JOIN marital_status ms"
+			+ " ON fm.marital_status = ms.marital_status_id"
+			+ " INNER JOIN answer a"
+			+ " ON fm.family_id = a.filled_id WHERE a.answer_3 LIKE :wardNo AND fm.deleted = 0 AND fm.is_dead = 0 <caseQuery>")
+	@RegisterBeanMapper(FamilyMemberDTO.class)
+	List<FamilyMemberDTO> searchMemberByWard(@Bind("wardNo") String wardNo,@Define("caseQuery") String caseQuery);
+
+	@SqlQuery("SELECT fm.full_name AS name, "
+			+ " fr.relation_nepali AS relation, "
+			+ " fm.age AS age, "
+			+ " g.gender_nepali AS gender, "
+			+ " ms.marital_status_nep AS maritalStatus, "
+			+ " aq.qualification_nep AS education, "
+			+ " fm.occupation AS occupation,"
+			+ " fm.has_voter_id AS voterCard,"
+			+ " fm.migration AS address, "
+			+ " fm.health_status AS healthCondition,"
+			+ " fm.member_id AS memberId, "
+			+ " fm.dob_ad AS dateOfBirthAD, "
+			+ " fm.dob_bs AS dateOfBirthBS, "
+			+ " fm.is_dead AS isDead, "
+			+ " fm.family_id AS mainId "
+			+ " FROM family_member fm "
+			+ " INNER JOIN family_relation fr "
+			+ " ON fm.relation_id = fr.relation_id "
+			+ " INNER JOIN academic_qualification aq "
+			+ " ON fm.qualification_id = aq.qualification_id "
+			+ " INNER JOIN gender g "
+			+ " ON fm.gender_id = g.gender_id "
+			+ " INNER JOIN marital_status ms"
+			+ " ON fm.marital_status = ms.marital_status_id"
+			+ " INNER JOIN answer a"
+			+ " ON fm.family_id = a.filled_id WHERE a.answer_3 LIKE :wardNo AND fm.deleted = 0 AND fm.is_dead = 0 <caseQuery>")
+	@RegisterBeanMapper(FamilyMemberDTO.class)
+	List<FamilyMemberDTO> searchAllMemberByWard(@Define("caseQuery") String caseQuery);
 	
 }

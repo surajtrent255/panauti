@@ -62,7 +62,6 @@ public class MemberController {
 		return new ResponseDTO<List<FamilyMemberDTO>> (memberService.getNextLotMember(request, roleWardDTO));
 	}
 	
-	
 	@PostMapping("/sortBy")
 	public ResponseDTO<List<FamilyMemberDTO>> getSortedMember(HttpServletRequest request) {
 		return new ResponseDTO<List<FamilyMemberDTO>> (memberService.getSortedMember(request));

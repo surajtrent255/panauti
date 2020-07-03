@@ -32,7 +32,8 @@ public interface ResidentDAO {
 	@SqlBatch("insert_family_members")
 	void addFamilyMembers(@BindBean List<FamilyMember> familyMembers);
 
-	@SqlQuery("SELECT fm.full_name AS name, "
+	@SqlQuery("SELECT fm.id AS id, "
+			+ " fm.full_name AS name, "
 			+ " fr.relation_nepali AS relation, "
 			+ " fm.age AS age, "
 			+ " g.gender_nepali AS gender, "
@@ -59,7 +60,8 @@ public interface ResidentDAO {
 	@RegisterBeanMapper(FamilyMember.class)
 	List<FamilyMember> getAllFamilyMembersFromFamilyId(@Bind("familyId") String familyId);
 	
-	@SqlQuery("SELECT fm.full_name AS name, "
+	@SqlQuery("SELECT fm.id AS id, "
+			+ " fm.full_name AS name, "
 			+ " fr.relation_nepali AS relation, "
 			+ " fm.age AS age, "
 			+ " g.gender_nepali AS gender, "
@@ -135,7 +137,8 @@ public interface ResidentDAO {
 		deleteFamilyMembersByFamilyId(familyId);
 	}
 	
-	@SqlQuery("SELECT fm.full_name AS name, "
+	@SqlQuery("SELECT fm.id AS id, "
+			+ " fm.full_name AS name, "
 			+ " fm.relation_id AS relation, "
 			+ " fm.age AS age, "
 			+ " fm.gender_id AS gender, "
@@ -154,7 +157,8 @@ public interface ResidentDAO {
 	@RegisterBeanMapper(FamilyMember.class)
 	FamilyMember getMemberRawDataFromMemberId(@Bind("memberId") String memberId);
 
-	@SqlQuery("SELECT fm.full_name AS name, "
+	@SqlQuery("SELECT  fm.id AS id, "
+			+ " fm.full_name AS name, "
 			+ " fr.relation_nepali AS relation, "
 			+ " fm.age AS age, "
 			+ " g.gender_nepali AS gender, "
@@ -183,7 +187,8 @@ public interface ResidentDAO {
 	@RegisterBeanMapper(FamilyMemberDTO.class)
 	List<FamilyMemberDTO> getMembers(@Define("caseQuery")String caseQuery);
 
-	@SqlQuery("SELECT fm.full_name AS name, "
+	@SqlQuery("SELECT fm.id AS id, "
+			+ " fm.full_name AS name, "
 			+ " fr.relation_nepali AS relation, "
 			+ " fm.age AS age, "
 			+ " g.gender_nepali AS gender, "
@@ -213,7 +218,8 @@ public interface ResidentDAO {
 	List<FamilyMemberDTO> searchAllMemberByKey(@Bind("searchKey") String searchKey, @Define("caseQuery") String caseQuery);
 
 	
-	@SqlQuery("SELECT fm.full_name AS name, "
+	@SqlQuery("SELECT fm.id AS id, "
+			+ " fm.full_name AS name, "
 			+ " fr.relation_nepali AS relation, "
 			+ " fm.age AS age, "
 			+ " g.gender_nepali AS gender, "
@@ -242,7 +248,8 @@ public interface ResidentDAO {
 	@RegisterBeanMapper(FamilyMemberDTO.class)
 	List<FamilyMemberDTO> searchMemberByKey(@Bind("searchKey") String searchKey, @Bind("wardNo") String wardNo, @Define("caseQuery") String caseQuery);
 	
-	@SqlQuery("SELECT fm.full_name AS name, "
+	@SqlQuery("SELECT fm.id AS id, "
+			+ " fm.full_name AS name, "
 			+ " fr.relation_nepali AS relation, "
 			+ " fm.age AS age, "
 			+ " g.gender_nepali AS gender, "
@@ -271,7 +278,8 @@ public interface ResidentDAO {
 	@RegisterBeanMapper(FamilyMemberDTO.class)
 	List<FamilyMemberDTO> searchMemberByWard(@Bind("wardNo") String wardNo,@Define("caseQuery") String caseQuery);
 
-	@SqlQuery("SELECT fm.full_name AS name, "
+	@SqlQuery("SELECT fm.id AS id, "
+			+ " fm.full_name AS name, "
 			+ " fr.relation_nepali AS relation, "
 			+ " fm.age AS age, "
 			+ " g.gender_nepali AS gender, "

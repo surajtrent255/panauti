@@ -1,12 +1,9 @@
 package com.ishanitech.ipalika.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 
 @Data
 public class FamilyMember {
-	@JsonIgnore
 	private int id;
 	private String memberId;
     private String mainId;			//family Id (Form field id)

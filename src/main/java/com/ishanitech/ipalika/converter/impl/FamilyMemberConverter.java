@@ -37,6 +37,7 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 	public FamilyMemberDTO fromEntity(FamilyMember entity) {
 
 		FamilyMemberDTO  familyMemberDTO = new FamilyMemberDTO();
+		
 		familyMemberDTO.setMemberId(entity.getMemberId());
 		familyMemberDTO.setMainId(entity.getMainId());
 		familyMemberDTO.setName(entity.getName());

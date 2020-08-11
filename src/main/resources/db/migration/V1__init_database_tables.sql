@@ -356,3 +356,15 @@ CREATE TABLE IF NOT EXISTS `ward` (
 	UNIQUE KEY `ward_number_UNIQUE` (`ward_number`)
 );
 
+
+CREATE TABLE `death_record` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`registration_number` VARCHAR(150) NOT NULL COLLATE 'utf8_general_ci',
+	`member_id` VARCHAR(15) NOT NULL COLLATE 'utf8_general_ci',
+	`death_cause` VARCHAR(150) NOT NULL COLLATE 'utf8_general_ci',
+	`demise_date` DATETIME NOT NULL,
+	`place` VARCHAR(150) NOT NULL COLLATE 'utf8_general_ci',
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `registration_number` (`registration_number`) USING BTREE,
+	UNIQUE INDEX `member_id` (`member_id`) USING BTREE
+);

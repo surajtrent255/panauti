@@ -193,7 +193,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 			residentDetail.setSurveyor(surveyor);
 			List<FamilyMemberDTO> familyMembers = residentService.getAllFamilyMembersFromFamilyId(filledId);
 			residentDetail.setFamilyMembers(familyMembers);
-			IntStream.rangeClosed(1, 60).forEach(i -> {
+			IntStream.rangeClosed(1, 100).forEach(i -> {
 				if(questionWithOptions.contains(i)) {
 					try {
 						Method getAnswerMethod = Answer.class.getMethod(String.format("getAnswer%d", i));

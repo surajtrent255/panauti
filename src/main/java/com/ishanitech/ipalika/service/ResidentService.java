@@ -2,6 +2,7 @@ package com.ishanitech.ipalika.service;
 
 import java.util.List;
 
+import com.ishanitech.ipalika.dto.DeathRecordDTO;
 import com.ishanitech.ipalika.dto.FamilyMemberDTO;
 import com.ishanitech.ipalika.dto.MemberFormDetailsDTO;
 
@@ -22,6 +23,8 @@ public interface ResidentService {
 	void editMemberInfo(FamilyMemberDTO familyMemberInfo, String memberId);
 
 	void deleteMemberByMemberId(String memberId);
+	
+	void addDeathRecord(DeathRecordDTO deathRecord);
 
 	void setFamilyMemberDead(String memberId);
 

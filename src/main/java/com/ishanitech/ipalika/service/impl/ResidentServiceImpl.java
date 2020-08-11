@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ishanitech.ipalika.converter.impl.FamilyMemberConverter;
 import com.ishanitech.ipalika.dao.ResidentDAO;
+import com.ishanitech.ipalika.dto.DeathRecordDTO;
 import com.ishanitech.ipalika.dto.FamilyMemberDTO;
 import com.ishanitech.ipalika.dto.MemberFormDetailsDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
@@ -24,24 +25,22 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ResidentServiceImpl implements ResidentService {
 	
-	
-	private final DbService dbService;
-	
+	private final ResidentDAO residentDAO;
 
 	public ResidentServiceImpl(DbService dbService) {
-		this.dbService = dbService;
+		this.residentDAO = dbService.getDao(ResidentDAO.class);
 	}
 
 	@Override
 	public void addResidentMembers(List<FamilyMemberDTO> familyMemberInfo) {
-		List<String> memberIdsInDatabase = dbService.getDao(ResidentDAO.class).getAllMemberIds();
+		List<String> memberIdsInDatabase = residentDAO.getAllMemberIds();
 		List<FamilyMember> familyMembers = new FamilyMemberConverter().fromDto(familyMemberInfo)
 				.stream()
 				.filter(famMember -> !memberIdsInDatabase.contains(famMember.getMemberId()))
 				.collect(Collectors.toList());
 		
 		try {
-			dbService.getDao(ResidentDAO.class).addFamilyMembers(familyMembers);
+			residentDAO.addFamilyMembers(familyMembers);
 		} catch(JdbiException jex) {
 			throw new CustomSqlException("Exception: " + jex.getMessage());
 		}
@@ -52,7 +51,7 @@ public class ResidentServiceImpl implements ResidentService {
 	public List<FamilyMemberDTO> getAllFamilyMembersFromFamilyId(String familyId) {
 		List<FamilyMemberDTO> familyMembers = new ArrayList<>();
 		try {
-			List<FamilyMember> familyMemberInfo = dbService.getDao(ResidentDAO.class).getAllFamilyMembersFromFamilyId(familyId);
+			List<FamilyMember> familyMemberInfo = residentDAO.getAllFamilyMembersFromFamilyId(familyId);
 			familyMembers = new FamilyMemberConverter().fromEntity(familyMemberInfo);
 			return familyMembers;
 		} catch (JdbiException jex) {
@@ -64,7 +63,7 @@ public class ResidentServiceImpl implements ResidentService {
 	public FamilyMemberDTO getMemberDetailsFromMemberId(String memberId) {
 		FamilyMemberDTO familyMember = new FamilyMemberDTO();
 		try {
-			FamilyMember familyMemberInfo = dbService.getDao(ResidentDAO.class).getMemberDetailsFromMemberId(memberId);
+			FamilyMember familyMemberInfo = residentDAO.getMemberDetailsFromMemberId(memberId);
 			familyMember = new FamilyMemberConverter().fromEntity(familyMemberInfo);
 			return familyMember;
 		} catch (JdbiException jex) {
@@ -75,7 +74,7 @@ public class ResidentServiceImpl implements ResidentService {
 	@Override
 	public void deleteResidentByFamilyId(String familyId) {
 		try {
-			dbService.getDao(ResidentDAO.class).deleteResidentByFamilyId(familyId);
+			residentDAO.deleteResidentByFamilyId(familyId);
 		} catch (JdbiException jex) {
 			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
 		}
@@ -87,7 +86,7 @@ public class ResidentServiceImpl implements ResidentService {
 		FamilyMember familyMember = new FamilyMemberConverter().fromDto(familyMemberInfo);
 		
 		try {
-			dbService.getDao(ResidentDAO.class).addFamilyMemberSingle(familyMember);
+			residentDAO.addFamilyMemberSingle(familyMember);
 		} catch (JdbiException jex) {
 			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
 		}
@@ -97,10 +96,9 @@ public class ResidentServiceImpl implements ResidentService {
 	@Override
 	public MemberFormDetailsDTO getMemberFormDetails() {
 		MemberFormDetailsDTO memberFormDetails = new MemberFormDetailsDTO();
-		ResidentDAO residentDao = dbService.getDao(ResidentDAO.class);
 
 		try {
-			List<String> relationList = residentDao.getListofRelation();
+			List<String> relationList = residentDAO.getListofRelation();
 
 			if (relationList.size() > 0) {
 				memberFormDetails.setRelation(relationList);
@@ -111,7 +109,7 @@ public class ResidentServiceImpl implements ResidentService {
 		}
 		
 		try {
-			List<String> qualificationList = residentDao.getListofQualification();
+			List<String> qualificationList = residentDAO.getListofQualification();
 
 			if (qualificationList.size() > 0) {
 				memberFormDetails.setEducation(qualificationList);
@@ -122,7 +120,7 @@ public class ResidentServiceImpl implements ResidentService {
 		}
 		
 		try {
-			List<String> genderList = residentDao.getListofGender();
+			List<String> genderList = residentDAO.getListofGender();
 
 			if (genderList.size() > 0) {
 				memberFormDetails.setGender(genderList);
@@ -133,7 +131,7 @@ public class ResidentServiceImpl implements ResidentService {
 		}
 		
 		try {
-			List<String> maritalStatusList = residentDao.getListofMaritalStatus();
+			List<String> maritalStatusList = residentDAO.getListofMaritalStatus();
 
 			if (maritalStatusList.size() > 0) {
 				memberFormDetails.setMaritalStatus(maritalStatusList);
@@ -150,7 +148,7 @@ public class ResidentServiceImpl implements ResidentService {
 	public void editMemberInfo(FamilyMemberDTO familyMemberInfo, String memberId) {
 		FamilyMember familyMember = new FamilyMemberConverter().fromDto(familyMemberInfo);
 		try {
-			dbService.getDao(ResidentDAO.class).editFamilyMemberInfo(familyMember, memberId);
+			residentDAO.editFamilyMemberInfo(familyMember, memberId);
 		} catch (JdbiException jex) {
 			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
 		}
@@ -160,7 +158,7 @@ public class ResidentServiceImpl implements ResidentService {
 	@Override
 	public void deleteMemberByMemberId(String memberId) {
 		try {
-			dbService.getDao(ResidentDAO.class).deleteMemberByMemberId(memberId);
+			residentDAO.deleteMemberByMemberId(memberId);
 		} catch (JdbiException jex) {
 			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
 		}
@@ -171,7 +169,7 @@ public class ResidentServiceImpl implements ResidentService {
 	@Override
 	public void setFamilyMemberDead(String memberId) {
 		try {
-			dbService.getDao(ResidentDAO.class).setFamilyMemberDead(memberId);
+			residentDAO.setFamilyMemberDead(memberId);
 		} catch(JdbiException jex) {
 			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
 		}
@@ -181,10 +179,19 @@ public class ResidentServiceImpl implements ResidentService {
 	public FamilyMemberDTO getMemberRawDataFromMemberId(String memberId) {
 		FamilyMemberDTO familyMember = new FamilyMemberDTO();
 		try {
-			FamilyMember familyMemberInfo = dbService.getDao(ResidentDAO.class).getMemberRawDataFromMemberId(memberId);
+			FamilyMember familyMemberInfo = residentDAO.getMemberRawDataFromMemberId(memberId);
 			familyMember = new FamilyMemberConverter().fromEntity(familyMemberInfo);
 			return familyMember;
 		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
+		}
+	}
+
+	@Override
+	public void addDeathRecord(DeathRecordDTO deathRecord) {
+		try {
+			residentDAO.markMemberDeadAndAddDeathRecord(deathRecord);
+		} catch(JdbiException jex) {
 			throw new CustomSqlException("Exception :" + jex.getLocalizedMessage());
 		}
 	}

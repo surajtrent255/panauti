@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ishanitech.ipalika.dto.DeathRecordDTO;
 import com.ishanitech.ipalika.dto.FamilyMemberDTO;
 import com.ishanitech.ipalika.dto.MemberFormDetailsDTO;
 import com.ishanitech.ipalika.dto.ResidentDTO;
@@ -55,6 +56,7 @@ public class ResidentController {
 		log.info("Roles-->" + roleWardDTO);
 		return new ResponseDTO<List<ResidentDTO>>(surveyAnswerService.getResident(roleWardDTO, request));
 	}
+	
 	//Searches resident bases on searchKey. SearchKey = house owner name....
 	@PostMapping("/search")
 	public ResponseDTO<List<ResidentDTO>> searchResident(HttpServletRequest request, @RequestParam("searchKey") String searchKey, @RequestParam("wardNo") String wardNo) {
@@ -109,10 +111,10 @@ public class ResidentController {
 	}
 	
 	//returns information of the resident by its filled id.
-		@GetMapping("/detail/rawAnswers/{filledId}")
-		public ResponseDTO<Answer> getRawInformationOfResident(Model model, @PathVariable("filledId") String filledId) {
-			return new ResponseDTO<Answer>(surveyAnswerService.getRawAnswerByFilledId(filledId));
-		}
+	@GetMapping("/detail/rawAnswers/{filledId}")
+	public ResponseDTO<Answer> getRawInformationOfResident(Model model, @PathVariable("filledId") String filledId) {
+		return new ResponseDTO<Answer>(surveyAnswerService.getRawAnswerByFilledId(filledId));
+	}
 	
 	//Adds the family members to a resident
 	@ResponseStatus(HttpStatus.CREATED)
@@ -162,6 +164,12 @@ public class ResidentController {
 	@DeleteMapping("/member/{memberId}")
 	public void deleteMemberByMemberId(@PathVariable("memberId") String memberId) throws CustomSqlException {
 		residentService.deleteMemberByMemberId(memberId);
+	}
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/member/dead")
+	public void postDeathRecord(@RequestBody DeathRecordDTO deathRecord) throws CustomSqlException {
+		residentService.addDeathRecord(deathRecord);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)

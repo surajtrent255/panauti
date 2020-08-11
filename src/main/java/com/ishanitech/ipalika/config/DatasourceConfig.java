@@ -4,8 +4,6 @@
  */
 package com.ishanitech.ipalika.config;
 
-
-
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +21,7 @@ import com.zaxxer.hikari.HikariDataSource;
 public class DatasourceConfig {
 	@Autowired
 	DataSourceBean dsb;
-	
-	
-	
+
 	@Primary
 	@Bean
 	HikariDataSource datasource() {
@@ -36,18 +32,18 @@ public class DatasourceConfig {
 		config.setJdbcUrl("jdbc:mysql://localhost:3306/ipalika?autoReconnect=true&serverTimezone=UTC");
 		return new HikariDataSource(config);
 	}
-	
+
 	@Bean
 	TransactionAwareDataSourceProxy transactionAwareDataSourceProxy() {
 		TransactionAwareDataSourceProxy proxy = new TransactionAwareDataSourceProxy(datasource());
 		return proxy;
 	}
-	
+
 	@Bean
 	PlatformTransactionManager platformTransactionManager() {
 		return new DataSourceTransactionManager(transactionAwareDataSourceProxy());
 	}
-	
+
 	@Bean
 	Jdbi jdbiBean() {
 		Jdbi jdbi = Jdbi.create(transactionAwareDataSourceProxy());

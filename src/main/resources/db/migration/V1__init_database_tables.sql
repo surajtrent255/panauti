@@ -368,3 +368,12 @@ CREATE TABLE `death_record` (
 	UNIQUE INDEX `registration_number` (`registration_number`) USING BTREE,
 	UNIQUE INDEX `member_id` (`member_id`) USING BTREE
 );
+
+
+CREATE TABLE `extra_report` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`report_name` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`data` INT(11) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `report_name` (`report_name`) USING BTREE
+);

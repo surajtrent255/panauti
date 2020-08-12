@@ -3,6 +3,7 @@ package com.ishanitech.ipalika.dao;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ import org.jdbi.v3.sqlobject.transaction.Transaction;
 
 import com.ishanitech.ipalika.dto.QuestionType;
 import com.ishanitech.ipalika.exception.CustomSqlException;
+import com.ishanitech.ipalika.model.ExtraReport;
 import com.ishanitech.ipalika.model.PopulationReport;
 import com.ishanitech.ipalika.model.QuestionReport;
 import com.ishanitech.ipalika.utils.ReportUtil;
@@ -85,12 +87,20 @@ public interface ReportDAO {
 	@RegisterBeanMapper(QuestionReport.class)
 	List<QuestionReport> getAllQuestionReport();
 	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_death', (SELECT COUNT(*) FROM death_record))")
+	void generateDeathRecordCount();
+	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_household', (SELECT COUNT(*) FROM answer))")
+	void generateTotalHouseholdCount();
+	
 	@Transaction
 	default void generateReport() {
 		Map<Integer, String> answerAndTypes = getAllAnswer();
 		double totalPopulation = getTotalPopulation();
 		Map<Integer, Double> populationByGender = getPopulationByGenderId();
 		Map<Integer, Double> populationByQualification = getPopulationByQualificationId();
+		generateDeathRecordCount();
+		generateTotalHouseholdCount();
 		List<PopulationReport> populationReports = new ArrayList<>();
 		insertAgeGroupReport(totalPopulation); //inserts age group report
 		PopulationReport genderReport = new PopulationReport();
@@ -163,5 +173,9 @@ public interface ReportDAO {
 			}).collect(Collectors.toList());
 		insertQuestionReports(rawAnswers);
 	}
+
+	@RegisterBeanMapper(ExtraReport.class)
+	@SqlQuery("SELECT report_name, data FROM extra_report")
+	List<ExtraReport> getExtraReports();
 	
 }

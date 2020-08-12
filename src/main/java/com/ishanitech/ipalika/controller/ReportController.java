@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ishanitech.ipalika.dto.ResponseDTO;
+import com.ishanitech.ipalika.model.ExtraReport;
 import com.ishanitech.ipalika.model.PopulationReport;
 import com.ishanitech.ipalika.model.QuestionReport;
 import com.ishanitech.ipalika.service.ReportService;
@@ -38,5 +39,10 @@ public class ReportController {
 	@GetMapping("/question")
 	ResponseDTO<List<QuestionReport>> getQuestionReports() {
 		return new ResponseDTO<List<QuestionReport>>(reportService.getAllQuestionReports());
+	}
+	
+	@GetMapping("/extra")
+	ResponseDTO<List<ExtraReport>> getExtraReports() {
+		return new ResponseDTO<>(reportService.getExtraReports());
 	}
 }

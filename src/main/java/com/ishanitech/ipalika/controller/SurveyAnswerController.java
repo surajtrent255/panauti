@@ -56,6 +56,7 @@ public class SurveyAnswerController {
 			@RequestBody List<AnswerDTO> surveyAnswerInfo) throws CustomSqlException {
 		if (surveyAnswerInfo != null) {
 			surveyAnswerService.addAnswers(surveyAnswerInfo);
+			System.out.println("SurveyAnswer--->" + surveyAnswerInfo);
 		} else {
 			throw new NullPointerException("Invalid data");
 		}

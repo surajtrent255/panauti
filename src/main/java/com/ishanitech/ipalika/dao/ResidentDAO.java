@@ -12,6 +12,7 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 
+import com.ishanitech.ipalika.dto.DeathRecordDTO;
 import com.ishanitech.ipalika.dto.FamilyMemberDTO;
 import com.ishanitech.ipalika.model.FamilyMember;
 
@@ -122,7 +123,7 @@ public interface ResidentDAO {
 	@SqlUpdate("UPDATE family_member fm SET fm.deleted = 1 WHERE fm.member_id =:memberId")
 	void deleteMemberByMemberId(@Bind("memberId") String memberId);
 
-	@SqlUpdate("UPDATE family_member fm SET fm.is_dead = 1 WHERE fm.member_id =:memberId")
+	@SqlUpdate("UPDATE family_member SET is_dead = TRUE WHERE member_id = :memberId")
 	void setFamilyMemberDead(@Bind("memberId") String memberId);
 	
 	@SqlUpdate("UPDATE answer a SET a.deleted = 1 WHERE a.filled_id =:familyId")
@@ -307,5 +308,16 @@ public interface ResidentDAO {
 			+ " ON fm.family_id = a.filled_id WHERE a.answer_3 LIKE :wardNo AND fm.deleted = 0 AND fm.is_dead = 0 <caseQuery>")
 	@RegisterBeanMapper(FamilyMemberDTO.class)
 	List<FamilyMemberDTO> searchAllMemberByWard(@Define("caseQuery") String caseQuery);
+
+	
+	@SqlUpdate("INSERT INTO death_record(registration_number, member_id, death_cause, demise_date, place) VALUES (:registrationNumber, :memberId, :deathCause, :demiseDate, :place)")
+	void addDeathRecord(@BindBean DeathRecordDTO deathRecord);
+	
+	@Transaction
+	default void markMemberDeadAndAddDeathRecord(DeathRecordDTO deathRecord) {
+		System.out.println("MemberID : " + deathRecord.getMemberId());
+		setFamilyMemberDead(deathRecord.getMemberId());
+		addDeathRecord(deathRecord);
+	}
 	
 }

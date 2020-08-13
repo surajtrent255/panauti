@@ -294,6 +294,20 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 			
 		case DROPDOWN:
 			return questionOption.getOptions().get(Integer.parseInt(rawanswer)).getOptionText();
+			
+		case RADIO_M:
+			if(rawanswer.contains(",")) {
+				String[] extractedData = rawanswer.split(",");
+				List<String> options = new ArrayList<>();
+				IntStream.range(0, extractedData.length)
+				.forEach(i -> {
+					String s = questionOption.getOptions().get(i).getOptionText() + "(" + extractedData[i] +")";
+					options.add(s);
+				});
+				return replaceArrayBracket(options.toString());
+			} else {
+				return questionOption.getOptions().get(0).getOptionText() + "(" + rawanswer +")";
+			}
 		
 		default:
 			return "";

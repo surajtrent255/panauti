@@ -27,7 +27,7 @@ spring:
 
 database:
   username: root
-  password: password
+  password: root
 
 file:
   upload:

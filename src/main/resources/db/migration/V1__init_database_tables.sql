@@ -94,6 +94,7 @@ INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('12', 'CH
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('13', 'DROPDOWN');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('14', 'DISTRICT');
 INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('15', 'WARD');
+INSERT INTO `ipalika`.`question_type` (`type_id`, `type_name`) VALUES ('16', 'RADIO_M');
 
 CREATE TABLE IF NOT EXISTS `options` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,

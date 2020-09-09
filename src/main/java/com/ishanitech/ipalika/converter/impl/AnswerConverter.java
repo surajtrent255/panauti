@@ -139,11 +139,11 @@ public class AnswerConverter extends BaseConverter<Answer, AnswerDTO> {
 	public ResidentDTO entityToResident(Answer entity) {
 		ResidentDTO residentDto = new ResidentDTO();
 		residentDto.setFilledId(entity.getFilledId());
-		residentDto.setHouseOwner(entity.getAnswer1()); //house owner's name
-		residentDto.setTole(entity.getAnswer2()); //tole
-		residentDto.setHouseNo(entity.getAnswer4()); //house number
-		residentDto.setKittaNo(entity.getAnswer13()); //kitta number
-		residentDto.setPhoneNo(entity.getAnswer5()); //phone number
+		residentDto.setHouseOwner(entity.getAnswer1()); 	//house owner's name
+		residentDto.setTole(entity.getAnswer2()); 			//tole
+		residentDto.setHouseNo(entity.getAnswer4()); 		//house number
+		residentDto.setKittaNo(entity.getAnswer13()); 		//kitta number
+		residentDto.setPhoneNo(entity.getAnswer5()); 		//phone number
 		residentDto.setImageUrl(String.format("%s/%s", "http://localhost:8888/resource", entity.getAnswer52())); //image url
 		return residentDto;
 	}

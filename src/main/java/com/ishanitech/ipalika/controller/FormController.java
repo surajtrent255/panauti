@@ -38,7 +38,7 @@ public class FormController {
 
 	/**
 	 * Handles the post request coming to {@code FormController} on its root url {@link /form}.
-	 * @param form dto object
+	 * @param form FormDTO object
 	 * @return void 
 	 * @author <b> Umesh Bhujel </b>
 	 * @since 1.0
@@ -50,6 +50,7 @@ public class FormController {
 		FormConverter converter = new FormConverter();
 		formService.addForm(converter.fromDto(form));
 	}
+	
 	
 	/**
 	 * Gets the form from database using given id
@@ -66,9 +67,19 @@ public class FormController {
 		return new ResponseDTO<>(converter.fromEntity(form));
 	}
 	
+	
+	/**
+	 * Updates form using given id
+	 * @param id integer id
+	 * @param formDTO FormDTO object
+	 * @return {@code ResponseDTO<FormDTO>} object
+	 * @throws CustomSqlException
+	 * @author <b> Umesh Bhujel </b>
+	 * @since 1.0
+	 */
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/{id}")
-	public ResponseDTO<FormDTO> updateFormById(@PathVariable("id") Integer id, @RequestBody FormDTO formDTO) {
+	public ResponseDTO<FormDTO> updateFormById(@PathVariable("id") Integer id, @RequestBody FormDTO formDTO) throws CustomSqlException {
 		FormConverter converter = new FormConverter();
 		formService.updateFormById(id, converter.fromDto(formDTO));
 		return new ResponseDTO<>(formDTO);

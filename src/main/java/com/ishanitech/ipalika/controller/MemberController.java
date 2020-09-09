@@ -19,7 +19,11 @@ import com.ishanitech.ipalika.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
-
+/**
+ * {@code MemberController} is a controller class which handles the CRUD operaiton of family members.
+ * @author Tanchhowpa Singzango
+ * @since 1.0
+ */
 @Slf4j
 @RequestMapping("/member")
 @RestController

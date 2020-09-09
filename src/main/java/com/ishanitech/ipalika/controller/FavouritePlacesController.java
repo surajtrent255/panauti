@@ -27,10 +27,10 @@ import com.ishanitech.ipalika.service.FavouritePlacesService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 
+ * {@code FavouritePlaceController} is a controller class that handles favourite place.
  * @author Tanchhowpa email: rev.x17@gmail.com Jan 29, 2020 10:16:40 AM
+ * @since 1.0
  */
-
 @Slf4j
 @RequestMapping("/favourite-place")
 @RestController

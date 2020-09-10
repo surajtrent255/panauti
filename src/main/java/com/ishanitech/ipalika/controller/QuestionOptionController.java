@@ -26,6 +26,16 @@ public class QuestionOptionController {
 		this.questionOptionsService = questionOptionsService;
 	}
 
+	
+	/**
+	 * Handles the post request coming to {@code QuestionOptionController} on its root url {@link /question-option}
+	 * For entry of Question and options
+	 * @param response HttpServletResponse object 
+	 * @param questionOptionsRequest QuestionOptionRequestDTO object
+	 * @return void 
+	 * @author <b> Umesh Bhujel </b>
+	 * @since 1.0
+	 */
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public void addQuestionAndOptions(HttpServletResponse response, @RequestBody QuestionOptionRequestDTO questionOptionsRequest) {

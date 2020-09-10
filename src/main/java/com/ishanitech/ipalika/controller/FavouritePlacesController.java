@@ -95,6 +95,7 @@ public class FavouritePlacesController {
 	 * @param http HttpServletResponse object 
 	 * @param favouritePlaceInfo request object
 	 * @param placeId String placeId
+	 * @return void
 	 * @throws CustomSqlException
 	 * @author <b> Tanchhowpa Singzango </b>
 	 * @since 1.0

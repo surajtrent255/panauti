@@ -34,6 +34,11 @@ import com.ishanitech.ipalika.service.SurveyAnswerService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * {@code FormDetailController} is a controller class.
+ * @author Umesh Bhujel, Tanchhowpa Singzango, Pujan K.C.
+ * @since 1.0
+ */
 @Slf4j
 @RequestMapping("/resident")
 @RestController

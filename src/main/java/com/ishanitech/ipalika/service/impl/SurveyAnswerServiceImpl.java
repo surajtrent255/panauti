@@ -235,7 +235,6 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	 * @return String in Nepali form.
 	 */
 	private String extractAnswer(Object rawAnswer, QuestionOption questionOption) {
-		log.info("#########################");
 		String rawanswer = rawAnswer.toString();
 		log.info(rawanswer);
 		switch(questionOption.getQuestionType()) {

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ishanitech.ipalika.dto.ResponseDTO;
-import com.ishanitech.ipalika.exception.EntityNotFoundException;
 import com.ishanitech.ipalika.model.ExtraReport;
 import com.ishanitech.ipalika.model.PopulationReport;
 import com.ishanitech.ipalika.model.QuestionReport;

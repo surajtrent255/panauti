@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class JwtProperties {
 	private String applicationName;
-	private int expirationDate;
+	private long expirationDate;
 	private SecurityProperty security;
 	private JwtAuthenticationProperty auth;
 }

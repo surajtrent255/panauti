@@ -7,7 +7,7 @@ jwt:
   security:
     key: ishanitech
   applicationName: ishanitech
-  expirationDate: 864000000
+  expirationDate: 2592000000
   auth:
     header: Authorization
     schema: Bearer

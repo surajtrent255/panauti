@@ -20,7 +20,7 @@ public interface FormDetailDAO {
 			"	qt.type_name AS q_type " + 
 			"	FROM question q" + 
 			"	INNER JOIN question_type qt ON q.type_id = qt.type_id " + 
-			"	WHERE q.form_id = :formID")
+			"	WHERE q.form_id = :formID ORDER BY indx ASC")
 	@RegisterRowMapper(FormDetailMapper.class)
 	public List<FormDetail> getAllFormDetails(@Bind("formID") Integer formId);
 	

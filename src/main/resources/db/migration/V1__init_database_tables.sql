@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `form` (
 
 CREATE TABLE IF NOT EXISTS `question` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`indx` INT(11) NOT NULL,
 	`question_id` VARCHAR(50) NOT NULL,
 	`description` TEXT NOT NULL,
 	`group` VARCHAR(50) NOT NULL,
@@ -69,7 +70,8 @@ CREATE TABLE IF NOT EXISTS `question` (
 	`form_id` INT(11) NOT NULL,
 	`reportable` BIT(1) NOT NULL DEFAULT b'0',
 	PRIMARY KEY (`id`),
-	UNIQUE INDEX `question_id` (`question_id`)
+	UNIQUE INDEX `question_id` (`question_id`),
+	UNIQUE INDEX `indx` (`indx`)
 );
 
 

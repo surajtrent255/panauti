@@ -1,4 +1,5 @@
 package com.ishanitech.ipalika.dao;
+import java.util.List;
 import java.util.Map;
 
 import org.jdbi.v3.core.result.LinkedHashMapRowReducer;
@@ -131,4 +132,25 @@ public interface UserDAO {
 		}
 		
 	}
+
+	@SqlQuery(" SELECT u.id AS u_id, "
+			+ " u.username AS u_username, "
+			+ " full_name AS u_full_name, "
+			+ " u.email AS u_email, "
+			+ " u.mobile_number AS u_mobileNumber, "
+			+ " u.locked AS u_locked, "
+			+ " u.first_login AS u_firstLogin, "
+			+ " u.enabled AS u_enabled, "
+			+ " u.expired AS u_expired, "
+			+ " u.registered_date AS u_registeredDate, "
+			+ " u.ward_no AS u_wardNo,"
+			+ " r.id AS r_id, "
+			+ " r.role as r_role FROM user u INNER JOIN user_role ur ON u.id = ur.user_id "
+			+ " INNER JOIN role r ON r.id = ur.role_id "
+			+ " WHERE ur.role_id > :roleId AND u.enabled = 1")
+	@UseRowReducer(UserReducer.class)
+	public List<User> getAllUserInfo(@Bind("roleId") int roleId);
+
+	@SqlQuery("SELECT role_id FROM user_role ur INNER JOIN user u ON ur.user_id = u.id WHERE u.id =:userId")
+	public int getRoleIdFromUserId(@Bind("userId") int userId);
 }

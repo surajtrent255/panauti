@@ -55,6 +55,7 @@ public class UserConverter extends BaseConverter<User, UserDTO> {
 		userDTO.setFirstLogin(entity.isFirstLogin());
 		userDTO.setWardNo(entity.getWardNo());
 		userDTO.setRoles(entity.getRole().stream().map(role -> role.getRole()).collect(Collectors.toList()));
+		userDTO.setRegisteredDate(entity.getRegisteredDate());
 		return userDTO;
 	}
 

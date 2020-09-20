@@ -3,7 +3,9 @@ package com.ishanitech.ipalika.service.impl;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+
 
 import org.jdbi.v3.core.JdbiException;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
@@ -17,6 +19,7 @@ import com.ishanitech.ipalika.converter.impl.UserConverter;
 import com.ishanitech.ipalika.dao.UserDAO;
 import com.ishanitech.ipalika.dto.UserDTO;
 import com.ishanitech.ipalika.dto.UserRegistrationDTO;
+import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.exception.EntityNotFoundException;
 import com.ishanitech.ipalika.model.Role;
 import com.ishanitech.ipalika.model.User;
@@ -153,6 +156,19 @@ public class UserServiceImpl implements UserService {
 	
 	private String[] splitFirstMiddleAndLastName(String fullName) {
 		return fullName.split(" ");
+	}
+
+	@Override
+	public List<UserDTO> getAllUserInfo(int userId) {
+		try {
+		List<UserDTO> users;
+		int roleId = dbService.getDao(UserDAO.class).getRoleIdFromUserId(userId);
+		List<User> userInfo =  dbService.getDao(UserDAO.class).getAllUserInfo(roleId);
+		users = new UserConverter().fromEntity(userInfo);
+		return users;
+		} catch(JdbiException jex) {
+			throw new CustomSqlException("Exception : " + jex.getLocalizedMessage());
+		}
 	}
 
 }

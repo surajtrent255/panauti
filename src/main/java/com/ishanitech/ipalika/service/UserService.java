@@ -1,6 +1,8 @@
 package com.ishanitech.ipalika.service;
 
+import java.util.List;
 import java.util.Map;
+
 
 import com.ishanitech.ipalika.dto.UserDTO;
 import com.ishanitech.ipalika.dto.UserRegistrationDTO;
@@ -18,4 +20,5 @@ public interface UserService {
 	public void changePassword(String newPassword, int userId);
 	public void updateUserInfoByUserId(Map<String, Object> updates, int userId);
 	public void disableUser(int userId);
+	List<UserDTO> getAllUserInfo(int userId);
 }

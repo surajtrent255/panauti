@@ -1,6 +1,7 @@
 package com.ishanitech.ipalika.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,5 +25,6 @@ public class UserDTO implements Serializable {
 	private boolean firstLogin;
 	private boolean expired;
 	private int wardNo;
+	private Date registeredDate;
 	private List<String> roles;
 }

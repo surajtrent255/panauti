@@ -1,12 +1,15 @@
 package com.ishanitech.ipalika.controller;
 
+import java.util.List;
 import java.util.Map;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.dto.UserDTO;
 import com.ishanitech.ipalika.dto.UserRegistrationDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
@@ -65,6 +69,13 @@ public class UserController {
 	@PutMapping("/{userId}/password")
 	public void changePassword(@RequestBody String password, @PathVariable("userId") int userId) {
 		userService.changePassword(password, userId);
+	}
+	
+	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
+	@GetMapping
+	public ResponseDTO<List<UserDTO>> getAllUserInfo(@AuthenticationPrincipal CustomUserDetails user) throws CustomSqlException {
+		log.info(user.toString());
+		return new ResponseDTO<List<UserDTO>> (userService.getAllUserInfo(user.getUser().getUserId()));
 	}
 	
 }

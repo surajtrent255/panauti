@@ -77,20 +77,8 @@ public class UserServiceImpl implements UserService {
 		Role role = new Role();
 		role.setId(userDto.getAccountType());
 		user.setPassword(encoder.encode(userDto.getPassword()));
-		String[] fullName = splitFirstMiddleAndLastName(userDto.getFullName());
-		if(fullName != null && fullName.length > 0) {
-			if(fullName.length == 3) {
-				user.setFirstName(fullName[0]);
-				user.setMiddleName(fullName[1]);
-				user.setLastName(fullName[2]);
-			}
-			
-			if(fullName.length == 2) {
-				user.setFirstName(fullName[0]);
-				user.setMiddleName(null);
-				user.setLastName(fullName[1]);
-			}
-		}
+		user.setFullName(userDto.getFullName());
+		
 		 try {
 			 userDao.addUserAndRole(user, userDto.getAccountType());
 		 } catch (JdbiException jex) {
@@ -117,27 +105,8 @@ public class UserServiceImpl implements UserService {
 				userInfo.setMobileNumber((String)user.get("mobileNumber"));
 			}
 			
-			if(user.containsKey("username")) {
-				userInfo.setUsername((String)user.get("username"));
-			}
-			
 			if(user.containsKey("fullName")) {
-				String[] fullName = ((String)user.get("fullName")).split(" ");
-				
-				if(fullName.length > 0 && fullName.length == 1) {
-					userInfo.setFirstName(fullName[0]);
-				}
-				
-				if(fullName.length > 0 && fullName.length == 2) {
-					userInfo.setFirstName(fullName[0]);
-					userInfo.setLastName(fullName[1]);
-				}
-				
-				if(fullName.length > 0 && fullName.length == 3) {
-					userInfo.setFirstName(fullName[0]);
-					userInfo.setMiddleName(fullName[1]);
-					userInfo.setLastName(fullName[2]);
-				}
+				userInfo.setFullName((String)user.get("fullName"));
 			}
 			dbService.getDao(UserDAO.class).updateUserInfo(userInfo, userId);
 		} catch(JdbiException jex) {

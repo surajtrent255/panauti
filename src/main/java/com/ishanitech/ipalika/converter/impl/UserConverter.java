@@ -22,20 +22,7 @@ public class UserConverter extends BaseConverter<User, UserDTO> {
 	@Override
 	public User fromDto(UserDTO dto) {
 		User user = new User();
-		String[] fullName = splitFirstMiddleAndLastName(dto.getFullName());
-		if(fullName != null && fullName.length > 0) {
-			if(fullName.length == 3) {
-				user.setFirstName(fullName[0]);
-				user.setMiddleName(fullName[1]);
-				user.setLastName(fullName[2]);
-			}
-			
-			if(fullName.length == 2) {
-				user.setFirstName(fullName[0]);
-				user.setMiddleName(null);
-				user.setLastName(fullName[1]);
-			}
-		}
+		user.setFullName(dto.getFullName());
 		user.setWardNo(dto.getWardNo());
 		user.setUsername(dto.getUsername());
 		user.setEmail(dto.getEmail());
@@ -60,7 +47,7 @@ public class UserConverter extends BaseConverter<User, UserDTO> {
 		userDTO.setUserId(entity.getId());
 		userDTO.setUsername(entity.getUsername());
 		userDTO.setEmail(entity.getEmail());
-		userDTO.setFullName(String.format("%s %s %s", entity.getFirstName(), entity.getMiddleName(), entity.getLastName()));
+		userDTO.setFullName(entity.getFullName());
 		userDTO.setMobileNumber(entity.getMobileNumber());
 		userDTO.setLocked(entity.isLocked());
 		userDTO.setEnabled(entity.isEnabled());

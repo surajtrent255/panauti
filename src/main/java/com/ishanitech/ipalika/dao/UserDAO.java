@@ -31,9 +31,7 @@ public interface UserDAO {
 	 * @param user User model object.
 	 */
 	@GetGeneratedKeys
-	@SqlUpdate("INSERT INTO user ( `first_name`,"
-			+ " `middle_name`, "
-			+ " `last_name`, "
+	@SqlUpdate("INSERT INTO user ( `full_name`, "
 			+ " `username`, "
 			+ " `email`, "
 			+ " `password`, "
@@ -44,9 +42,7 @@ public interface UserDAO {
 			+ " `expired`, "
 			+ " `registered_date`,"
 			+ " `ward_no`) "
-			+ " VALUES (:firstName, "
-			+ " :middleName, "
-			+ " :lastName, "
+			+ " VALUES (:fullName, "
 			+ " :username, "
 			+ " :email, "
 			+ " :password, "
@@ -74,7 +70,7 @@ public interface UserDAO {
 	/**
 	 * @return fullName String containing first middle and last name
 	 */
-	@SqlQuery("SELECT CONCAT(`first_name`, `middle_name`, `last_name`)  FROM user WHERE id =:id")
+	@SqlQuery("SELECT full_name FROM user WHERE id =:id")
 	public String getUserFullNameById(@Bind("id") int id);
 
 	@SqlUpdate("UPDATE user SET deleted = true WHERE id = :userId")
@@ -86,14 +82,12 @@ public interface UserDAO {
 	@SqlUpdate("UPDATE user SET password = :password WHERE id = :userId")
 	public void changePassword(@Bind("password") String password, @Bind("userId") int userId);
 	
-	@SqlUpdate("UPDATE user SET username = :username, first_name = :firstName, middle_name = :middleName, last_name = :lastName, mobile_number = :mobileNumber WHERE id = :userId")
+	@SqlUpdate("UPDATE user SET full_name = :fullName, mobile_number = :mobileNumber WHERE id = :userId")
 	public void updateUserInfo(@BindBean User user, @Bind("userId") int userId);
 	
 	@SqlQuery(" SELECT u.id AS u_id, "
 			+ " username AS u_username, "
-			+ " first_name AS u_first_name, "
-			+ " middle_name AS u_middle_name, "
-			+ " last_name AS u_last_name, "
+			+ " full_name AS u_full_name, "
 			+ " password AS u_password, "
 			+ " email AS u_email, "
 			+ " mobile_number AS u_mobile_number, "

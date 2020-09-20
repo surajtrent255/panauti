@@ -1,28 +1,29 @@
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`first_name` VARCHAR(30) NOT NULL,
-	`middle_name` VARCHAR(30) NULL DEFAULT NULL,
-	`last_name` VARCHAR(30) NOT NULL,
-	`username` VARCHAR(30) NOT NULL,
-	`email` VARCHAR(50) NULL DEFAULT NULL,
-	`password` VARCHAR(60) NOT NULL,
-	`mobile_number` VARCHAR(10) NOT NULL,
+	`full_name` VARCHAR(30) NOT NULL COLLATE 'utf8_general_ci',
+	`username` VARCHAR(30) NOT NULL COLLATE 'utf8_general_ci',
+	`email` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`password` VARCHAR(60) NOT NULL COLLATE 'utf8_general_ci',
+	`mobile_number` VARCHAR(10) NOT NULL COLLATE 'utf8_general_ci',
 	`locked` BIT(1) NOT NULL DEFAULT b'1',
 	`first_login` BIT(1) NULL DEFAULT b'1',
 	`enabled` BIT(1) NOT NULL DEFAULT b'1',
 	`expired` BIT(1) NOT NULL DEFAULT b'1',
 	`registered_date` TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-	`ward_no` INT(11) NOT NULL DEFAULT 1,
-	PRIMARY KEY (`id`),
-	UNIQUE INDEX `username` (`username`),
-	UNIQUE INDEX `mobile_number` (`mobile_number`),
-	UNIQUE INDEX `email` (`email`)
-);
+	`ward_no` INT(11) NOT NULL DEFAULT '1',
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `username` (`username`) USING BTREE,
+	UNIQUE INDEX `mobile_number` (`mobile_number`) USING BTREE,
+	UNIQUE INDEX `email` (`email`) USING BTREE
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
 
-INSERT INTO `user` (`id`, `first_name`, `middle_name`, `last_name`, `username`, `email`, `password`, `mobile_number`, `locked`, `first_login`, `enabled`, `expired`, `registered_date`, `ward_no`)
+INSERT INTO `user` (`id`, `full_name`, `username`, `email`, `password`, `mobile_number`, `locked`, `first_login`, `enabled`, `expired`, `registered_date`, `ward_no`)
  VALUES
-(1, 'Umesh', 'B.', 'Bhujel', 'yoomes', 'yoomesbhujel@gmail.com', '$2a$11$H9wDLxAPTX5qp0doFKank.w6vgB7xPo1CJojH2AC0ovBY4Iu31oTS', '9849931288', 0, 0, 1, 0, CURRENT_TIMESTAMP(), 0),
-(2, 'Pujan', 'X.', 'KC', 'pujanov', 'pujanov69@gmail.com', '$2a$11$H9wDLxAPTX5qp0doFKank.w6vgB7xPo1CJojH2AC0ovBY4Iu31oTS', '9849399058', 0, 0, 1, 0, CURRENT_TIMESTAMP(), 1);
+(1, 'Umesh Bhujel', 'yoomes', 'yoomesbhujel@gmail.com', '$2a$11$H9wDLxAPTX5qp0doFKank.w6vgB7xPo1CJojH2AC0ovBY4Iu31oTS', '9849931288', 0, 0, 1, 0, CURRENT_TIMESTAMP(), 0),
+(2, 'Pujan KC', 'pujanov', 'pujanov69@gmail.com', '$2a$11$H9wDLxAPTX5qp0doFKank.w6vgB7xPo1CJojH2AC0ovBY4Iu31oTS', '9849399058', 0, 0, 1, 0, CURRENT_TIMESTAMP(), 1);
 
 
 CREATE TABLE IF NOT EXISTS `role` (

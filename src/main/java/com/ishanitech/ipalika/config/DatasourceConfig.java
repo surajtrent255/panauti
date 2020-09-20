@@ -28,6 +28,7 @@ public class DatasourceConfig {
 		HikariConfig config = new HikariConfig();
 		config.setUsername(dsb.getUsername());
 		config.setPassword(dsb.getPassword());
+
 		config.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		config.setJdbcUrl("jdbc:mysql://localhost:3306/ipalika?autoReconnect=true&serverTimezone=UTC");
 		return new HikariDataSource(config);

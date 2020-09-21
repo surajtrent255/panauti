@@ -1,4 +1,4 @@
-INSERT INTO `form` (`id`, `form_id`, `form_name`) VALUES (1, 'MUNICIPALITY_RESIDENT_FORM', 'Municipality Residents Information Form');
+﻿INSERT INTO `form` (`id`, `form_id`, `form_name`) VALUES (1, 'MUNICIPALITY_RESIDENT_FORM', 'Municipality Residents Information Form');
 
 INSERT INTO `options` (`id`, `option_id`, `option_text`, `question_id`) VALUES
 	(1, 1, 'नेपाली', 8),
@@ -384,7 +384,7 @@ INSERT INTO `question` (`id`, `indx`, `question_id`, `description`, `group`, `re
 	(88, 67, '‍non_seasonal_agr_land', 'बेमौसमी खेति गरिएको जग्गा ', 'कृषि', 1, 12, 1, b'0'),
 	(89, 68, '‍bee_keeping', 'मौरीपालन गर्नु भएको छ? (भए मौरीघार कति) ', 'कृषि', 1, 12, 1, b'0'),
 	(90, 69, '‍bee_species', 'मौरीपालन कुन जातकोः ', 'कृषि', 1, 1, 1, b'0'),
-	(91, 70, '‍annual_honey_production', 'वार्षिक मह उत्पादन (के.जी)', 'कृषि', 1, 3, 1, b'0'),
+	(91, 70, '‍annual_honey_production', 'वार्षिक मह उत्पादन (के.जी)', 'कृषि', 1, 4, 1, b'0'),
 	(92, 71, '‍agr_manpower_number', 'काम गर्ने कर्मचारीहरु कति छन ? ', 'कृषि', 1, 12, 1, b'0');
 
 

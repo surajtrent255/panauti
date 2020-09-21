@@ -23,7 +23,6 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 		familyMember.setGender(dto.getGender());
 		familyMember.setMaritalStatus(dto.getMaritalStatus());
 		familyMember.setVoterCard(Boolean.parseBoolean(dto.getVoterCard()));
-		familyMember.setAddress(Integer.parseInt(dto.getAddress()));
 		familyMember.setHealthCondition(dto.getHealthCondition());
 		familyMember.setDateOfBirthAD(dto.getDateOfBirthAD());
 		familyMember.setDateOfBirthBS(dto.getDateOfBirthBS());
@@ -47,7 +46,6 @@ public class FamilyMemberConverter extends BaseConverter<FamilyMember, FamilyMem
 		familyMemberDTO.setGender(entity.getGender());
 		familyMemberDTO.setMaritalStatus(entity.getMaritalStatus());
 		familyMemberDTO.setVoterCard(String.valueOf(entity.getVoterCard()));
-		familyMemberDTO.setAddress(String.valueOf(entity.getAddress()));
 		familyMemberDTO.setHealthCondition(entity.getHealthCondition());
 		familyMemberDTO.setDateOfBirthAD(entity.getDateOfBirthAD());
 		familyMemberDTO.setDateOfBirthBS(entity.getDateOfBirthBS());

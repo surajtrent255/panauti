@@ -42,7 +42,6 @@ public interface ResidentDAO {
 			+ " aq.qualification_nep AS education, "
 			+ " fm.occupation AS occupation,"
 			+ " fm.has_voter_id AS voterCard,"
-			+ " fm.migration AS address, "
 			+ " fm.health_status AS healthCondition,"
 			+ " fm.member_id AS memberId, "
 			+ " fm.dob_ad AS dateOfBirthAD, "
@@ -70,7 +69,6 @@ public interface ResidentDAO {
 			+ " aq.qualification_nep AS education, "
 			+ " fm.occupation AS occupation,"
 			+ " fm.has_voter_id AS voterCard,"
-			+ " fm.migration AS address, "
 			+ " fm.health_status AS healthCondition,"
 			+ " fm.member_id AS memberId, "
 			+ " fm.dob_ad AS dateOfBirthAD, "
@@ -89,7 +87,7 @@ public interface ResidentDAO {
 	@RegisterBeanMapper(FamilyMember.class)
 	FamilyMember getMemberDetailsFromMemberId(@Bind("memberId") String memberId);
 	
-	@SqlUpdate("INSERT INTO family_member (family_id, full_name, relation_id, age, gender_id, marital_status, qualification_id, occupation, has_voter_id, migration, health_status, member_id, dob_ad, dob_bs) VALUE(:mainId, :name, :relation, :age, :gender, :maritalStatus, :education, :occupation, :voterCard, :address, :healthCondition, :memberId, :dateOfBirthAD, :dateOfBirthBS)")
+	@SqlUpdate("INSERT INTO family_member (family_id, full_name, relation_id, age, gender_id, marital_status, qualification_id, occupation, has_voter_id, health_status, member_id, dob_ad, dob_bs) VALUE(:mainId, :name, :relation, :age, :gender, :maritalStatus, :education, :occupation, :voterCard, :healthCondition, :memberId, :dateOfBirthAD, :dateOfBirthBS)")
 	void addFamilyMemberSingle(@BindBean FamilyMember familyMembers);
 	
 	@SqlQuery("SELECT relation_nepali FROM family_relation")
@@ -113,7 +111,6 @@ public interface ResidentDAO {
 			+ " qualification_id =:education, "
 			+ " occupation =:occupation, "
 			+ " has_voter_id =:voterCard, "
-			+ " migration =:address, "
 			+ " health_status =:healthCondition, "
 			+ " dob_ad =:dateOfBirthAD, "
 			+ " dob_bs =:dateOfBirthBS "
@@ -147,7 +144,6 @@ public interface ResidentDAO {
 			+ " fm.qualification_id AS education, "
 			+ " fm.occupation AS occupation,"
 			+ " fm.has_voter_id AS voterCard,"
-			+ " fm.migration AS address, "
 			+ " fm.health_status AS healthCondition,"
 			+ " fm.member_id AS memberId, "
 			+ " fm.dob_ad AS dateOfBirthAD, "
@@ -167,7 +163,6 @@ public interface ResidentDAO {
 			+ " aq.qualification_nep AS education, "
 			+ " fm.occupation AS occupation,"
 			+ " fm.has_voter_id AS voterCard,"
-			+ " fm.migration AS address, "
 			+ " fm.health_status AS healthCondition,"
 			+ " fm.member_id AS memberId, "
 			+ " fm.dob_ad AS dateOfBirthAD, "
@@ -197,7 +192,6 @@ public interface ResidentDAO {
 			+ " aq.qualification_nep AS education, "
 			+ " fm.occupation AS occupation,"
 			+ " fm.has_voter_id AS voterCard,"
-			+ " fm.migration AS address, "
 			+ " fm.health_status AS healthCondition,"
 			+ " fm.member_id AS memberId, "
 			+ " fm.dob_ad AS dateOfBirthAD, "
@@ -228,7 +222,6 @@ public interface ResidentDAO {
 			+ " aq.qualification_nep AS education, "
 			+ " fm.occupation AS occupation,"
 			+ " fm.has_voter_id AS voterCard,"
-			+ " fm.migration AS address, "
 			+ " fm.health_status AS healthCondition,"
 			+ " fm.member_id AS memberId, "
 			+ " fm.dob_ad AS dateOfBirthAD, "
@@ -258,7 +251,6 @@ public interface ResidentDAO {
 			+ " aq.qualification_nep AS education, "
 			+ " fm.occupation AS occupation,"
 			+ " fm.has_voter_id AS voterCard,"
-			+ " fm.migration AS address, "
 			+ " fm.health_status AS healthCondition,"
 			+ " fm.member_id AS memberId, "
 			+ " fm.dob_ad AS dateOfBirthAD, "
@@ -288,7 +280,6 @@ public interface ResidentDAO {
 			+ " aq.qualification_nep AS education, "
 			+ " fm.occupation AS occupation,"
 			+ " fm.has_voter_id AS voterCard,"
-			+ " fm.migration AS address, "
 			+ " fm.health_status AS healthCondition,"
 			+ " fm.member_id AS memberId, "
 			+ " fm.dob_ad AS dateOfBirthAD, "

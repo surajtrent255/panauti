@@ -16,7 +16,6 @@ import com.ishanitech.ipalika.dto.FamilyMemberDTO;
 import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.dto.RoleWardDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
-import com.ishanitech.ipalika.exception.EntityNotFoundException;
 import com.ishanitech.ipalika.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;

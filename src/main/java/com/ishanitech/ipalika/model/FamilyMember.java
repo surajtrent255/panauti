@@ -15,7 +15,6 @@ public class FamilyMember {
     private String gender;
     private String maritalStatus;
     private Boolean voterCard;
-    private int address;
     private String healthCondition;
     private String dateOfBirthAD;
     private String dateOfBirthBS;

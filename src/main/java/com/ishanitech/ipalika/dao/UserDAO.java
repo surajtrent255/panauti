@@ -157,5 +157,5 @@ public interface UserDAO {
 	
 	
 	@SqlQuery("SELECT if(<param> IS NOT NULL, TRUE, false) AS result FROM user WHERE <param> = :value ")
-	public boolean checkDuplicateUserParams(@Define String param, String value);
+	public Boolean checkDuplicateUserParams(@Define String param, String value);
 }

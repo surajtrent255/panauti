@@ -175,8 +175,8 @@ public class UserServiceImpl implements UserService {
 		
 		// userParameters key must match with column name in user table.
 		for (Map.Entry<String, String> entry : userParameters.entrySet()) {
-			boolean res = dbService.getDao(UserDAO.class).checkDuplicateUserParams(entry.getKey(), entry.getValue());
-			result.put(entry.getValue(), res);
+			Boolean res = dbService.getDao(UserDAO.class).checkDuplicateUserParams(entry.getKey(), entry.getValue());
+			result.put(entry.getValue(), res != null ? true : false);
 		}
 		
 		return result;

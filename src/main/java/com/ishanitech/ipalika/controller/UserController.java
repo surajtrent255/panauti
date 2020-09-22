@@ -77,7 +77,7 @@ public class UserController {
 		return new ResponseDTO<List<UserDTO>> (userService.getAllUserInfo(user.getUser().getUserId()));
 	}
 	
-	@GetMapping(value = "/duplicate", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/duplicate")
 	public ResponseDTO<Map<String, Boolean>> checkParameter(@RequestBody Map<String, String> userParameters) {
 		return new ResponseDTO<Map<String, Boolean>>(userService.checkDuplicateEntryParams(userParameters));
 	}

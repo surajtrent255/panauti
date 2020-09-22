@@ -25,4 +25,5 @@ public interface UserService {
 	void updateUserInfoByAdmin(Map<String, Object> user, int userId);
 	UserDTO getUserInfoByUserId(int userId);
 	void changePasswordByAdmin(String newPassword, int userId);
+
 }

@@ -194,8 +194,8 @@ public class UserServiceImpl implements UserService {
 			if(user.containsKey("role")) {
 				int roleId = Integer.parseInt((String) user.get("role"));
 				dbService.getDao(UserDAO.class).updateRoleInfo(roleId, userId);
-			}
-			
+			}		
+
 			dbService.getDao(UserDAO.class).updateUserInfo(userInfo, userId);
 		} catch(JdbiException jex) {
 			log.error(String.format("Error occured while updating userinfo %s", jex.getLocalizedMessage()));
@@ -214,6 +214,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+
 	// Checks the userParameter for potential duplicate values in user table.
 	@Override
 	public Map<String, Boolean> checkDuplicateEntryParams(Map<String, String> userParameters) {
@@ -221,8 +222,8 @@ public class UserServiceImpl implements UserService {
 		
 		// userParameters key must match with column name in user table.
 		for (Map.Entry<String, String> entry : userParameters.entrySet()) {
-			boolean res = dbService.getDao(UserDAO.class).checkDuplicateUserParams(entry.getKey(), entry.getValue());
-			result.put(entry.getValue(), res);
+			Boolean res = dbService.getDao(UserDAO.class).checkDuplicateUserParams(entry.getKey(), entry.getValue());
+			result.put(entry.getValue(), res != null ? true : false);
 		}
 		
 		return result;
@@ -237,5 +238,6 @@ public class UserServiceImpl implements UserService {
 			log.error(String.format("Something went wrong while changing user password: %s", jex.getLocalizedMessage()));
 		}
 	}
+
 
 }

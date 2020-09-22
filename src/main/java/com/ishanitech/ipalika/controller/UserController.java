@@ -76,8 +76,8 @@ public class UserController {
 	public ResponseDTO<List<UserDTO>> getAllUserInfo(@AuthenticationPrincipal CustomUserDetails user) throws CustomSqlException {
 		return new ResponseDTO<List<UserDTO>> (userService.getAllUserInfo(user.getUser().getUserId()));
 	}
-	
-	@GetMapping(value = "/duplicate", consumes = MediaType.APPLICATION_JSON_VALUE)
+
+	@PostMapping(value = "/duplicate")
 	public ResponseDTO<Map<String, Boolean>> checkParameter(@RequestBody Map<String, String> userParameters) {
 		return new ResponseDTO<Map<String, Boolean>>(userService.checkDuplicateEntryParams(userParameters));
 	}
@@ -94,11 +94,13 @@ public class UserController {
 			@RequestBody Map<String, Object> updates) {
 		userService.updateUserInfoByAdmin(updates, userId);
 	}
+
 	
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/{userId}/pass-reset-admin")
 	public void changePasswordByAdmin(@RequestBody String password, @PathVariable("userId") int userId) {
 		userService.changePasswordByAdmin(password, userId);
 	}
+
 
 }

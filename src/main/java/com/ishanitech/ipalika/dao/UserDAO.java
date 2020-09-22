@@ -84,6 +84,7 @@ public interface UserDAO {
 	@SqlUpdate("UPDATE user SET password = :password WHERE id = :userId")
 	public void changePassword(@Bind("password") String password, @Bind("userId") int userId);
 	
+
 	@SqlUpdate("UPDATE user SET full_name = :fullName, mobile_number = :mobileNumber, username = :username, email = :email, ward_no = :wardNo WHERE id = :userId")
 	public void updateUserInfo(@BindBean User user, @Bind("userId") int userId);
 	
@@ -155,9 +156,9 @@ public interface UserDAO {
 	@SqlQuery("SELECT role_id FROM user_role ur INNER JOIN user u ON ur.user_id = u.id WHERE u.id =:userId")
 	public int getRoleIdFromUserId(@Bind("userId") int userId);
 
-	
+
 	@SqlQuery("SELECT if(<param> IS NOT NULL, TRUE, false) AS result FROM user WHERE <param> = :value ")
-	public boolean checkDuplicateUserParams(@Define String param, String value);
+	public Boolean checkDuplicateUserParams(@Define String param, String value);
 
 
 	@SqlQuery(" SELECT u.id AS u_id, "
@@ -179,7 +180,9 @@ public interface UserDAO {
 	@UseRowReducer(UserReducer.class)
 	public User getUserInfoByUserId(@Bind("userId") int userId);
 
+
 	@SqlUpdate("UPDATE user_role SET role_id = :roleId WHERE user_id = :userId")
 	public void updateRoleInfo(@Bind("roleId") int roleId,@Bind("userId") int userId);
+
 
 }

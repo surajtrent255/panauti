@@ -3,6 +3,7 @@ package com.ishanitech.ipalika.service.impl;
 
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -154,10 +155,6 @@ public class UserServiceImpl implements UserService {
 		throw new EntityNotFoundException("User not found");
 	}
 	
-	private String[] splitFirstMiddleAndLastName(String fullName) {
-		return fullName.split(" ");
-	}
-
 	@Override
 	public List<UserDTO> getAllUserInfo(int userId) {
 		try {
@@ -169,6 +166,20 @@ public class UserServiceImpl implements UserService {
 		} catch(JdbiException jex) {
 			throw new CustomSqlException("Exception : " + jex.getLocalizedMessage());
 		}
+	}
+
+	// Checks the userParameter for potential duplicate values in user table.
+	@Override
+	public Map<String, Boolean> checkDuplicateEntryParams(Map<String, String> userParameters) {
+		Map<String, Boolean> result = new HashMap<>();
+		
+		// userParameters key must match with column name in user table.
+		for (Map.Entry<String, String> entry : userParameters.entrySet()) {
+			boolean res = dbService.getDao(UserDAO.class).checkDuplicateUserParams(entry.getKey(), entry.getValue());
+			result.put(entry.getValue(), res);
+		}
+		
+		return result;
 	}
 
 }

@@ -74,8 +74,12 @@ public class UserController {
 	@Secured({"ROLE_SUPER_ADMIN", "ROLE_CENTRAL_ADMIN"})
 	@GetMapping
 	public ResponseDTO<List<UserDTO>> getAllUserInfo(@AuthenticationPrincipal CustomUserDetails user) throws CustomSqlException {
-		log.info(user.toString());
 		return new ResponseDTO<List<UserDTO>> (userService.getAllUserInfo(user.getUser().getUserId()));
+	}
+	
+	@GetMapping(value = "/duplicate", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseDTO<Map<String, Boolean>> checkParameter(@RequestBody Map<String, String> userParameters) {
+		return new ResponseDTO<Map<String, Boolean>>(userService.checkDuplicateEntryParams(userParameters));
 	}
 	
 }

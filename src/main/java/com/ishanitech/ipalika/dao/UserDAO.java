@@ -8,6 +8,7 @@ import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
@@ -153,4 +154,8 @@ public interface UserDAO {
 
 	@SqlQuery("SELECT role_id FROM user_role ur INNER JOIN user u ON ur.user_id = u.id WHERE u.id =:userId")
 	public int getRoleIdFromUserId(@Bind("userId") int userId);
+	
+	
+	@SqlQuery("SELECT if(<param> IS NOT NULL, TRUE, false) AS result FROM user WHERE <param> = :value ")
+	public boolean checkDuplicateUserParams(@Define String param, String value);
 }

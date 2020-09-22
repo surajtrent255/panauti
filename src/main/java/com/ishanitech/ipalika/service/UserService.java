@@ -21,4 +21,5 @@ public interface UserService {
 	public void updateUserInfoByUserId(Map<String, Object> updates, int userId);
 	public void disableUser(int userId);
 	List<UserDTO> getAllUserInfo(int userId);
+	Map<String, Boolean> checkDuplicateEntryParams(Map<String, String> userParameters);
 }

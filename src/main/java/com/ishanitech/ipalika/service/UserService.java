@@ -22,4 +22,7 @@ public interface UserService {
 	public void disableUser(int userId);
 	List<UserDTO> getAllUserInfo(int userId);
 	Map<String, Boolean> checkDuplicateEntryParams(Map<String, String> userParameters);
+	void updateUserInfoByAdmin(Map<String, Object> user, int userId);
+	UserDTO getUserInfoByUserId(int userId);
+	void changePasswordByAdmin(String newPassword, int userId);
 }

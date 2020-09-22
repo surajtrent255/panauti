@@ -82,4 +82,23 @@ public class UserController {
 		return new ResponseDTO<Map<String, Boolean>>(userService.checkDuplicateEntryParams(userParameters));
 	}
 	
+
+	@Secured("ROLE_SUPER_ADMIN")
+	@GetMapping("/{userId}")
+	public ResponseDTO<UserDTO> getUserInfoByUserId(@PathVariable("userId") int userId) throws CustomSqlException {
+		return new ResponseDTO<UserDTO> (userService.getUserInfoByUserId(userId));
+	}
+	
+	@PatchMapping(value = "edit/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void updateUserInfoByAdmin(@PathVariable("userId") int userId,
+			@RequestBody Map<String, Object> updates) {
+		userService.updateUserInfoByAdmin(updates, userId);
+	}
+	
+	@ResponseStatus(HttpStatus.OK)
+	@PutMapping("/{userId}/pass-reset-admin")
+	public void changePasswordByAdmin(@RequestBody String password, @PathVariable("userId") int userId) {
+		userService.changePasswordByAdmin(password, userId);
+	}
+
 }

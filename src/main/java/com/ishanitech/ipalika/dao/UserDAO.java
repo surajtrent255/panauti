@@ -84,7 +84,7 @@ public interface UserDAO {
 	@SqlUpdate("UPDATE user SET password = :password WHERE id = :userId")
 	public void changePassword(@Bind("password") String password, @Bind("userId") int userId);
 	
-	@SqlUpdate("UPDATE user SET full_name = :fullName, mobile_number = :mobileNumber WHERE id = :userId")
+	@SqlUpdate("UPDATE user SET full_name = :fullName, mobile_number = :mobileNumber, username = :username, email = :email, ward_no = :wardNo WHERE id = :userId")
 	public void updateUserInfo(@BindBean User user, @Bind("userId") int userId);
 	
 	@SqlQuery(" SELECT u.id AS u_id, "
@@ -148,14 +148,38 @@ public interface UserDAO {
 			+ " r.id AS r_id, "
 			+ " r.role as r_role FROM user u INNER JOIN user_role ur ON u.id = ur.user_id "
 			+ " INNER JOIN role r ON r.id = ur.role_id "
-			+ " WHERE ur.role_id > :roleId AND u.enabled = 1")
+			+ " WHERE ur.role_id >= :roleId AND u.id != :userId AND u.enabled = 1")
 	@UseRowReducer(UserReducer.class)
-	public List<User> getAllUserInfo(@Bind("roleId") int roleId);
+	public List<User> getAllUserInfo(@Bind("roleId") int roleId, @Bind("userId") int userId);
 
 	@SqlQuery("SELECT role_id FROM user_role ur INNER JOIN user u ON ur.user_id = u.id WHERE u.id =:userId")
 	public int getRoleIdFromUserId(@Bind("userId") int userId);
-	
+
 	
 	@SqlQuery("SELECT if(<param> IS NOT NULL, TRUE, false) AS result FROM user WHERE <param> = :value ")
 	public boolean checkDuplicateUserParams(@Define String param, String value);
+
+
+	@SqlQuery(" SELECT u.id AS u_id, "
+			+ " username AS u_username, "
+			+ " full_name AS u_full_name, "
+			+ " password AS u_password, "
+			+ " email AS u_email, "
+			+ " mobile_number AS u_mobile_number, "
+			+ " locked AS u_locked, "
+			+ " first_login AS u_first_login, "
+			+ " enabled AS u_enabled, "
+			+ " expired AS u_expired, "
+			+ " registered_date AS u_registered_date, "
+			+ " ward_no AS u_ward_no,"
+			+ " r.id AS r_id, "
+			+ " r.role as r_role FROM user u INNER JOIN user_role ur ON u.id = ur.user_id "
+			+ " INNER JOIN role r ON r.id = ur.role_id "
+			+ " WHERE u.id = :userId AND u.enabled = 1")
+	@UseRowReducer(UserReducer.class)
+	public User getUserInfoByUserId(@Bind("userId") int userId);
+
+	@SqlUpdate("UPDATE user_role SET role_id = :roleId WHERE user_id = :userId")
+	public void updateRoleInfo(@Bind("roleId") int roleId,@Bind("userId") int userId);
+
 }

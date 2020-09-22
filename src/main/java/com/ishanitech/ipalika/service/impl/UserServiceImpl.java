@@ -160,9 +160,55 @@ public class UserServiceImpl implements UserService {
 		try {
 		List<UserDTO> users;
 		int roleId = dbService.getDao(UserDAO.class).getRoleIdFromUserId(userId);
-		List<User> userInfo =  dbService.getDao(UserDAO.class).getAllUserInfo(roleId);
+		List<User> userInfo =  dbService.getDao(UserDAO.class).getAllUserInfo(roleId, userId);
 		users = new UserConverter().fromEntity(userInfo);
 		return users;
+		} catch(JdbiException jex) {
+			throw new CustomSqlException("Exception : " + jex.getLocalizedMessage());
+		}
+	}
+	
+	@Override
+	public void updateUserInfoByAdmin(Map<String, Object> user, int userId) {
+		try {
+			User userInfo = this.getUserById(userId);
+			if(user.containsKey("mobileNumber")) {
+				userInfo.setMobileNumber((String)user.get("mobileNumber"));
+			}
+
+			if(user.containsKey("userName")) {
+				userInfo.setUsername((String)user.get("userName"));
+			}
+			
+			if(user.containsKey("email")) {
+				userInfo.setEmail((String)user.get("email"));
+			}
+			
+			if(user.containsKey("fullName")) {
+				userInfo.setFullName((String)user.get("fullName"));
+			}
+			
+			if(user.containsKey("wardNo")) {
+				userInfo.setWardNo(Integer.parseInt((String) user.get("wardNo")));
+			}
+			if(user.containsKey("role")) {
+				int roleId = Integer.parseInt((String) user.get("role"));
+				dbService.getDao(UserDAO.class).updateRoleInfo(roleId, userId);
+			}
+			
+			dbService.getDao(UserDAO.class).updateUserInfo(userInfo, userId);
+		} catch(JdbiException jex) {
+			log.error(String.format("Error occured while updating userinfo %s", jex.getLocalizedMessage()));
+		}
+	}
+
+	@Override
+	public UserDTO getUserInfoByUserId(int userId) {
+		try {
+		UserDTO user;
+		User userInfo =  dbService.getDao(UserDAO.class).getUserInfoByUserId(userId);
+		user = new UserConverter().fromEntity(userInfo);
+		return user;
 		} catch(JdbiException jex) {
 			throw new CustomSqlException("Exception : " + jex.getLocalizedMessage());
 		}
@@ -180,6 +226,16 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return result;
+	}
+	
+	@Override
+	public void changePasswordByAdmin(String newPassword, int userId) {
+		String encryptedPassword = this.encoder.encode(newPassword.replaceAll("\"", ""));
+		try {
+			dbService.getDao(UserDAO.class).changePassword(encryptedPassword, userId);
+		} catch(JdbiException jex) {
+			log.error(String.format("Something went wrong while changing user password: %s", jex.getLocalizedMessage()));
+		}
 	}
 
 }

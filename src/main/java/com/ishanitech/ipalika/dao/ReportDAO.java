@@ -90,7 +90,7 @@ public interface ReportDAO {
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_death', (SELECT COUNT(*) FROM death_record))")
 	void generateDeathRecordCount();
 	
-	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_household', (SELECT COUNT(*) FROM answer))")
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_household', (SELECT COUNT(*) FROM answer WHERE deleted = 0))")
 	void generateTotalHouseholdCount();
 	
 	@Transaction

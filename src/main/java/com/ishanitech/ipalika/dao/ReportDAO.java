@@ -33,7 +33,7 @@ public interface ReportDAO {
 	@ValueColumn("type_name")
 	Map<Integer, String> getAllAnswer();
 	
-	@SqlQuery("SELECT <column> FROM answer")
+	@SqlQuery("SELECT <column> FROM answer WHERE deleted = 0")
 	List<String> getAllAnswerByAnswerId(@Define String column);
 	
 	@SqlQuery("SELECT count(*) AS total FROM family_member fm WHERE fm.is_dead = 0 AND fm.deleted = 0")

@@ -6,40 +6,61 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class AgeCalculatorUtil {
 
 	
 	public static String calculateAge(String dateOfBirth) {
-		String calculatedAge = "";
+String calculatedAge = "";
 		
 		
 		DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+		TimeZone tz = TimeZone.getTimeZone("UTC");
+		formatter.setTimeZone(tz);
+		formatter.setLenient(false);
 		Date date = null;
 		try {
 			date = (Date)formatter.parse(dateOfBirth);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-
-		formatter = new SimpleDateFormat("yyyy-mm-dd");
+		
 		String adjustedDOB = formatter.format(date).toString();
 		
 		LocalDate DOB = LocalDate.parse(adjustedDOB);
 
 		LocalDate now = LocalDate.now();
  
+		//Calculates the difference between the DOB and the current time
         Period diff = Period.between(DOB, now);
-//        System.out.printf("\nDifference is %d years, %d months and %d days old\n\n", 
-//                    diff.getYears(), diff.getMonths(), diff.getDays());
 		
+        //Gets the year
         String extractedYear = convertToDevanagari(Integer.toString(diff.getYears()));
+        
+        //Gets the month
         String extractedMonth = convertToDevanagari(Integer.toString(diff.getMonths()));
+        
+        //Gets the day
         String extractedDay = convertToDevanagari(Integer.toString(diff.getDays()));
+       
         
-        
-        calculatedAge = extractedYear + " बर्ष " + extractedMonth + " महिना " + extractedDay + " दिन "; 
-		
+       //Checking for null year, month, day 
+        if((extractedYear != null && !extractedYear.isEmpty()) && (extractedMonth != null && !extractedMonth.isEmpty()) && (extractedDay != null && !extractedDay.isEmpty())) {
+        	calculatedAge = extractedYear + " बर्ष " + extractedMonth + " महिना " + extractedDay + " दिन "; 
+        } else if((extractedYear != null && !extractedYear.isEmpty()) && (extractedMonth != null && !extractedMonth.isEmpty())) {
+        	calculatedAge = extractedYear + " बर्ष " + extractedMonth + " महिना "; 
+        } else if((extractedYear != null && !extractedYear.isEmpty()) &&  (extractedDay != null && !extractedDay.isEmpty())) {
+        	calculatedAge = extractedYear + " बर्ष " +  extractedDay + " दिन "; 
+        } else if((extractedYear != null && !extractedYear.isEmpty())) {
+        	calculatedAge = extractedYear + " बर्ष ";
+        } else if((extractedMonth != null && !extractedMonth.isEmpty()) && (extractedDay != null && !extractedDay.isEmpty())) {
+        	calculatedAge = extractedMonth + " महिना " + extractedDay + " दिन "; 
+        } else if((extractedMonth != null && !extractedMonth.isEmpty())) {
+        	calculatedAge = extractedMonth + " महिना ";
+        } else if((extractedDay != null && !extractedDay.isEmpty())) {
+        	calculatedAge = extractedDay + " दिन "; 
+        }
         
 		return calculatedAge;
 	}

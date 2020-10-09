@@ -3,6 +3,7 @@ package com.ishanitech.ipalika.service.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.preauth.RequestAttributeAuthenticationFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,11 +39,13 @@ import com.ishanitech.ipalika.dto.ResidentDetailDTO;
 import com.ishanitech.ipalika.dto.RoleWardDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
 import com.ishanitech.ipalika.dto.SurveyAnswerExtraInfoDTO;
+import com.ishanitech.ipalika.dto.UserDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.exception.FileStorageException;
 import com.ishanitech.ipalika.model.Answer;
 import com.ishanitech.ipalika.model.QuestionOption;
 import com.ishanitech.ipalika.model.SurveyAnswer;
+import com.ishanitech.ipalika.security.CustomUserDetails;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.ResidentService;
 import com.ishanitech.ipalika.service.SurveyAnswerService;
@@ -43,6 +53,7 @@ import com.ishanitech.ipalika.utils.CustomQueryCreator;
 import com.ishanitech.ipalika.utils.FileUtilService;
 import com.ishanitech.ipalika.utils.ImageUtilService;
 
+import jdk.internal.org.jline.utils.Log;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -138,17 +149,32 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	}
 	
 
+
 	@Override
 	public List<ResidentDTO> getResident(RoleWardDTO roleWardDTO, HttpServletRequest request) {
 		try {
-			/**List<Answer> residentsAllInfo = dbService.getDao(SurveyAnswerDAO.class).getResidents();
-			residents = new AnswerConverter().entityListToResidentList(residentsAllInfo);*/
-			//return residents;
 			List<ResidentDTO> residents;
+			
+			CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			
+			UserDTO loggedInUser = userDetails.getUser();
+			
 			String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
+			
+			//For Ward Admin
 			if(roleWardDTO.getRole() == 3) {
 				residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(Integer.toString(roleWardDTO.getWardNumber()), caseQuery);
-			}else {
+			} 
+			
+			//For Surveyor
+			else if(loggedInUser.getRoles().contains("SURVEYOR")) {
+				String adjustedCaseQuery = " AND a.added_by = " + loggedInUser.getUserId() + caseQuery;
+				log.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" + adjustedCaseQuery);
+				residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(adjustedCaseQuery);
+			}
+			
+			//For other
+			else {
 			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
 			}
 			residents.forEach(resident -> resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl())));
@@ -319,13 +345,28 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 
 	@Override
 	public List<ResidentDTO> searchResident(HttpServletRequest request, String searchKey, String wardNo) {
-		
 		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
 		List<ResidentDTO> residents;
-		if(wardNo.equals("")) {
-			residents = dbService.getDao(SurveyAnswerDAO.class).searchAllResidentByKey(searchKey, wardNo, caseQuery);
-		}else {
-		residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByKey(searchKey, wardNo, caseQuery);
+		
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		UserDTO loggedInUser = userDetails.getUser();
+		
+		
+		if(loggedInUser.getRoles().contains("SURVEYOR")) {
+			log.info("Surveyor called" + "####################" + request.toString());
+			String adjustedCaseQuery = " AND a.added_by = " + loggedInUser.getUserId() + caseQuery;
+			residents = dbService.getDao(SurveyAnswerDAO.class).searchAllResidentByKey(searchKey, adjustedCaseQuery);
+		} 
+		
+		else if(wardNo.equals("")) {
+			log.info("All search called");
+			residents = dbService.getDao(SurveyAnswerDAO.class).searchAllResidentByKey(searchKey, caseQuery);
+		} 
+
+		else {
+			log.info("Super admin  called");
+			residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByKey(searchKey, wardNo, caseQuery);
 		}
 		residents.forEach(resident -> {
 			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
@@ -354,13 +395,27 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 		try {
 			List<ResidentDTO> residents;
 			String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
-			if(roleWardDTO.getRole() == 3) {
+			
+			CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			
+			UserDTO loggedInUser = userDetails.getUser();
+			
+			if(loggedInUser.getRoles().contains("SURVEYOR")) {
+				String adjustedCaseQuery = " AND a.added_by = " + loggedInUser.getUserId() + caseQuery;
+				log.info("CaseQuerySurveyor--->"+ adjustedCaseQuery);
+				residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(adjustedCaseQuery);
+			} 
+			
+			else if(roleWardDTO.getRole() == 3) {
 				log.info("CaseQueryWardAdmin--->"+ caseQuery);
-				residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(Integer.toString(roleWardDTO.getWardNumber()), caseQuery);
-			}else {
-			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
-			log.info("CaseQueryCentralAdmin--->"+ caseQuery);
+				residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(Integer.toString(roleWardDTO.getWardNumber()), caseQuery);	
+			} 
+			
+			else {
+				log.info("CaseQueryCentralAdmin--->"+ caseQuery);
+				residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
 			}
+
 			residents.forEach(resident -> resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl())));
 			
 			if(request.getParameter("action").equals("prev")) {
@@ -387,7 +442,20 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	@Override
 	public List<ResidentDTO> getWardResidentByPageLimit(HttpServletRequest request) {
 		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
-		List<ResidentDTO> residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
+		
+		List<ResidentDTO> residents;
+		
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		UserDTO loggedInUser = userDetails.getUser();
+		
+		if(loggedInUser.getRoles().contains("SURVEYOR")) {
+			String adjustedCaseQuery = " AND a.added_by = " + loggedInUser.getUserId() + caseQuery;
+			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(adjustedCaseQuery);
+		} else {
+			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
+		}
+		
 		residents.forEach(resident -> {
 			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
 		});
@@ -397,7 +465,20 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 	@Override
 	public List<ResidentDTO> getSortedResident(HttpServletRequest request) {
 		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
-		List<ResidentDTO> residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
+		
+		List<ResidentDTO> residents;
+		
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		UserDTO loggedInUser = userDetails.getUser();
+		
+		if(loggedInUser.getRoles().contains("SURVEYOR")) {
+			String adjustedCaseQuery = " AND a.added_by = " + loggedInUser.getUserId() + caseQuery;
+			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(adjustedCaseQuery);
+		} else {
+			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
+		}
+		
 		residents.forEach(resident -> {
 			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
 		});

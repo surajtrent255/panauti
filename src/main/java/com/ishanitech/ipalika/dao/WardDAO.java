@@ -69,5 +69,9 @@ public interface WardDAO {
 			+ "FROM ward w ")
 	@RegisterBeanMapper(Ward.class)
 	List<Ward> getAllWardsInfo();
+
+
+	@SqlQuery("SELECT COUNT(*) FROM answer WHERE answer_3 = :wardNo")
+	Integer getTotalHouseCountByWard(@Bind("wardNo") int wardNo);
 	
 }

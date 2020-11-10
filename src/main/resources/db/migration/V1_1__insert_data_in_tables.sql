@@ -568,5 +568,7 @@ INSERT INTO `family_relation` (`relation_id`, `relation_nepali`, `relation_engli
 		
 	INSERT INTO `marital_status` (`marital_status_id`, `marital_status_nep`, `marital_status_eng`) VALUES
 	(1, 'विवाहित', 'Married'),
-	(2, 'अविवाहित', 'Single');
+	(2, 'अविवाहित', 'Single'),
+	(3, 'एकल महिला', 'Single Woman'),
+	(4, 'एकल पुरुष', 'Single Man');
 	

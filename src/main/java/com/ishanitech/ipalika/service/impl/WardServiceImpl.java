@@ -89,4 +89,12 @@ public class WardServiceImpl implements WardService {
 		}
 	}
 
+	@Override
+	public Integer getHouseCountByWard(int wardNo) {
+		
+		Integer totalHouseCount = dbService.getDao(WardDAO.class).getTotalHouseCountByWard(wardNo);
+		
+		return totalHouseCount;
+	}
+
 }

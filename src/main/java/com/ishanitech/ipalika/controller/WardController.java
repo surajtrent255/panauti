@@ -61,4 +61,10 @@ public class WardController {
 	public ResponseDTO<List<WardDTO>> getAllWardsInfo() throws CustomSqlException {
 		return new ResponseDTO<List<WardDTO>>(wardService.getAllwardsInfo());
 	}
+	
+	@GetMapping("/totalHouseCount/{wardNumber}") 
+	public ResponseDTO<Integer> getTotalHouseCountByWard(@PathVariable("wardNumber") int wardNo) throws CustomSqlException {
+		System.out.println("endpoint called ward--->" + wardNo);
+		return new ResponseDTO<Integer>(wardService.getHouseCountByWard(wardNo));
+	}
 }

@@ -20,4 +20,6 @@ public interface WardService {
 	WardDTO getWardByWardNumber(int wardNo);
 
 	List<WardDTO> getAllwardsInfo();
+	
+	Integer getHouseCountByWard(int wardNo);
 }

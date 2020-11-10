@@ -73,7 +73,7 @@ public interface SurveyAnswerDAO {
 			" (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers " + 
 			" FROM answer a WHERE a.answer_1 LIKE CONCAT('%', :searchKey, '%') AND a.deleted = 0 <caseQuery>")
 	@RegisterBeanMapper(ResidentDTO.class)
-	List<ResidentDTO> searchAllResidentByKey(@Bind("searchKey") String searchKey, @Bind("wardNo") String wardNo, @Define("caseQuery") String caseQuery);
+	List<ResidentDTO> searchAllResidentByKey(@Bind("searchKey") String searchKey, @Define("caseQuery") String caseQuery);
 	
 	@SqlQuery("SELECT id as id, filled_id as filledId, answer_1 AS houseOwner, answer_2 AS tole, answer_4 AS houseNo, answer_5 AS phoneNo, answer_13 AS kittaNo, answer_51 as imageUrl, " + 
 			" (SELECT COUNT(*) FROM family_member fm WHERE fm.family_id = a.filled_id AND fm.is_dead = 0 AND fm.deleted = 0) AS totalFamilyMembers " + 

@@ -10,14 +10,10 @@ import java.util.List;
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Service;
 
-import com.ishanitech.ipalika.converter.impl.FavouritePlaceConverter;
 import com.ishanitech.ipalika.converter.impl.WardConverter;
-import com.ishanitech.ipalika.dao.FavouritePlaceDAO;
 import com.ishanitech.ipalika.dao.WardDAO;
-import com.ishanitech.ipalika.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalika.dto.WardDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
-import com.ishanitech.ipalika.model.FavouritePlace;
 import com.ishanitech.ipalika.model.Ward;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.servicer.WardService;

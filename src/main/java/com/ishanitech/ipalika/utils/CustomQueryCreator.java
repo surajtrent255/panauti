@@ -310,23 +310,78 @@ public class CustomQueryCreator {
         		break;
         		
         	case FAV_PLACES:
-        		switch(action.toLowerCase()) {
-			    	case "next":
-			    		if(lastSeenId > 0) {
-			    			caseQuery += " AND o.order_id < " + lastSeenId;
-			    			caseQuery += " ORDER BY o.order_id DESC ";
-			    		}
-			    		break;
-			    	case "prev":
-			    		if(lastSeenId > 0) {
-							caseQuery += " AND o.order_id > " + lastSeenId;
-							caseQuery += " ORDER BY o.order_id ASC ";
-						}
-			    		break;
-			    	default: 
-			    		caseQuery += " ORDER BY o.order_id DESC ";
-			    		break;
-	        		}
+        		
+        		switch (wardNo) {
+                case "":
+                    break;
+
+                default:
+                	caseQuery += " AND fp.favourite_place_ward LIKE '" + wardNo + "' ";
+                    break;
+        		}
+        		
+        		
+        		switch (searchKey) {
+                case "":
+                    break;
+
+                default:
+                	log.info("SearchKey--->Embbzz-->"+ searchKey);
+                	if(searchKey.contains("%")) {
+                	try {
+                	    String result = java.net.URLDecoder.decode(searchKey, StandardCharsets.UTF_8.name());
+                	    searchKey = result;
+                	} catch (UnsupportedEncodingException e) {
+                	    // not going to happen - value came from JDK's own StandardCharsets
+                	}
+                	}
+                	log.info("SearchKey--->Embbzz-->Converted-->"+ searchKey);
+                	caseQuery += " AND fp.fav_place_name LIKE '%" + searchKey + "%'";
+                    break;
+        		}
+        		
+        		if(sortBy.equals("")) {
+        		switch (action.toLowerCase()) {
+                case "next":
+                    if (lastSeenId > 0) {
+                        caseQuery += " AND fp.id < " + lastSeenId;
+                        caseQuery += " ORDER BY fp.id DESC ";
+                    }
+                    break;
+                case "prev":
+                    if (lastSeenId > 0) {
+                        caseQuery += " AND fp.id > " + lastSeenId;
+                        caseQuery += " ORDER BY fp.id ASC ";
+                    }
+                    break;
+                default:
+                    caseQuery += " ORDER BY fp.id DESC ";
+                    break;
+        		}
+        		}else {
+        			switch (sortBy.toLowerCase()) {
+                    case "placeName":
+                            caseQuery += " ORDER BY fp.fav_place_name " + sortByOrder + " ";
+                            if(currentPage >= 0) {
+                            caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                            }else {
+                            	caseQuery += " LIMIT 0";
+                            }
+                        break;
+                    case "placeWard":
+                    	caseQuery += " ORDER BY a.fav_place_ward " + sortByOrder + " ";
+                        if(currentPage >= 0) {
+                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                        }else {
+                        	caseQuery += " LIMIT 0";
+                        }
+                        break;
+                        
+                    default:
+                        caseQuery += " ORDER BY fp.id DESC ";
+                        break;
+            		}
+        		}
         		break;
         		
         	default: 

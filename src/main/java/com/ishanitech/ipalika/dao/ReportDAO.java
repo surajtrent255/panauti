@@ -92,6 +92,29 @@ public interface ReportDAO {
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_household', (SELECT COUNT(*) FROM answer WHERE deleted = 0))")
 	void generateTotalHouseholdCount();
 	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_animal_husbandary_household', (Select COUNT(*) from answer " + 
+			"WHERE answer_42 NOT LIKE '%11:1%' AND answer_42 NOT LIKE ''))")
+	void generateTotalAnimalHouseholdCount();
+	
+	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_agriculture_household', (SELECT COUNT(*) from answer " + 
+			"WHERE answer_80 NOT LIKE '' OR answer_81 NOT LIKE '' OR answer_82 NOT LIKE '' " + 
+			"OR answer_83 NOT LIKE '' OR answer_84 NOT LIKE '' OR answer_85 NOT LIKE ''))")
+	void generateTotalAgricultureHouseholdCount();
+	
+	
+	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_beekeeping_household', (SELECT COUNT(*) from answer " + 
+			"WHERE answer_89 NOT LIKE '%1:1%' AND answer_89 NOT LIKE '' AND answer_89 NOT LIKE '%1:01%'))")
+	void generateTotalBeeKeepingHouseholdCount();
+	
+	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_agriculture_firm', (SELECT COUNT(*) from answer " + 
+			"WHERE answer_75 NOT LIKE '' AND answer_75 NOT LIKE '*' AND answer_75 NOT LIKE '%0%' AND answer_75 NOT LIKE ',' " + 
+			"AND answer_75 NOT LIKE '%1%' AND answer_75 NOT LIKE 'a' AND answer_75 NOT LIKE '.' AND answer_75 NOT LIKE 'छैन%' ))")
+	void generateTotalAgricultureFirmCount();
+	
+	
 	@Transaction
 	default void generateReport() {
 		Map<Integer, String> answerAndTypes = getAllAnswer();
@@ -100,6 +123,10 @@ public interface ReportDAO {
 		Map<Integer, Double> populationByQualification = getPopulationByQualificationId();
 		generateDeathRecordCount();
 		generateTotalHouseholdCount();
+		generateTotalAnimalHouseholdCount();
+		generateTotalAgricultureHouseholdCount();
+		generateTotalBeeKeepingHouseholdCount();
+		generateTotalAgricultureFirmCount();
 		List<PopulationReport> populationReports = new ArrayList<>();
 		insertAgeGroupReport(totalPopulation); //inserts age group report
 		PopulationReport genderReport = new PopulationReport();

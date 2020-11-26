@@ -98,6 +98,9 @@ public class ReportUtil {
 			case CHECKBOX:
 			case RADIO:
 				Stream.of(fullData).forEach(dat -> {
+					//System.out.println("DatDat--->"+ dat);
+					if(!dat.trim().equals(""))
+					{
 					double treamedData = Integer.parseInt(dat.trim());
 					if(treamedData == 0) {
 						report.setOption1(report.getOption1() + 1);
@@ -158,6 +161,7 @@ public class ReportUtil {
 					if(treamedData == 14) {
 						report.setOption15(report.getOption15() + 1);
 					}
+					} 
 					
 					report.setTotal(report.getTotal() + 1);
 				});

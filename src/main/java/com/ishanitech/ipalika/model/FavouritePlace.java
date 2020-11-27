@@ -1,14 +1,12 @@
 package com.ishanitech.ipalika.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
 
 @Data
 public class FavouritePlace {
-	@JsonIgnore
-	private long id;
+	private int id;
 	private String favPlaceId;
 	private String favPlaceName;
 	private String favPlaceDesc;

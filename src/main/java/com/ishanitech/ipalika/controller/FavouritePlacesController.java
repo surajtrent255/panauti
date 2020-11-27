@@ -1,7 +1,10 @@
 package com.ishanitech.ipalika.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
@@ -51,8 +54,8 @@ public class FavouritePlacesController {
 	 */
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping
-	public ResponseDTO<List<FavouritePlaceDTO>> getFavouritePlaces() {
-		return new ResponseDTO<List<FavouritePlaceDTO>>(favouritePlacesService.getFavouritePlaces());
+	public ResponseDTO<List<FavouritePlaceDTO>> getFavouritePlaces(HttpServletRequest request) {
+		return new ResponseDTO<List<FavouritePlaceDTO>>(favouritePlacesService.getFavouritePlaces(request));
 	}
 	
 	
@@ -198,6 +201,59 @@ public class FavouritePlacesController {
 	@GetMapping("/type")
 	public ResponseDTO<List<String>> getTypesofFavouritePlaces() throws CustomSqlException {
 		return new ResponseDTO<List<String>>(favouritePlacesService.getTypesofFavouritePlaces());
+	}
+	
+	
+	
+	@ResponseStatus(HttpStatus.OK)
+	@GetMapping("/search")
+	public ResponseDTO<List<FavouritePlaceDTO>> getFavouritePlaces(HttpServletRequest request, @RequestParam("searchKey") String searchKey, @RequestParam("wardNo") String wardNo, @RequestParam("placeType") String placeType) {
+		String searchkey = null;
+		try {
+			searchkey = URLDecoder.decode(searchKey, "Utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return new ResponseDTO<List<FavouritePlaceDTO>>(favouritePlacesService.searchFavouritePlaces(request, searchkey, wardNo));
+	}
+	
+	@GetMapping("/search/ward")
+	public ResponseDTO<List<FavouritePlaceDTO>> searchFavourtiePlaceByWard(@RequestParam("wardNo") String wardNo, HttpServletRequest request) {
+		log.info("PageddLImitedd---->" + request.getParameter("pageSize") + " NoWorries! ward");
+		return new ResponseDTO<List<FavouritePlaceDTO>>(favouritePlacesService.searchWardFavouritePlaces(wardNo, request));
+	}
+	
+	
+	@GetMapping("/pageLimit")
+	public ResponseDTO<List<FavouritePlaceDTO>> getResidentbyPageLimit(@RequestParam("wardNo") String wardNo, HttpServletRequest request) {
+		log.info("PageddLImitedd---->" + request.getParameter("pageSize") + " NoWorries! pagelimit");
+		return new ResponseDTO<List<FavouritePlaceDTO>>(favouritePlacesService.getFavouritePlaceByPageLimit(request));
+	}
+	
+	@GetMapping("/nextLot")
+	public ResponseDTO<List<FavouritePlaceDTO>> getNextLotResident(HttpServletRequest request) {
+		log.info("wardyyyzNo--->" + request.getParameter("wardNo"));
+		log.info("SearchKey--->" + request.getParameter("searchKey"));
+		log.info("PageSize--->" + request.getParameter("pageSize"));
+		log.info("Action--->" + request.getParameter("action"));
+		log.info("LastSeenId--->" + request.getParameter("last_seen"));
+		return new ResponseDTO<List<FavouritePlaceDTO>>(favouritePlacesService.getNextLotFavouritePlace(request));	
+	}
+	
+	@GetMapping("/sortBy")
+	public ResponseDTO<List<FavouritePlaceDTO>> getSortedResident(HttpServletRequest request) {
+		log.info("wardyyyzNo--->" + request.getParameter("wardNo"));
+		log.info("SearchKey--->" + request.getParameter("searchKey"));
+		log.info("PageSize--->" + request.getParameter("pageSize"));
+		log.info("SortBy--->" + request.getParameter("sortBy"));
+		log.info("SortByOrder--->" + request.getParameter("sortByOrder"));
+		return new ResponseDTO<List<FavouritePlaceDTO>>(favouritePlacesService.getSortedFavouritePlace(request));	
+	}
+	
+	@GetMapping("/search/placeType")
+	public ResponseDTO<List<FavouritePlaceDTO>> searchFavourtiePlaceByPlaceType(@RequestParam("placeType") String placeType, HttpServletRequest request) {
+		log.info("PageddLImitedd---->" + request.getParameter("pageSize") + " NoWorries! ward");
+		return new ResponseDTO<List<FavouritePlaceDTO>>(favouritePlacesService.searchPlaceTypeFavouritePlaces(placeType, request));
 	}
 
 }

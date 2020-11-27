@@ -27,6 +27,7 @@ public class FavouritePlaceConverter extends BaseConverter<FavouritePlace, Favou
 	@Override
 	public FavouritePlaceDTO fromEntity(FavouritePlace entity) {
 		FavouritePlaceDTO favPlaceDTO = new FavouritePlaceDTO();
+		favPlaceDTO.setId(entity.getId());
 		favPlaceDTO.setFilledId(entity.getFavPlaceId());
 		favPlaceDTO.setPlaceName(entity.getFavPlaceName());
 		favPlaceDTO.setPlaceDescription(entity.getFavPlaceDesc());

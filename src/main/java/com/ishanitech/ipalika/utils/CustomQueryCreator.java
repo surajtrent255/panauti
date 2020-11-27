@@ -30,6 +30,7 @@ public class CustomQueryCreator {
         String sortBy;
         String sortByOrder;
         String currentPageNo;
+        String placeType;
         int currentPage;
         
         if (checkParameter("last_seen", request)) {
@@ -60,6 +61,12 @@ public class CustomQueryCreator {
             wardNo = (String) getParameterFromRequestObject("wardNo", request);
         } else {
             wardNo = "";
+        }
+        
+        if (checkParameter("placeType", request)) {
+            placeType = (String) getParameterFromRequestObject("placeType", request);
+        } else {
+            placeType = "";
         }
         
         if (checkParameter("sortBy", request)) {
@@ -316,7 +323,16 @@ public class CustomQueryCreator {
                     break;
 
                 default:
-                	caseQuery += " AND fp.favourite_place_ward LIKE '" + wardNo + "' ";
+                	caseQuery += " AND fp.fav_place_ward LIKE '" + wardNo + "' ";
+                    break;
+        		}
+        		
+        		switch (placeType) {
+                case "":
+                    break;
+
+                default:
+                	caseQuery += " AND fp.fav_place_type LIKE '" + placeType + "' ";
                     break;
         		}
         		

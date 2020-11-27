@@ -1,8 +1,11 @@
 package com.ishanitech.ipalika.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.jdbi.v3.core.JdbiException;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
@@ -12,11 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ishanitech.ipalika.converter.impl.FavouritePlaceConverter;
 import com.ishanitech.ipalika.dao.FavouritePlaceDAO;
 import com.ishanitech.ipalika.dto.FavouritePlaceDTO;
+import com.ishanitech.ipalika.dto.PaginationTypeClass;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.exception.EntityNotFoundException;
 import com.ishanitech.ipalika.model.FavouritePlace;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.FavouritePlacesService;
+import com.ishanitech.ipalika.utils.CustomQueryCreator;
 import com.ishanitech.ipalika.utils.FileUtilService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,11 +43,14 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 
 
 	@Override
-	public List<FavouritePlaceDTO> getFavouritePlaces() {
+	public List<FavouritePlaceDTO> getFavouritePlaces(HttpServletRequest request) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAV_PLACES);
 		List<FavouritePlaceDTO> favPlaces = new ArrayList<>();
+		List<FavouritePlace> favPlacesInfo;
 		try {
-			List<FavouritePlace> favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).getFavouritePlaces();
+			favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).getFavouritePlaces(caseQuery);
 			favPlaces = new FavouritePlaceConverter().fromEntity(favPlacesInfo);
+			log.info(favPlaces.toString());
 			return favPlaces;
 			
 		} catch (JdbiException jex) {
@@ -153,5 +161,141 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 	public void updateFavouritePlaceImage(MultipartFile image) {
 		fileUtilService.storeEditedFile(image);
 	}
+
+
+
+	@Override
+	public List<FavouritePlaceDTO> searchFavouritePlaces(HttpServletRequest request, String searchKey, String wardNo) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAV_PLACES);
+		List<FavouritePlaceDTO> favPlaces = new ArrayList<>();
+		List<FavouritePlace> favPlacesInfo;
+		try {
+		if(wardNo.equals("")) {
+			log.info("All search called");
+			favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchAllFavouritePlaceByKey(searchKey, caseQuery);
+		} 
+
+		else {
+			log.info("ward wise  called");
+			favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchFavouritePlaceByKey(searchKey, wardNo, caseQuery);
+		}
+		
+			favPlaces = new FavouritePlaceConverter().fromEntity(favPlacesInfo);
+			return favPlaces;
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception: " + jex.getLocalizedMessage());
+		}
+	}
+
+
+
+	@Override
+	public List<FavouritePlaceDTO> searchWardFavouritePlaces(String wardNo, HttpServletRequest request) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAV_PLACES);
+		List<FavouritePlaceDTO> favPlaces = new ArrayList<>();
+		List<FavouritePlace> favPlacesInfo;
+		try {
+			if(wardNo.equals("")) {
+				log.info("ward is empty");
+				favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchAllFavouritePlaceByWard(caseQuery);
+			}else {
+				log.info("ward is sleected");
+				favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchFavouritePlaceByWard(wardNo, caseQuery);
+			}
+			favPlaces = new FavouritePlaceConverter().fromEntity(favPlacesInfo);
+			return favPlaces;
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception: " + jex.getLocalizedMessage());
+		}
+	}
+
+
+
+	@Override
+	public List<FavouritePlaceDTO> searchPlaceTypeFavouritePlaces(String placeType, HttpServletRequest request) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAV_PLACES);
+		List<FavouritePlaceDTO> favPlaces = new ArrayList<>();
+		List<FavouritePlace> favPlacesInfo;
+		try {
+			if(placeType.equals("")) {
+				log.info("placeType is empty");
+				favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchAllFavouritePlaceByType(caseQuery);
+			}else {
+				log.info("placeType is sleected");
+				favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchFavouritePlaceByType(placeType, caseQuery);
+			}
+			favPlaces = new FavouritePlaceConverter().fromEntity(favPlacesInfo);
+			return favPlaces;
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception: " + jex.getLocalizedMessage());
+		}
+	}
+	
+	@Override
+	public List<FavouritePlaceDTO> getFavouritePlaceByPageLimit(HttpServletRequest request) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAV_PLACES);
+		List<FavouritePlaceDTO> favPlaces = new ArrayList<>();
+		List<FavouritePlace> favPlacesInfo;
+		try {
+			favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).getFavouritePlaces(caseQuery);
+			favPlaces = new FavouritePlaceConverter().fromEntity(favPlacesInfo);
+			return favPlaces;
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception: " + jex.getLocalizedMessage());
+		}
+	}
+
+
+
+	@Override
+	public List<FavouritePlaceDTO> getNextLotFavouritePlace(HttpServletRequest request) {
+		try {
+			String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAV_PLACES);
+			List<FavouritePlaceDTO> favPlaces = new ArrayList<>();
+			List<FavouritePlace> favPlacesInfo;
+			
+			
+			favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).getFavouritePlaces(caseQuery);
+			favPlaces = new FavouritePlaceConverter().fromEntity(favPlacesInfo);
+			if(request.getParameter("action").equals("prev")) {
+				
+				if(request.getParameter("sortBy") == null) {
+				List<FavouritePlaceDTO> orderedfavPlaces = reverseList(favPlaces);
+				favPlaces = orderedfavPlaces;
+				}
+			}
+			
+			return favPlaces;
+		} catch(JdbiException jex) {
+			throw new CustomSqlException("Exception: " +jex.getLocalizedMessage());
+		}
+	}
+	
+	  public static<T> List<T> reverseList(List<T> list)
+	  {
+	    List<T> reverse = new ArrayList<>(list);
+	    Collections.reverse(reverse);
+	    return reverse;
+	  }
+
+
+
+	@Override
+	public List<FavouritePlaceDTO> getSortedFavouritePlace(HttpServletRequest request) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.FAV_PLACES);
+		List<FavouritePlaceDTO> favPlaces = new ArrayList<>();
+		List<FavouritePlace> favPlacesInfo;
+		try {
+			favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).getFavouritePlaces(caseQuery);
+			favPlaces = new FavouritePlaceConverter().fromEntity(favPlacesInfo);
+			return favPlaces;
+		} catch (JdbiException jex) {
+			throw new CustomSqlException("Exception: " + jex.getLocalizedMessage());
+		}
+		
+	}
+
+
+
 
 }

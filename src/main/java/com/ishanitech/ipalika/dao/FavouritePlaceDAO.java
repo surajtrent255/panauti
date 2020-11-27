@@ -5,6 +5,7 @@ import java.util.List;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.locator.UseClasspathSqlLocator;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
@@ -26,7 +27,7 @@ public interface FavouritePlaceDAO {
 	@SqlQuery("SELECT fav_place_id FROM favourite_place")
 	List<String> getAllFilledIds();
 	
-	@SqlQuery("SELECT id AS id, fav_place_id AS favPlaceId, fav_place_name AS favPlaceName, fav_place_desc AS favPlaceDesc, fav_place_photo AS favPlacePhoto, fav_place_location AS favPlaceLocation, fav_place_ward AS favPlaceWard FROM favourite_place WHERE deleted = 0")
+	@SqlQuery("SELECT id AS id, fav_place_id AS favPlaceId, fav_place_name AS favPlaceName, fav_place_desc AS favPlaceDesc, fav_place_photo AS favPlacePhoto, fav_place_location AS favPlaceLocation, fav_place_ward AS favPlaceWard FROM favourite_place fp WHERE deleted = 0")
 	@RegisterBeanMapper(FavouritePlace.class)
 	List<FavouritePlace> getFavouritePlaces();
 
@@ -69,5 +70,34 @@ public interface FavouritePlaceDAO {
 	
 	@SqlQuery("SELECT place_type_nep FROM favourite_place_type")
 	List<String> getTypesofFavouritePlaces();
+
+	@SqlQuery("SELECT id AS id, fav_place_id AS favPlaceId, fav_place_name AS favPlaceName, fav_place_desc AS favPlaceDesc, fav_place_photo AS favPlacePhoto, fav_place_location AS favPlaceLocation, fav_place_ward AS favPlaceWard FROM favourite_place fp WHERE fp.fav_place_name LIKE CONCAT('%', :searchKey, '%') AND fp.deleted = 0 AND fp.fav_place_ward LIKE :wardNo <caseQuery>")
+	@RegisterBeanMapper(FavouritePlace.class)
+	List<FavouritePlace> searchFavouritePlaceByKey(@Bind("searchKey") String searchKey, @Bind("wardNo") String wardNo, @Define("caseQuery") String caseQuery);
+
+	@SqlQuery("SELECT id AS id, fav_place_id AS favPlaceId, fav_place_name AS favPlaceName, fav_place_desc AS favPlaceDesc, fav_place_photo AS favPlacePhoto, fav_place_location AS favPlaceLocation, fav_place_ward AS favPlaceWard FROM favourite_place fp WHERE fp.fav_place_name LIKE CONCAT('%', :searchKey, '%') AND fp.deleted = 0 <caseQuery>")
+	@RegisterBeanMapper(FavouritePlace.class)
+	List<FavouritePlace> searchAllFavouritePlaceByKey(@Bind("searchKey") String searchKey, @Define("caseQuery") String caseQuery);
+
+	@SqlQuery("SELECT id AS id, fav_place_id AS favPlaceId, fav_place_name AS favPlaceName, fav_place_desc AS favPlaceDesc, fav_place_photo AS favPlacePhoto, fav_place_location AS favPlaceLocation, fav_place_ward AS favPlaceWard FROM favourite_place fp WHERE fp.deleted = 0 <caseQuery>")
+	@RegisterBeanMapper(FavouritePlace.class)
+	List<FavouritePlace> searchAllFavouritePlaceByWard(@Define("caseQuery") String caseQuery);
+
+	@SqlQuery("SELECT id AS id, fav_place_id AS favPlaceId, fav_place_name AS favPlaceName, fav_place_desc AS favPlaceDesc, fav_place_photo AS favPlacePhoto, fav_place_location AS favPlaceLocation, fav_place_ward AS favPlaceWard FROM favourite_place fp WHERE fp.deleted = 0 AND fp.fav_place_ward LIKE :wardNo  <caseQuery>")
+	@RegisterBeanMapper(FavouritePlace.class)
+	List<FavouritePlace> searchFavouritePlaceByWard(@Bind("wardNo") String wardNo, @Define("caseQuery") String caseQuery);
+
+	
+	@SqlQuery("SELECT id AS id, fav_place_id AS favPlaceId, fav_place_name AS favPlaceName, fav_place_desc AS favPlaceDesc, fav_place_photo AS favPlacePhoto, fav_place_location AS favPlaceLocation, fav_place_ward AS favPlaceWard FROM favourite_place fp WHERE deleted = 0 <caseQuery>")
+	@RegisterBeanMapper(FavouritePlace.class)
+	List<FavouritePlace> getFavouritePlaces(@Define("caseQuery") String caseQuery);
+
+	@SqlQuery("SELECT id AS id, fav_place_id AS favPlaceId, fav_place_name AS favPlaceName, fav_place_desc AS favPlaceDesc, fav_place_photo AS favPlacePhoto, fav_place_location AS favPlaceLocation, fav_place_ward AS favPlaceWard FROM favourite_place fp WHERE fp.deleted = 0 <caseQuery>")
+	@RegisterBeanMapper(FavouritePlace.class)
+	List<FavouritePlace> searchAllFavouritePlaceByType(@Define("caseQuery") String caseQuery);
+
+	@SqlQuery("SELECT id AS id, fav_place_id AS favPlaceId, fav_place_name AS favPlaceName, fav_place_desc AS favPlaceDesc, fav_place_photo AS favPlacePhoto, fav_place_location AS favPlaceLocation, fav_place_ward AS favPlaceWard FROM favourite_place fp WHERE fp.deleted = 0 AND fp.fav_place_type LIKE :placeType <caseQuery>")
+	@RegisterBeanMapper(FavouritePlace.class)
+	List<FavouritePlace> searchFavouritePlaceByType(@Bind("placeType") String placeType, @Define("caseQuery") String caseQuery);
 	
 }

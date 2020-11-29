@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ishanitech.ipalika.dao.ReportDAO;
+import com.ishanitech.ipalika.dto.AgriculturalFarmDTO;
+import com.ishanitech.ipalika.dto.BeekeepingDTO;
 import com.ishanitech.ipalika.model.ExtraReport;
 import com.ishanitech.ipalika.model.PopulationReport;
 import com.ishanitech.ipalika.model.QuestionReport;
@@ -37,6 +39,16 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public List<ExtraReport> getExtraReports() {
 		return reportDAO.getExtraReports();
+	}
+
+	@Override
+	public List<BeekeepingDTO> getBeekeepingInfo() {
+		return reportDAO.getBeekeepingInfo();
+	}
+
+	@Override
+	public List<AgriculturalFarmDTO> getAgriculturaFarmInfo() {
+		return reportDAO.getAgriculturalFarmInfo();
 	}
 
 }

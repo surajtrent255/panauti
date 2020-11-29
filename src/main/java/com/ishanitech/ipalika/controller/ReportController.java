@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ishanitech.ipalika.dto.AgriculturalFarmDTO;
+import com.ishanitech.ipalika.dto.BeekeepingDTO;
 import com.ishanitech.ipalika.dto.ResponseDTO;
+import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.model.ExtraReport;
 import com.ishanitech.ipalika.model.PopulationReport;
 import com.ishanitech.ipalika.model.QuestionReport;
@@ -78,4 +81,17 @@ public class ReportController {
 	ResponseDTO<List<ExtraReport>> getExtraReports() {
 		return new ResponseDTO<>(reportService.getExtraReports());
 	}
+	
+	
+	@GetMapping("/beekeeping") 
+	public ResponseDTO<List<BeekeepingDTO>> getBeekeepingInfo() throws CustomSqlException {
+		return new ResponseDTO<List<BeekeepingDTO>>(reportService.getBeekeepingInfo());
+	}
+	
+	
+	@GetMapping("/agriculturalFarm") 
+	public ResponseDTO<List<AgriculturalFarmDTO>> getAgriculturalFarmInfo() throws CustomSqlException {
+		return new ResponseDTO<List<AgriculturalFarmDTO>>(reportService.getAgriculturaFarmInfo());
+	}
+	
 }

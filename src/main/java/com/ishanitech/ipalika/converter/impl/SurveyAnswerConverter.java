@@ -10,9 +10,7 @@ import com.ishanitech.ipalika.dto.SurveyAnswerDTO;
 import com.ishanitech.ipalika.model.Answer;
 import com.ishanitech.ipalika.model.SurveyAnswer;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class SurveyAnswerConverter extends BaseConverter<SurveyAnswer, SurveyAnswerDTO> {
 
 	@Override

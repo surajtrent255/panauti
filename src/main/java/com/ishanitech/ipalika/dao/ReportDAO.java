@@ -18,6 +18,8 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 
+import com.ishanitech.ipalika.dto.AgriculturalFarmDTO;
+import com.ishanitech.ipalika.dto.BeekeepingDTO;
 import com.ishanitech.ipalika.dto.QuestionType;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.model.ExtraReport;
@@ -105,7 +107,7 @@ public interface ReportDAO {
 	
 	
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_beekeeping_household', (SELECT COUNT(*) from answer " + 
-			"WHERE answer_89 NOT LIKE '%1:1%' AND answer_89 NOT LIKE '' AND answer_89 NOT LIKE '%1:01%'))")
+			"WHERE answer_89 NOT LIKE '%1:1%' AND answer_89 NOT LIKE '' AND answer_89 NOT LIKE '1:%'))")
 	void generateTotalBeeKeepingHouseholdCount();
 	
 	
@@ -203,5 +205,13 @@ public interface ReportDAO {
 	@RegisterBeanMapper(ExtraReport.class)
 	@SqlQuery("SELECT report_name, data FROM extra_report")
 	List<ExtraReport> getExtraReports();
+
+	@SqlQuery("SELECT id AS id, a.answer_1 AS ownerName, a.answer_3 AS wardNo, a.answer_89 AS beeHiveNo, a.answer_90 AS beeSpecies, a.answer_91 AS yearlyProduction from answer a WHERE a.answer_89 NOT LIKE '%1:1%' AND a.answer_89 NOT LIKE '' AND a.answer_89 NOT LIKE '1:%'")
+	@RegisterBeanMapper(BeekeepingDTO.class)
+	List<BeekeepingDTO> getBeekeepingInfo();
+
+	@SqlQuery("SELECT id AS id, a.answer_3 AS wardNo, a.answer_75 AS farmName, a.answer_76 AS registration, a.answer_77 AS insurance from answer a WHERE a.answer_75 NOT LIKE '' AND a.answer_75 NOT LIKE '*' AND a.answer_75 NOT LIKE '%0%' AND a.answer_75 NOT LIKE ',' AND a.answer_75 NOT LIKE '%1%' AND a.answer_75 NOT LIKE 'a' AND a.answer_75 NOT LIKE '०' AND a.answer_75 NOT LIKE '.' AND a.answer_75 NOT LIKE 'छैन%' ")
+	@RegisterBeanMapper(AgriculturalFarmDTO.class)
+	List<AgriculturalFarmDTO> getAgriculturalFarmInfo();
 	
 }

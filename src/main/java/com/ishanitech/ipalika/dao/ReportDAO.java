@@ -95,26 +95,60 @@ public interface ReportDAO {
 	void generateTotalHouseholdCount();
 	
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_animal_husbandary_household', (Select COUNT(*) from answer " + 
-			"WHERE answer_42 NOT LIKE '%11:1%' AND answer_42 NOT LIKE ''))")
+			"WHERE answer_42 NOT LIKE '%11:1%' AND answer_42 NOT LIKE '' AND deleted = 0))")
 	void generateTotalAnimalHouseholdCount();
 	
 	
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_agriculture_household', (SELECT COUNT(*) from answer " + 
 			"WHERE answer_80 NOT LIKE '' OR answer_81 NOT LIKE '' OR answer_82 NOT LIKE '' " + 
-			"OR answer_83 NOT LIKE '' OR answer_84 NOT LIKE '' OR answer_85 NOT LIKE ''))")
+			"OR answer_83 NOT LIKE '' OR answer_84 NOT LIKE '' OR answer_85 NOT LIKE '' AND deleted = 0))")
 	void generateTotalAgricultureHouseholdCount();
 	
 	
-	
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_beekeeping_household', (SELECT COUNT(*) from answer " + 
-			"WHERE answer_89 NOT LIKE '%1:1%' AND answer_89 NOT LIKE '' AND answer_89 NOT LIKE '1:%'))")
+			"WHERE answer_89 NOT LIKE '%1:1%' AND answer_89 NOT LIKE '' AND answer_89 NOT LIKE '1:%' AND deleted = 0))")
 	void generateTotalBeeKeepingHouseholdCount();
 	
 	
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_agriculture_firm', (SELECT COUNT(*) from answer " + 
 			"WHERE answer_75 NOT LIKE '' AND answer_75 NOT LIKE '*' AND answer_75 NOT LIKE '%0%' AND answer_75 NOT LIKE ',' " + 
-			"AND answer_75 NOT LIKE '%1%' AND answer_75 NOT LIKE 'a' AND answer_75 NOT LIKE '.' AND answer_75 NOT LIKE 'छैन%' ))")
+			"AND answer_75 NOT LIKE '%1%' AND answer_75 NOT LIKE 'a' AND answer_75 NOT LIKE '.' AND answer_75 NOT LIKE 'छैन%' AND deleted = 0))")
 	void generateTotalAgricultureFirmCount();
+	
+	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_foodcrop_household', (SELECT COUNT(*) from answer WHERE answer_80 NOT LIKE '' AND answer_80 NOT LIKE '6' AND answer_80 NOT LIKE '%6%' AND deleted = 0))")
+	void generateTotalFoodCropHouseholdCount();
+	
+	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_cashcrop_household', (SELECT COUNT(*) from answer WHERE answer_81 NOT LIKE '' AND answer_81 NOT LIKE '10' AND answer_81 NOT LIKE '%10%' AND deleted = 0))")
+	void generateTotalCashCropHouseholdCount();
+	
+	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_dahacrop_household', (SELECT COUNT(*) from answer WHERE answer_82 NOT LIKE '' AND answer_82 NOT LIKE '6' AND answer_82 NOT LIKE '%6%' AND deleted = 0))")
+	void generateTotalDahaCropHouseholdCount();
+	
+	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_fruit_household', (SELECT COUNT(*) from answer WHERE answer_83 NOT LIKE '' AND answer_83 NOT LIKE '8' AND answer_83 NOT LIKE '%8%' AND deleted = 0))")
+	void generateTotalFruitHouseholdCount();
+	
+	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_vegetable_household', (SELECT COUNT(*) from answer WHERE answer_84 NOT LIKE '' AND answer_84 NOT LIKE '14' AND answer_84 NOT LIKE '%14%' AND deleted = 0))")
+	void generateTotalVegetableHouseholdCount();
+	
+	
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_mushroom_household', (SELECT COUNT(*) from answer WHERE answer_85 NOT LIKE '' AND answer_85 NOT LIKE '5' AND answer_85 NOT LIKE '%5%' AND deleted = 0))")
+	void generateTotalMushroomHouseholdCount();
+	
+	
+	@SqlQuery("SELECT id AS id, a.answer_1 AS ownerName, a.answer_3 AS wardNo, a.answer_89 AS beeHiveNo, a.answer_90 AS beeSpecies, a.answer_91 AS yearlyProduction from answer a WHERE a.answer_89 NOT LIKE '%1:1%' AND a.answer_89 NOT LIKE '' AND a.answer_89 NOT LIKE '1:%' AND a.deleted = 0")
+	@RegisterBeanMapper(BeekeepingDTO.class)
+	List<BeekeepingDTO> getBeekeepingInfo();
+
+	
+	@SqlQuery("SELECT id AS id, a.answer_3 AS wardNo, a.answer_75 AS farmName, a.answer_76 AS registration, a.answer_77 AS insurance from answer a WHERE a.answer_75 NOT LIKE '' AND a.answer_75 NOT LIKE '*' AND a.answer_75 NOT LIKE '%0%' AND a.answer_75 NOT LIKE ',' AND a.answer_75 NOT LIKE '%1%' AND a.answer_75 NOT LIKE 'a' AND a.answer_75 NOT LIKE '०' AND a.answer_75 NOT LIKE '.' AND a.answer_75 NOT LIKE 'छैन%' AND a.deleted = 0 ")
+	@RegisterBeanMapper(AgriculturalFarmDTO.class)
+	List<AgriculturalFarmDTO> getAgriculturalFarmInfo();
+	
 	
 	
 	@Transaction
@@ -129,6 +163,12 @@ public interface ReportDAO {
 		generateTotalAgricultureHouseholdCount();
 		generateTotalBeeKeepingHouseholdCount();
 		generateTotalAgricultureFirmCount();
+		generateTotalFoodCropHouseholdCount();
+		generateTotalCashCropHouseholdCount();
+		generateTotalDahaCropHouseholdCount();
+		generateTotalFruitHouseholdCount();
+		generateTotalVegetableHouseholdCount();
+		generateTotalMushroomHouseholdCount();
 		List<PopulationReport> populationReports = new ArrayList<>();
 		insertAgeGroupReport(totalPopulation); //inserts age group report
 		PopulationReport genderReport = new PopulationReport();
@@ -202,16 +242,10 @@ public interface ReportDAO {
 		insertQuestionReports(rawAnswers);
 	}
 
+	
 	@RegisterBeanMapper(ExtraReport.class)
 	@SqlQuery("SELECT report_name, data FROM extra_report")
 	List<ExtraReport> getExtraReports();
 
-	@SqlQuery("SELECT id AS id, a.answer_1 AS ownerName, a.answer_3 AS wardNo, a.answer_89 AS beeHiveNo, a.answer_90 AS beeSpecies, a.answer_91 AS yearlyProduction from answer a WHERE a.answer_89 NOT LIKE '%1:1%' AND a.answer_89 NOT LIKE '' AND a.answer_89 NOT LIKE '1:%'")
-	@RegisterBeanMapper(BeekeepingDTO.class)
-	List<BeekeepingDTO> getBeekeepingInfo();
-
-	@SqlQuery("SELECT id AS id, a.answer_3 AS wardNo, a.answer_75 AS farmName, a.answer_76 AS registration, a.answer_77 AS insurance from answer a WHERE a.answer_75 NOT LIKE '' AND a.answer_75 NOT LIKE '*' AND a.answer_75 NOT LIKE '%0%' AND a.answer_75 NOT LIKE ',' AND a.answer_75 NOT LIKE '%1%' AND a.answer_75 NOT LIKE 'a' AND a.answer_75 NOT LIKE '०' AND a.answer_75 NOT LIKE '.' AND a.answer_75 NOT LIKE 'छैन%' ")
-	@RegisterBeanMapper(AgriculturalFarmDTO.class)
-	List<AgriculturalFarmDTO> getAgriculturalFarmInfo();
 	
 }

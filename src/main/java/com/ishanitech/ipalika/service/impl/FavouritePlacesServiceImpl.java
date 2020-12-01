@@ -50,7 +50,6 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		try {
 			favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).getFavouritePlaces(caseQuery);
 			favPlaces = new FavouritePlaceConverter().fromEntity(favPlacesInfo);
-			log.info(favPlaces.toString());
 			return favPlaces;
 			
 		} catch (JdbiException jex) {

@@ -217,7 +217,7 @@ CREATE TABLE `answer` (
 	`deleted` bit(1) NOT NULL DEFAULT b'0',
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `filled_id` (`filled_id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `favourite_place` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.jdbi.v3.sqlobject.CreateSqlObject;
 import org.jdbi.v3.sqlobject.config.KeyColumn;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.config.ValueColumn;
@@ -28,6 +29,9 @@ import com.ishanitech.ipalika.model.QuestionReport;
 import com.ishanitech.ipalika.utils.ReportUtil;
 
 public interface ReportDAO {
+	
+	@CreateSqlObject
+	FavouritePlaceDAO favPlaceDao();
 	
 	@SqlQuery("SELECT q.id, qt.type_name FROM question q INNER JOIN question_type qt ON q.type_id = qt.type_id WHERE q.reportable = TRUE")
 	@KeyColumn("id")
@@ -150,6 +154,10 @@ public interface ReportDAO {
 	List<AgriculturalFarmDTO> getAgriculturalFarmInfo();
 	
 	
+	@SqlUpdate("REPLACE INTO favourite_place_report(place_type, data) "
+			+ " VALUES "
+			+ " ((SELECT place_type_eng from favourite_place_type WHERE type_id =:typeId), (SELECT COUNT(*) FROM favourite_place WHERE fav_place_type =:typeId AND deleted = 0))")
+	void insertFavouritePlaceReports(@Bind("typeId") String placeTypeId);
 	
 	@Transaction
 	default void generateReport() {
@@ -169,6 +177,7 @@ public interface ReportDAO {
 		generateTotalFruitHouseholdCount();
 		generateTotalVegetableHouseholdCount();
 		generateTotalMushroomHouseholdCount();
+		generateFavouritePlaceReport();
 		List<PopulationReport> populationReports = new ArrayList<>();
 		insertAgeGroupReport(totalPopulation); //inserts age group report
 		PopulationReport genderReport = new PopulationReport();
@@ -242,10 +251,15 @@ public interface ReportDAO {
 		insertQuestionReports(rawAnswers);
 	}
 
-	
 	@RegisterBeanMapper(ExtraReport.class)
 	@SqlQuery("SELECT report_name, data FROM extra_report")
 	List<ExtraReport> getExtraReports();
+
+	@Transaction
+	default void generateFavouritePlaceReport() {
+		List<String> favPlaceTypeIds = favPlaceDao().getTypeIdofFavouritePlaces();
+		favPlaceTypeIds.stream().forEach((placeTypeId) -> insertFavouritePlaceReports(placeTypeId));
+	}
 
 	
 }

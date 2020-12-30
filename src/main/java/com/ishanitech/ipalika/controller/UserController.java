@@ -93,7 +93,6 @@ public class UserController {
 		userService.updateUserInfoByAdmin(updates, userId);
 	}
 
-	
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/{userId}/pass-reset-admin")
 	public void changePasswordByAdmin(@RequestBody String password, @PathVariable("userId") int userId) {

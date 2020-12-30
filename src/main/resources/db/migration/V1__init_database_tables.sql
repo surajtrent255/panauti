@@ -378,3 +378,11 @@ CREATE TABLE `extra_report` (
 	PRIMARY KEY (`id`) USING BTREE,
 	UNIQUE INDEX `report_name` (`report_name`) USING BTREE
 );
+
+CREATE TABLE `favourite_place_report` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`place_type` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`data` INT(11) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `place_type` (`place_type`) USING BTREE
+);

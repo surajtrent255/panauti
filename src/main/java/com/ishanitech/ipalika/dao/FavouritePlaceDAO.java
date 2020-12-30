@@ -100,4 +100,7 @@ public interface FavouritePlaceDAO {
 	@RegisterBeanMapper(FavouritePlace.class)
 	List<FavouritePlace> searchFavouritePlaceByType(@Bind("placeType") String placeType, @Define("caseQuery") String caseQuery);
 	
+	@SqlQuery("SELECT type_id FROM favourite_place_type")
+	List<String> getTypeIdofFavouritePlaces();
+	
 }

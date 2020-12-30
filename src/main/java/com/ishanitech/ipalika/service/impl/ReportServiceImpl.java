@@ -9,6 +9,7 @@ import com.ishanitech.ipalika.dao.ReportDAO;
 import com.ishanitech.ipalika.dto.AgriculturalFarmDTO;
 import com.ishanitech.ipalika.dto.BeekeepingDTO;
 import com.ishanitech.ipalika.model.ExtraReport;
+import com.ishanitech.ipalika.model.FavouritePlaceReport;
 import com.ishanitech.ipalika.model.PopulationReport;
 import com.ishanitech.ipalika.model.QuestionReport;
 import com.ishanitech.ipalika.service.DbService;
@@ -49,6 +50,11 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public List<AgriculturalFarmDTO> getAgriculturaFarmInfo() {
 		return reportDAO.getAgriculturalFarmInfo();
+	}
+
+	@Override
+	public List<FavouritePlaceReport> getFavouritePlaceReports() {
+		return reportDAO.getAllFavouritePlaceReports();
 	}
 
 }

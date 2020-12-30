@@ -15,6 +15,7 @@ import com.ishanitech.ipalika.dto.BeekeepingDTO;
 import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.model.ExtraReport;
+import com.ishanitech.ipalika.model.FavouritePlaceReport;
 import com.ishanitech.ipalika.model.PopulationReport;
 import com.ishanitech.ipalika.model.QuestionReport;
 import com.ishanitech.ipalika.service.ReportService;
@@ -82,6 +83,11 @@ public class ReportController {
 		return new ResponseDTO<>(reportService.getExtraReports());
 	}
 	
+	
+	@GetMapping("/favouritePlace")
+	ResponseDTO<List<FavouritePlaceReport>> getFavouritePlaceReports() {
+		return new ResponseDTO<>(reportService.getFavouritePlaceReports());
+	}
 	
 	@GetMapping("/beekeeping") 
 	public ResponseDTO<List<BeekeepingDTO>> getBeekeepingInfo() throws CustomSqlException {

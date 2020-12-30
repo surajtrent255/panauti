@@ -24,6 +24,7 @@ import com.ishanitech.ipalika.dto.BeekeepingDTO;
 import com.ishanitech.ipalika.dto.QuestionType;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.model.ExtraReport;
+import com.ishanitech.ipalika.model.FavouritePlaceReport;
 import com.ishanitech.ipalika.model.PopulationReport;
 import com.ishanitech.ipalika.model.QuestionReport;
 import com.ishanitech.ipalika.utils.ReportUtil;
@@ -91,6 +92,10 @@ public interface ReportDAO {
 	@SqlQuery("SELECT * FROM question_report")
 	@RegisterBeanMapper(QuestionReport.class)
 	List<QuestionReport> getAllQuestionReport();
+	
+	@SqlQuery("SELECT * FROM favourite_place_report")
+	@RegisterBeanMapper(FavouritePlaceReport.class)
+	List<FavouritePlaceReport> getAllFavouritePlaceReports();
 	
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_death', (SELECT COUNT(*) FROM death_record))")
 	void generateDeathRecordCount();

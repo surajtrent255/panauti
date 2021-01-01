@@ -107,7 +107,6 @@ public class CustomQueryCreator {
                     break;
 
                 default:
-                	log.info("SearchKey--->Embbzz-->"+ searchKey);
                 	if(searchKey.contains("%")) {
                 	try {
                 	    String result = java.net.URLDecoder.decode(searchKey, StandardCharsets.UTF_8.name());
@@ -116,7 +115,6 @@ public class CustomQueryCreator {
                 	    // not going to happen - value came from JDK's own StandardCharsets
                 	}
                 	}
-                	log.info("SearchKey--->Embbzz-->Converted-->"+ searchKey);
                 	caseQuery += " AND a.answer_1 LIKE '%" + searchKey + "%'";
                     break;
         		}
@@ -221,7 +219,6 @@ public class CustomQueryCreator {
                     break;
 
                 default:
-                	log.info("SearchKey--->Embbzz-->"+ searchKey);
                 	if(searchKey.contains("%")) {
                 	try {
                 	    String result = java.net.URLDecoder.decode(searchKey, StandardCharsets.UTF_8.name());
@@ -230,7 +227,6 @@ public class CustomQueryCreator {
                 	    // not going to happen - value came from JDK's own StandardCharsets
                 	}
                 	}
-                	log.info("SearchKey--->Embbzz-->Converted-->"+ searchKey);
                 	caseQuery += " AND fm.full_name LIKE '%" + searchKey + "%'";
                     break;
         		}
@@ -273,41 +269,33 @@ public class CustomQueryCreator {
                         	caseQuery += " LIMIT 0";
                         }
                         break;
-//                    case "tole":
-//                    	caseQuery += " ORDER BY a.answer_2 " + sortByOrder + " ";
-//                        if(currentPage >= 0) {
-//                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
-//                        }else {
-//                        	caseQuery += " LIMIT 0";
-//                        }
-//                        break;
-//                        
-//                    case "phonenumber":
-//                    	caseQuery += " ORDER BY a.answer_5 " + sortByOrder + " ";
-//                        if(currentPage >= 0) {
-//                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
-//                        }else {
-//                        	caseQuery += " LIMIT 0";
-//                        }
-//                        break;
-//                        
-//                    case "kittanumber":
-//                    	caseQuery += " ORDER BY a.answer_13 " + sortByOrder + " ";
-//                        if(currentPage >= 0) {
-//                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
-//                        }else {
-//                        	caseQuery += " LIMIT 0";
-//                        }
-//                        break;
-//                    
-//                    case "familysize":
-//                    	caseQuery += " ORDER BY totalFamilyMembers " + sortByOrder + " ";
-//                        if(currentPage >= 0) {
-//                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
-//                        }else {
-//                        	caseQuery += " LIMIT 0";
-//                        }
-//                        break;
+                    case "gender":
+                    	caseQuery += " ORDER BY fm.gender_id " + sortByOrder + " ";
+                        if(currentPage >= 0) {
+                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                        }else {
+                        	caseQuery += " LIMIT 0";
+                        }
+                        break;
+                        
+                    case "education":
+                    	caseQuery += " ORDER BY fm.qualification_id " + sortByOrder + " ";
+                        if(currentPage >= 0) {
+                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                        }else {
+                        	caseQuery += " LIMIT 0";
+                        }
+                        break;
+                        
+                    case "marital":
+                    	caseQuery += " ORDER BY fm.marital_status " + sortByOrder + " ";
+                        if(currentPage >= 0) {
+                        caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
+                        }else {
+                        	caseQuery += " LIMIT 0";
+                        }
+                        break;
+
                     default:
                         caseQuery += " ORDER BY fm.id DESC ";
                         break;
@@ -342,7 +330,6 @@ public class CustomQueryCreator {
                     break;
 
                 default:
-                	log.info("SearchKey--->Embbzz-->"+ searchKey);
                 	if(searchKey.contains("%")) {
                 	try {
                 	    String result = java.net.URLDecoder.decode(searchKey, StandardCharsets.UTF_8.name());
@@ -351,7 +338,6 @@ public class CustomQueryCreator {
                 	    // not going to happen - value came from JDK's own StandardCharsets
                 	}
                 	}
-                	log.info("SearchKey--->Embbzz-->Converted-->"+ searchKey);
                 	caseQuery += " AND fp.fav_place_name LIKE '%" + searchKey + "%'";
                     break;
         		}

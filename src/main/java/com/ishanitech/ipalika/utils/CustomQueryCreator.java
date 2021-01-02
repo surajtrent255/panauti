@@ -140,7 +140,6 @@ public class CustomQueryCreator {
         		}else {
         			switch (sortBy.toLowerCase()) {
                     case "ownername":
-                            //caseQuery += " AND a.id < " + lastSeenId;
                             caseQuery += " ORDER BY a.answer_1 " + sortByOrder + " ";
                             if(currentPage >= 0) {
                             caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
@@ -252,7 +251,6 @@ public class CustomQueryCreator {
         		}else {
         			switch (sortBy.toLowerCase()) {
                     case "fullname":
-                            //caseQuery += " AND a.id < " + lastSeenId;
                             caseQuery += " ORDER BY fm.full_name " + sortByOrder + " ";
                             if(currentPage >= 0) {
                             caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
@@ -287,7 +285,7 @@ public class CustomQueryCreator {
                         }
                         break;
                         
-                    case "marital":
+                    case "maritalstatus":
                     	caseQuery += " ORDER BY fm.marital_status " + sortByOrder + " ";
                         if(currentPage >= 0) {
                         caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
@@ -360,9 +358,10 @@ public class CustomQueryCreator {
                     caseQuery += " ORDER BY fp.id DESC ";
                     break;
         		}
-        		}else {
+        		
+        		} else {
         			switch (sortBy.toLowerCase()) {
-                    case "placeName":
+                    case "placename":
                             caseQuery += " ORDER BY fp.fav_place_name " + sortByOrder + " ";
                             if(currentPage >= 0) {
                             caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
@@ -370,8 +369,8 @@ public class CustomQueryCreator {
                             	caseQuery += " LIMIT 0";
                             }
                         break;
-                    case "placeWard":
-                    	caseQuery += " ORDER BY a.fav_place_ward " + sortByOrder + " ";
+                    case "placeward":
+                    	caseQuery += " ORDER BY fp.fav_place_ward " + sortByOrder + " ";
                         if(currentPage >= 0) {
                         caseQuery += " LIMIT " + currentPage * pageSize + ", " + pageSize ;
                         }else {

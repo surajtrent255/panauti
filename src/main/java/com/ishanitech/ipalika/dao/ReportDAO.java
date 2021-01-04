@@ -109,8 +109,8 @@ public interface ReportDAO {
 	
 	
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data) VALUE ('total_agriculture_household', (SELECT COUNT(*) from answer " + 
-			"WHERE answer_80 NOT LIKE '' OR answer_81 NOT LIKE '' OR answer_82 NOT LIKE '' " + 
-			"OR answer_83 NOT LIKE '' OR answer_84 NOT LIKE '' OR answer_85 NOT LIKE '' AND deleted = 0))")
+			"WHERE (answer_80 NOT LIKE '' OR answer_81 NOT LIKE '' OR answer_82 NOT LIKE '' " + 
+			"OR answer_83 NOT LIKE '' OR answer_84 NOT LIKE '' OR answer_85 NOT LIKE '') AND deleted = 0))")
 	void generateTotalAgricultureHouseholdCount();
 	
 	

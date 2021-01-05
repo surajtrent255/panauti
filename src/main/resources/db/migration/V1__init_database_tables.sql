@@ -351,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `ward` (
 	`location` VARCHAR(100) NOT NULL DEFAULT '0',
 	`name` VARCHAR(100) NOT NULL DEFAULT '0',
 	`ward_description` TEXT,
-	`main_person` VARCHAR(100) NOT NULL DEFAULT '0',
+	`main_person` VARCHAR(5000) NOT NULL DEFAULT '0',
 	`contact_no` VARCHAR(10) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `ward_number_UNIQUE` (`ward_number`)

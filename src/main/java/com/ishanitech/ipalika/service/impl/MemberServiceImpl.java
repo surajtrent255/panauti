@@ -18,6 +18,7 @@ import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.MemberService;
 import com.ishanitech.ipalika.utils.CustomQueryCreator;
 
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -105,7 +106,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	public static<T> List<T> reverseList(List<T> list) {
-		List<T> reverse = new ArrayList<>();
+		List<T> reverse = new ArrayList<>(list);
 		Collections.reverse(reverse);
 		return reverse;
 	}

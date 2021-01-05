@@ -18,6 +18,8 @@ import com.ishanitech.ipalika.dto.RoleWardDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.service.MemberService;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * {@code MemberController} is a controller class which handles the CRUD operaiton of family members.

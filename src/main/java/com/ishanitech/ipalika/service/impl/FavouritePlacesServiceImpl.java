@@ -170,12 +170,10 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		List<FavouritePlace> favPlacesInfo;
 		try {
 		if(wardNo.equals("")) {
-			log.info("All search called");
 			favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchAllFavouritePlaceByKey(searchKey, caseQuery);
 		} 
 
 		else {
-			log.info("ward wise  called");
 			favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchFavouritePlaceByKey(searchKey, wardNo, caseQuery);
 		}
 		
@@ -195,10 +193,8 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		List<FavouritePlace> favPlacesInfo;
 		try {
 			if(wardNo.equals("")) {
-				log.info("ward is empty");
 				favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchAllFavouritePlaceByWard(caseQuery);
 			}else {
-				log.info("ward is sleected");
 				favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchFavouritePlaceByWard(wardNo, caseQuery);
 			}
 			favPlaces = new FavouritePlaceConverter().fromEntity(favPlacesInfo);
@@ -217,10 +213,8 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		List<FavouritePlace> favPlacesInfo;
 		try {
 			if(placeType.equals("")) {
-				log.info("placeType is empty");
 				favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchAllFavouritePlaceByType(caseQuery);
 			}else {
-				log.info("placeType is sleected");
 				favPlacesInfo = dbService.getDao(FavouritePlaceDAO.class).searchFavouritePlaceByType(placeType, caseQuery);
 			}
 			favPlaces = new FavouritePlaceConverter().fromEntity(favPlacesInfo);

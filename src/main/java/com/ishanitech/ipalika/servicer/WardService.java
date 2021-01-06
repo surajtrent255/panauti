@@ -6,6 +6,8 @@ package com.ishanitech.ipalika.servicer;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ishanitech.ipalika.dto.WardDTO;
 
 public interface WardService {
@@ -22,4 +24,6 @@ public interface WardService {
 	List<WardDTO> getAllwardsInfo();
 	
 	Integer getHouseCountByWard(int wardNo);
+
+	void addWardBuilginImage(MultipartFile image);
 }

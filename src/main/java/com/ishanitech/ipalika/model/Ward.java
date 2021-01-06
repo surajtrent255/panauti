@@ -10,4 +10,6 @@ public class Ward {
 	private String wardDescription;
 	private String mainPerson;
 	private String contactNumber;
+	
+	private String buildingImage;
 }

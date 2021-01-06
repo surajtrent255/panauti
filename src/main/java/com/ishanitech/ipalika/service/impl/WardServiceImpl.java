@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jdbi.v3.core.JdbiException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ishanitech.ipalika.config.properties.RestBaseProperty;
 import com.ishanitech.ipalika.converter.impl.WardConverter;
 import com.ishanitech.ipalika.dao.WardDAO;
 import com.ishanitech.ipalika.dto.WardDTO;
@@ -17,13 +20,19 @@ import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.model.Ward;
 import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.servicer.WardService;
+import com.ishanitech.ipalika.utils.FileUtilService;
 
 @Service
 public class WardServiceImpl implements WardService {
 	private final DbService dbService;
+	private final FileUtilService fileUtilService;
 	
-	public WardServiceImpl(DbService dbService) {
+	@Autowired
+	private RestBaseProperty restUrlProperty;
+	
+	public WardServiceImpl(DbService dbService, FileUtilService fileUtilService) {
 		this.dbService = dbService;
+		this.fileUtilService = fileUtilService;
 	}
 
 	@Override
@@ -65,7 +74,7 @@ public class WardServiceImpl implements WardService {
 		try {
 			Ward wardInfo = dbService.getDao(WardDAO.class)
 					.getWardByWardNumber(wardNo);
-			ward = new WardConverter().fromEntity(wardInfo);
+			ward = new WardConverter(restUrlProperty).fromEntity(wardInfo);
 			return ward;
 		} catch (JdbiException jex) {
 			throw new CustomSqlException("Exception : " + jex.getLocalizedMessage());
@@ -91,6 +100,12 @@ public class WardServiceImpl implements WardService {
 		Integer totalHouseCount = dbService.getDao(WardDAO.class).getTotalHouseCountByWard(wardNo);
 		
 		return totalHouseCount;
+	}
+
+	@Override
+	public void addWardBuilginImage(MultipartFile image) {
+		fileUtilService.storeFile(image);
+		
 	}
 
 }

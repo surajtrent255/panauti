@@ -3,11 +3,30 @@ package com.ishanitech.ipalika.converter.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ishanitech.ipalika.config.properties.RestBaseProperty;
 import com.ishanitech.ipalika.converter.BaseConverter;
 import com.ishanitech.ipalika.dto.WardDTO;
 import com.ishanitech.ipalika.model.Ward;
+import com.ishanitech.ipalika.utils.ImageUtilService;
 
 public class WardConverter extends BaseConverter<Ward, WardDTO> {
+
+	private RestBaseProperty restBaseProperty;
+	
+	
+	
+	public WardConverter(RestBaseProperty restBaseProperty) {
+		super();
+		this.restBaseProperty = restBaseProperty;
+	}
+	
+	
+
+	public WardConverter() {
+		super();
+	}
+
+
 
 	@Override
 	public Ward fromDto(WardDTO dto) {
@@ -18,6 +37,7 @@ public class WardConverter extends BaseConverter<Ward, WardDTO> {
 		ward.setWardDescription(dto.getWardDescription());
 		ward.setMainPerson(dto.getMainPerson());
 		ward.setContactNumber(dto.getContactNumber());
+		ward.setBuildingImage(dto.getBuildingImage());
 		return ward;
 	}
 
@@ -30,6 +50,9 @@ public class WardConverter extends BaseConverter<Ward, WardDTO> {
 		wardDTO.setWardDescription(entity.getWardDescription());
 		wardDTO.setMainPerson(entity.getMainPerson());
 		wardDTO.setContactNumber(entity.getContactNumber());
+		//ImageUtilService.makeFullImageurl(restBaseProperty, entity.getBuildingImage());
+		if(restBaseProperty != null)
+		wardDTO.setBuildingImage(ImageUtilService.makeFullImageurl(restBaseProperty, entity.getBuildingImage()));
 		return wardDTO;
 	}
 	

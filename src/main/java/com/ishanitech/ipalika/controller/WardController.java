@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalika.dto.ResponseDTO;
 import com.ishanitech.ipalika.dto.WardDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
+import com.ishanitech.ipalika.exception.FileStorageException;
 import com.ishanitech.ipalika.servicer.WardService;
 
 @RestController
@@ -66,5 +71,19 @@ public class WardController {
 	public ResponseDTO<Integer> getTotalHouseCountByWard(@PathVariable("wardNumber") int wardNo) throws CustomSqlException {
 		System.out.println("endpoint called ward--->" + wardNo);
 		return new ResponseDTO<Integer>(wardService.getHouseCountByWard(wardNo));
+	}
+	
+	/**
+	 * Uploads the image for ward building using MultipartFile
+	 * @param picture MultipartFile image
+	 * @return void
+	 * @throws FileStorageException if there is error on storing file
+	 * @author <b> Pujan KC </b>
+	 * @since 1.0
+	 */
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/image")
+	public void uploadImageWardBuilding(@RequestParam("picture") MultipartFile image) throws FileStorageException {
+		wardService.addWardBuilginImage(image);
 	}
 }

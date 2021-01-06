@@ -25,13 +25,15 @@ public interface WardDAO {
 			+ " `name`, "
 			+ " `ward_description`, "
 			+ " `main_person`, "
-			+ " `contact_no`) "
+			+ " `contact_no`, "
+			+ " `building_image`) "
 			+ " VALUES (:wardNumber, "
 			+ " :wardLocation, "
 			+ " :wardName, "
 			+ " :wardDescription,"
 			+ " :mainPerson, "
-			+ " :contactNumber)")
+			+ " :contactNumber, "
+			+ " :buildingImage)")
 	void addWard(@BindBean Ward ward);
 	
 	@SqlQuery("SELECT w.ward_number AS wardNumber,"
@@ -39,7 +41,8 @@ public interface WardDAO {
 			+ "w.name AS wardName, "
 			+ "w.ward_description AS wardDescription, "
 			+ "w.main_person AS mainPerson, "
-			+ "w.contact_no AS contactNumber "
+			+ "w.contact_no AS contactNumber,"
+			+ "w.building_image AS buildingImage "
 			+ "FROM ward w "
 			+ "WHERE w.ward_number =:wardNo")
 	@RegisterBeanMapper(Ward.class)
@@ -52,7 +55,8 @@ public interface WardDAO {
 			+ "name =:wardName, "
 			+ "ward_description =:wardDescription, "
 			+ "main_person =:mainPerson, "
-			+ "contact_no =:contactNumber "
+			+ "contact_no =:contactNumber,"
+			+ "building_image =:buildingImage "
 			+ "WHERE ward_number =:wardNo")
 	void updateWardInfoByWardNumber(@BindBean Ward ward, @Bind("wardNo") int wardNo);
 
@@ -65,7 +69,8 @@ public interface WardDAO {
 			+ "w.name AS wardName, "
 			+ "w.ward_description AS wardDescription, "
 			+ "w.main_person AS mainPerson, "
-			+ "w.contact_no AS contactNumber "
+			+ "w.contact_no AS contactNumber,"
+			+ "w.building_image AS buildingImage "
 			+ "FROM ward w ")
 	@RegisterBeanMapper(Ward.class)
 	List<Ward> getAllWardsInfo();

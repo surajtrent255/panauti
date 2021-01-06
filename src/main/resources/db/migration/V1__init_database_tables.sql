@@ -296,6 +296,7 @@ CREATE TABLE `population_report` (
 	`option_14` DOUBLE NOT NULL DEFAULT 0,
 	`option_15` DOUBLE NOT NULL DEFAULT 0,
 	`total` DOUBLE NOT NULL DEFAULT 0,
+	`ward` INT(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `based_on` (`based_on`)
 );
@@ -320,6 +321,7 @@ CREATE TABLE `question_report` (
 	`option_14` DOUBLE NOT NULL DEFAULT 0,
 	`option_15` DOUBLE NOT NULL DEFAULT 0,
 	`total` DOUBLE NOT NULL DEFAULT 0,
+	`ward` INT(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `question_id` (`question_id`)
 );
@@ -375,6 +377,7 @@ CREATE TABLE `extra_report` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`report_name` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
 	`data` INT(11) NOT NULL DEFAULT '0',
+	`ward` INT(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`) USING BTREE,
 	UNIQUE INDEX `report_name` (`report_name`) USING BTREE
 );
@@ -383,6 +386,7 @@ CREATE TABLE `favourite_place_report` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`place_type` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
 	`data` INT(11) NOT NULL DEFAULT '0',
+	`ward` INT(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`) USING BTREE,
 	UNIQUE INDEX `place_type` (`place_type`) USING BTREE
 );

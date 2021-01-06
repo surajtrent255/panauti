@@ -10,11 +10,11 @@ import com.ishanitech.ipalika.model.PopulationReport;
 import com.ishanitech.ipalika.model.QuestionReport;
 
 public interface ReportService {
-	public void generateReport();
-	public List<PopulationReport> getAllPopulationReports();
-	public List<QuestionReport> getAllQuestionReports();
-	public List<ExtraReport> getExtraReports();
-	public List<BeekeepingDTO> getBeekeepingInfo();
-	public List<AgriculturalFarmDTO> getAgriculturaFarmInfo();
-	public List<FavouritePlaceReport> getFavouritePlaceReports();
+	public void generateReport(int wardNo);
+	public List<PopulationReport> getAllPopulationReports(int wardNo);
+	public List<QuestionReport> getAllQuestionReports(int wardNo);
+	public List<ExtraReport> getExtraReports(int wardNo);
+	public List<BeekeepingDTO> getBeekeepingInfo(int wardNo);
+	public List<AgriculturalFarmDTO> getAgriculturaFarmInfo(int wardNo);
+	public List<FavouritePlaceReport> getFavouritePlaceReports(int wardNo);
 }

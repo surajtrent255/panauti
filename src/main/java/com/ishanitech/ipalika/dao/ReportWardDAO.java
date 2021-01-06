@@ -106,7 +106,7 @@ public interface ReportWardDAO {
 	void generateTotalHouseholdCount(@Bind("wardNo") int wardNo);
 	
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_animal_husbandary_household', :wardNo), (Select COUNT(*) from answer " + 
-			"WHERE answer_42 NOT LIKE '%11:1%' AND answer_42 NOT LIKE '' AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
+			"WHERE (answer_42 NOT LIKE '%11:1%' AND answer_42 NOT LIKE '') AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
 	void generateTotalAnimalHouseholdCount(@Bind("wardNo") int wardNo);
 	
 	
@@ -117,46 +117,46 @@ public interface ReportWardDAO {
 	
 	
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_beekeeping_household', :wardNo), (SELECT COUNT(*) from answer " + 
-			"WHERE answer_89 NOT LIKE '%1:1%' AND answer_89 NOT LIKE '' AND answer_89 NOT LIKE '1:%' AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
+			"WHERE (answer_89 NOT LIKE '%1:1%' AND answer_89 NOT LIKE '' AND answer_89 NOT LIKE '1:%') AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
 	void generateTotalBeeKeepingHouseholdCount(@Bind("wardNo") int wardNo);
 	
 	
 	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_agriculture_firm', :wardNo), (SELECT COUNT(*) from answer " + 
-			"WHERE answer_75 NOT LIKE '' AND answer_75 NOT LIKE '*' AND answer_75 NOT LIKE '%0%' AND answer_75 NOT LIKE ',' " + 
-			"AND answer_75 NOT LIKE '%1%' AND answer_75 NOT LIKE 'a' AND answer_75 NOT LIKE '.' AND answer_75 NOT LIKE 'छैन%' AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
+			"WHERE (answer_75 NOT LIKE '' AND answer_75 NOT LIKE '*' AND answer_75 NOT LIKE '%0%' AND answer_75 NOT LIKE ',' " + 
+			"AND answer_75 NOT LIKE '%1%' AND answer_75 NOT LIKE 'a' AND answer_75 NOT LIKE '.' AND answer_75 NOT LIKE 'छैन%') AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
 	void generateTotalAgricultureFirmCount(@Bind("wardNo") int wardNo);
 	
 	
-	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_foodcrop_household', :wardNo), (SELECT COUNT(*) from answer WHERE answer_80 NOT LIKE '' AND answer_80 NOT LIKE '6' AND answer_80 NOT LIKE '%6%' AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_foodcrop_household', :wardNo), (SELECT COUNT(*) from answer WHERE (answer_80 NOT LIKE '' AND answer_80 NOT LIKE '6' AND answer_80 NOT LIKE '%6%') AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
 	void generateTotalFoodCropHouseholdCount(@Bind("wardNo") int wardNo);
 	
 	
-	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_cashcrop_household', :wardNo), (SELECT COUNT(*) from answer WHERE answer_81 NOT LIKE '' AND answer_81 NOT LIKE '10' AND answer_81 NOT LIKE '%10%' AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_cashcrop_household', :wardNo), (SELECT COUNT(*) from answer WHERE (answer_81 NOT LIKE '' AND answer_81 NOT LIKE '10' AND answer_81 NOT LIKE '%10%') AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
 	void generateTotalCashCropHouseholdCount(@Bind("wardNo") int wardNo);
 	
 	
-	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_dahacrop_household', :wardNo), (SELECT COUNT(*) from answer WHERE answer_82 NOT LIKE '' AND answer_82 NOT LIKE '6' AND answer_82 NOT LIKE '%6%' AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_dahacrop_household', :wardNo), (SELECT COUNT(*) from answer WHERE (answer_82 NOT LIKE '' AND answer_82 NOT LIKE '6' AND answer_82 NOT LIKE '%6%') AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
 	void generateTotalDahaCropHouseholdCount(@Bind("wardNo") int wardNo);
 	
 	
-	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_fruit_household', :wardNo), (SELECT COUNT(*) from answer WHERE answer_83 NOT LIKE '' AND answer_83 NOT LIKE '8' AND answer_83 NOT LIKE '%8%' AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_fruit_household', :wardNo), (SELECT COUNT(*) from answer WHERE (answer_83 NOT LIKE '' AND answer_83 NOT LIKE '8' AND answer_83 NOT LIKE '%8%') AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
 	void generateTotalFruitHouseholdCount(@Bind("wardNo") int wardNo);
 	
 	
-	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_vegetable_household', :wardNo), (SELECT COUNT(*) from answer WHERE answer_84 NOT LIKE '' AND answer_84 NOT LIKE '14' AND answer_84 NOT LIKE '%14%' AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_vegetable_household', :wardNo), (SELECT COUNT(*) from answer WHERE (answer_84 NOT LIKE '' AND answer_84 NOT LIKE '14' AND answer_84 NOT LIKE '%14%') AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
 	void generateTotalVegetableHouseholdCount(@Bind("wardNo") int wardNo);
 	
 	
-	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_mushroom_household', :wardNo), (SELECT COUNT(*) from answer WHERE answer_85 NOT LIKE '' AND answer_85 NOT LIKE '5' AND answer_85 NOT LIKE '%5%' AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
+	@SqlUpdate("REPLACE INTO extra_report(report_name, data, ward) VALUE (CONCAT('total_mushroom_household', :wardNo), (SELECT COUNT(*) from answer WHERE (answer_85 NOT LIKE '' AND answer_85 NOT LIKE '5' AND answer_85 NOT LIKE '%5%') AND deleted = 0 AND answer_3 =:wardNo), :wardNo)")
 	void generateTotalMushroomHouseholdCount(@Bind("wardNo") int wardNo);
 	
 	
-	@SqlQuery("SELECT id AS id, a.answer_1 AS ownerName, a.answer_3 AS wardNo, a.answer_89 AS beeHiveNo, a.answer_90 AS beeSpecies, a.answer_91 AS yearlyProduction from answer a WHERE a.answer_89 NOT LIKE '%1:1%' AND a.answer_89 NOT LIKE '' AND a.answer_89 NOT LIKE '1:%' AND a.deleted = 0 AND a.answer_3 =:wardNo")
+	@SqlQuery("SELECT id AS id, a.answer_1 AS ownerName, a.answer_3 AS wardNo, a.answer_89 AS beeHiveNo, a.answer_90 AS beeSpecies, a.answer_91 AS yearlyProduction from answer a WHERE (a.answer_89 NOT LIKE '%1:1%' AND a.answer_89 NOT LIKE '' AND a.answer_89 NOT LIKE '1:%') AND a.deleted = 0 AND a.answer_3 =:wardNo")
 	@RegisterBeanMapper(BeekeepingDTO.class)
 	List<BeekeepingDTO> getBeekeepingInfo(@Bind("wardNo") int wardNo);
 
 	
-	@SqlQuery("SELECT id AS id, a.answer_3 AS wardNo, a.answer_75 AS farmName, a.answer_76 AS registration, a.answer_77 AS insurance from answer a WHERE a.answer_75 NOT LIKE '' AND a.answer_75 NOT LIKE '*' AND a.answer_75 NOT LIKE '%0%' AND a.answer_75 NOT LIKE ',' AND a.answer_75 NOT LIKE '%1%' AND a.answer_75 NOT LIKE 'a' AND a.answer_75 NOT LIKE '०' AND a.answer_75 NOT LIKE '.' AND a.answer_75 NOT LIKE 'छैन%' AND a.deleted = 0 AND a.answer_3 =:wardNo")
+	@SqlQuery("SELECT id AS id, a.answer_3 AS wardNo, a.answer_75 AS farmName, a.answer_76 AS registration, a.answer_77 AS insurance from answer a WHERE (a.answer_75 NOT LIKE '' AND a.answer_75 NOT LIKE '*' AND a.answer_75 NOT LIKE '%0%' AND a.answer_75 NOT LIKE ',' AND a.answer_75 NOT LIKE '%1%' AND a.answer_75 NOT LIKE 'a' AND a.answer_75 NOT LIKE '०' AND a.answer_75 NOT LIKE '.' AND a.answer_75 NOT LIKE 'छैन%') AND a.deleted = 0 AND a.answer_3 =:wardNo")
 	@RegisterBeanMapper(AgriculturalFarmDTO.class)
 	List<AgriculturalFarmDTO> getAgriculturalFarmInfo(@Bind("wardNo") int wardNo);
 	

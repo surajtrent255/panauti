@@ -52,12 +52,20 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public List<BeekeepingDTO> getBeekeepingInfo(int wardNo) {
-		return reportWardDAO.getBeekeepingInfo(wardNo);
+		if(wardNo == 0) {
+			return reportDAO.getBeekeepingInfo();
+		} else {
+			return reportWardDAO.getBeekeepingInfo(wardNo);
+		}
 	}
 
 	@Override
 	public List<AgriculturalFarmDTO> getAgriculturaFarmInfo(int wardNo) {
-		return reportWardDAO.getAgriculturalFarmInfo(wardNo);
+		if(wardNo == 0) {
+			return reportDAO.getAgriculturalFarmInfo();
+		} else {
+			return reportWardDAO.getAgriculturalFarmInfo(wardNo);
+		}
 	}
 
 	@Override

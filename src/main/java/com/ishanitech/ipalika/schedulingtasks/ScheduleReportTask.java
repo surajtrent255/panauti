@@ -21,6 +21,6 @@ public class ScheduleReportTask {
 	//@Scheduled(fixedRate = 60000)
 	public void generateReport() {
 		log.info("Generate Report Called");
-		reportService.generateReport();
+		reportService.generateReport(0);
 	}
 }

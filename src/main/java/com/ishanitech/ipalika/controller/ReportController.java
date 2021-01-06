@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -42,9 +43,9 @@ public class ReportController {
 	 * @since 1.0
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping
-	public void generateReport() {
-		reportService.generateReport();
+	@PostMapping("/{wardNo}")
+	public void generateReport(@PathVariable("wardNo") int wardNo) {
+		reportService.generateReport(wardNo);
 	}
 	
 	
@@ -54,9 +55,9 @@ public class ReportController {
 	 * @author <b> Umesh Bhujel </b>
 	 * @since 1.0
 	 */
-	@GetMapping("/population")
-	ResponseDTO<List<PopulationReport>> getPopulationReport() {
-		return new ResponseDTO<List<PopulationReport>>(reportService.getAllPopulationReports());
+	@GetMapping("/population/{wardNo}")
+	ResponseDTO<List<PopulationReport>> getPopulationReport(@PathVariable("wardNo") int wardNo) {
+		return new ResponseDTO<List<PopulationReport>>(reportService.getAllPopulationReports(wardNo));
 	}
 	
 	
@@ -66,9 +67,9 @@ public class ReportController {
 	 * @author <b> Umesh Bhujel </b>
 	 * @since 1.0
 	 */
-	@GetMapping("/question")
-	ResponseDTO<List<QuestionReport>> getQuestionReports() {
-		return new ResponseDTO<List<QuestionReport>>(reportService.getAllQuestionReports());
+	@GetMapping("/question/{wardNo}")
+	ResponseDTO<List<QuestionReport>> getQuestionReports(@PathVariable("wardNo") int wardNo) {
+		return new ResponseDTO<List<QuestionReport>>(reportService.getAllQuestionReports(wardNo));
 	}
 	
 	
@@ -78,26 +79,26 @@ public class ReportController {
 	 * @author <b> Umesh Bhujel </b>
 	 * @since 1.0
 	 */
-	@GetMapping("/extra")
-	ResponseDTO<List<ExtraReport>> getExtraReports() {
-		return new ResponseDTO<>(reportService.getExtraReports());
+	@GetMapping("/extra/{wardNo}")
+	ResponseDTO<List<ExtraReport>> getExtraReports(@PathVariable("wardNo") int wardNo) {
+		return new ResponseDTO<>(reportService.getExtraReports(wardNo));
 	}
 	
 	
-	@GetMapping("/favouritePlace")
-	ResponseDTO<List<FavouritePlaceReport>> getFavouritePlaceReports() {
-		return new ResponseDTO<>(reportService.getFavouritePlaceReports());
+	@GetMapping("/favouritePlace/{wardNo}")
+	ResponseDTO<List<FavouritePlaceReport>> getFavouritePlaceReports(@PathVariable("wardNo") int wardNo) {
+		return new ResponseDTO<>(reportService.getFavouritePlaceReports(wardNo));
 	}
 	
-	@GetMapping("/beekeeping") 
-	public ResponseDTO<List<BeekeepingDTO>> getBeekeepingInfo() throws CustomSqlException {
-		return new ResponseDTO<List<BeekeepingDTO>>(reportService.getBeekeepingInfo());
+	@GetMapping("/beekeeping/{wardNo}") 
+	public ResponseDTO<List<BeekeepingDTO>> getBeekeepingInfo(@PathVariable("wardNo") int wardNo) throws CustomSqlException {
+		return new ResponseDTO<List<BeekeepingDTO>>(reportService.getBeekeepingInfo(wardNo));
 	}
 	
 	
-	@GetMapping("/agriculturalFarm") 
-	public ResponseDTO<List<AgriculturalFarmDTO>> getAgriculturalFarmInfo() throws CustomSqlException {
-		return new ResponseDTO<List<AgriculturalFarmDTO>>(reportService.getAgriculturaFarmInfo());
+	@GetMapping("/agriculturalFarm/{wardNo}") 
+	public ResponseDTO<List<AgriculturalFarmDTO>> getAgriculturalFarmInfo(@PathVariable("wardNo") int wardNo) throws CustomSqlException {
+		return new ResponseDTO<List<AgriculturalFarmDTO>>(reportService.getAgriculturaFarmInfo(wardNo));
 	}
 	
 }

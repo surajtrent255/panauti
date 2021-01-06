@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ishanitech.ipalika.dao.ReportDAO;
+import com.ishanitech.ipalika.dao.ReportWardDAO;
 import com.ishanitech.ipalika.dto.AgriculturalFarmDTO;
 import com.ishanitech.ipalika.dto.BeekeepingDTO;
 import com.ishanitech.ipalika.model.ExtraReport;
@@ -18,43 +19,58 @@ import com.ishanitech.ipalika.service.ReportService;
 @Service
 public class ReportServiceImpl implements ReportService {
 	private final ReportDAO reportDAO;
+	private final ReportWardDAO reportWardDAO;
+
 	public ReportServiceImpl(DbService dbService) {
 		this.reportDAO = dbService.getDao(ReportDAO.class);
+		this.reportWardDAO = dbService.getDao(ReportWardDAO.class);
 	}
 
 	@Override
-	public void generateReport() {
-		reportDAO.generateReport();
+	public void generateReport(int wardNo) {
+		if(wardNo == 0) {
+			reportDAO.generateReport();
+		} else {
+			reportWardDAO.generateReport(wardNo);
+		}
 	}
 
 	@Override
-	public List<PopulationReport> getAllPopulationReports() {
-		return reportDAO.getAllPopulationReports();
+	public List<PopulationReport> getAllPopulationReports(int wardNo) {
+		return reportWardDAO.getAllPopulationReports(wardNo);
 	}
 
 	@Override
-	public List<QuestionReport> getAllQuestionReports() {
-		return reportDAO.getAllQuestionReport();
+	public List<QuestionReport> getAllQuestionReports(int wardNo) {
+		return reportWardDAO.getAllQuestionReport(wardNo);
 	}
 
 	@Override
-	public List<ExtraReport> getExtraReports() {
-		return reportDAO.getExtraReports();
+	public List<ExtraReport> getExtraReports(int wardNo) {
+		return reportWardDAO.getExtraReports(wardNo);
 	}
 
 	@Override
-	public List<BeekeepingDTO> getBeekeepingInfo() {
-		return reportDAO.getBeekeepingInfo();
+	public List<BeekeepingDTO> getBeekeepingInfo(int wardNo) {
+		if(wardNo == 0) {
+			return reportDAO.getBeekeepingInfo();
+		} else {
+			return reportWardDAO.getBeekeepingInfo(wardNo);
+		}
 	}
 
 	@Override
-	public List<AgriculturalFarmDTO> getAgriculturaFarmInfo() {
-		return reportDAO.getAgriculturalFarmInfo();
+	public List<AgriculturalFarmDTO> getAgriculturaFarmInfo(int wardNo) {
+		if(wardNo == 0) {
+			return reportDAO.getAgriculturalFarmInfo();
+		} else {
+			return reportWardDAO.getAgriculturalFarmInfo(wardNo);
+		}
 	}
 
 	@Override
-	public List<FavouritePlaceReport> getFavouritePlaceReports() {
-		return reportDAO.getAllFavouritePlaceReports();
+	public List<FavouritePlaceReport> getFavouritePlaceReports(int wardNo) {
+		return reportWardDAO.getAllFavouritePlaceReports(wardNo);
 	}
 
 }

@@ -27,7 +27,11 @@ public class ScheduleReportTask {
 	public void generateReport() {
 		log.info("Generate Report Called");
 		reportService.generateReport(0);
-		
+	}
+	
+	@Scheduled(cron = "0 0 0 * * ?")
+	//@Scheduled(fixedRate = 60000)
+	public void generateReportWard() {
 		List<Integer> wardNos = wardService.getAllWardNumbers();
 		wardNos.stream().forEach((wardNo) -> reportService.generateReport(wardNo));
 	}

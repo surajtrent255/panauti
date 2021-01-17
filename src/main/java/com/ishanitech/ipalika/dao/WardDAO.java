@@ -76,7 +76,7 @@ public interface WardDAO {
 	List<Ward> getAllWardsInfo();
 
 
-	@SqlQuery("SELECT COUNT(*) FROM answer WHERE answer_3 = :wardNo")
+	@SqlQuery("SELECT COUNT(*) FROM answer WHERE answer_3 = :wardNo AND deleted = 0")
 	Integer getTotalHouseCountByWard(@Bind("wardNo") int wardNo);
 	
 }

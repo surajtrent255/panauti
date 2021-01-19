@@ -5,6 +5,7 @@
 package com.ishanitech.ipalika.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ishanitech.ipalika.dto.ResponseDTO;
+import com.ishanitech.ipalika.dto.ToleDTO;
 import com.ishanitech.ipalika.dto.WardDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.exception.FileStorageException;
@@ -40,6 +42,12 @@ public class WardController {
 	public ResponseDTO<List<Integer>> getAllWardsNumbers() {
 		List<Integer> wards = wardService.getAllWardNumbers();
 		return new ResponseDTO<List<Integer>>(wards);
+	}
+	
+	@GetMapping("/toles")
+	public ResponseDTO<List<ToleDTO>> getAllToles() {
+		List<ToleDTO> tolesMap = wardService.getAllToles();
+		return new ResponseDTO<List<ToleDTO>>(tolesMap);
 	}
 	
 	@PostMapping

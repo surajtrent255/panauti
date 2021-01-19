@@ -5,9 +5,11 @@
 package com.ishanitech.ipalika.servicer;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ishanitech.ipalika.dto.ToleDTO;
 import com.ishanitech.ipalika.dto.WardDTO;
 
 public interface WardService {
@@ -26,4 +28,6 @@ public interface WardService {
 	Integer getHouseCountByWard(int wardNo);
 
 	void addWardBuilginImage(MultipartFile image);
+
+	List<ToleDTO> getAllToles();
 }

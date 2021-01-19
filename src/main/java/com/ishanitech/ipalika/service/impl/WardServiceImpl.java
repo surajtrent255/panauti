@@ -6,6 +6,7 @@ package com.ishanitech.ipalika.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ishanitech.ipalika.config.properties.RestBaseProperty;
 import com.ishanitech.ipalika.converter.impl.WardConverter;
 import com.ishanitech.ipalika.dao.WardDAO;
+import com.ishanitech.ipalika.dto.ToleDTO;
 import com.ishanitech.ipalika.dto.WardDTO;
 import com.ishanitech.ipalika.exception.CustomSqlException;
 import com.ishanitech.ipalika.model.Ward;
@@ -106,6 +108,14 @@ public class WardServiceImpl implements WardService {
 	public void addWardBuilginImage(MultipartFile image) {
 		fileUtilService.storeFile(image);
 		
+	}
+
+	@Override
+	public List<ToleDTO> getAllToles() {
+		
+		 List<ToleDTO> toles = dbService.getDao(WardDAO.class).getAllTolesMap();
+		
+		return toles;
 	}
 
 }

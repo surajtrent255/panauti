@@ -27,6 +27,7 @@ public class CustomQueryCreator {
         Integer pageSize;
         String searchKey;
         String wardNo;
+        String tole;
         String sortBy;
         String sortByOrder;
         String currentPageNo;
@@ -61,6 +62,12 @@ public class CustomQueryCreator {
             wardNo = (String) getParameterFromRequestObject("wardNo", request);
         } else {
             wardNo = "";
+        }
+        
+        if (checkParameter("toleName", request)) {
+            tole = (String) getParameterFromRequestObject("toleName", request);
+        } else {
+            tole = "";
         }
         
         if (checkParameter("placeType", request)) {
@@ -101,6 +108,14 @@ public class CustomQueryCreator {
                     break;
         		}
         		
+        		switch (tole) {
+                case "":
+                    break;
+
+                default:
+                	caseQuery += " AND a.answer_2 LIKE '" + tole + "' ";
+                    break;
+        		}
         		
         		switch (searchKey) {
                 case "":

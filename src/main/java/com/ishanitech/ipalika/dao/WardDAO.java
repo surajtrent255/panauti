@@ -5,6 +5,7 @@
 package com.ishanitech.ipalika.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -12,6 +13,7 @@ import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
+import com.ishanitech.ipalika.dto.ToleDTO;
 import com.ishanitech.ipalika.model.Ward;
 
 public interface WardDAO {
@@ -78,5 +80,10 @@ public interface WardDAO {
 
 	@SqlQuery("SELECT COUNT(*) FROM answer WHERE answer_3 = :wardNo AND deleted = 0")
 	Integer getTotalHouseCountByWard(@Bind("wardNo") int wardNo);
+
+
+	@SqlQuery("SELECT DISTINCT ans.answer_3 as wardNumber, ans.answer_2 as toleName FROM answer ans WHERE deleted = 0;")
+	@RegisterBeanMapper(ToleDTO.class)
+	List<ToleDTO> getAllTolesMap();
 	
 }

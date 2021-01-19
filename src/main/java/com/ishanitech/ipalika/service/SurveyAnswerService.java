@@ -29,5 +29,7 @@ public interface SurveyAnswerService {
 	public List<ResidentDTO> getNextLotResident(RoleWardDTO roleWardDTO, HttpServletRequest request);
 	public List<ResidentDTO> getWardResidentByPageLimit(HttpServletRequest request);
 	public List<ResidentDTO> getSortedResident(HttpServletRequest request);
+
+	public List<ResidentDTO> searchToleResident(String wardNo, HttpServletRequest request);
 	
 }

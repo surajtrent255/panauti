@@ -381,6 +381,24 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 		});
 		return residents;
 	}
+	
+	
+
+	@Override
+	public List<ResidentDTO> searchToleResident(String wardNo, HttpServletRequest request) {
+		String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.RESIDENTS);
+		List<ResidentDTO> residents;
+		if(wardNo.equals("")) {
+			residents = dbService.getDao(SurveyAnswerDAO.class).searchAllResidentByWard(caseQuery);
+		}else {
+		residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(wardNo, caseQuery);
+		}
+		residents.forEach(resident -> {
+			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
+		});
+		return residents;
+	}
+
 
 	@Override
 	public List<ResidentDTO> getNextLotResident(RoleWardDTO roleWardDTO, HttpServletRequest request) {

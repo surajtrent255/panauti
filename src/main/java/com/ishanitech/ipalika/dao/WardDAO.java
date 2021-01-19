@@ -85,5 +85,8 @@ public interface WardDAO {
 	@SqlQuery("SELECT DISTINCT ans.answer_3 as wardNumber, ans.answer_2 as toleName FROM answer ans WHERE deleted = 0;")
 	@RegisterBeanMapper(ToleDTO.class)
 	List<ToleDTO> getAllTolesMap();
+
+	@SqlQuery("SELECT COUNT(*) FROM answer WHERE answer_3 = :wardNo AND answer_2 = :toleName AND deleted = 0")
+	Integer getTotalHouseCountByWardTole(int wardNo, String toleName);
 	
 }

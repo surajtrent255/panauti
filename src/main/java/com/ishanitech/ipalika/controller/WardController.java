@@ -76,9 +76,9 @@ public class WardController {
 	}
 	
 	@GetMapping("/totalHouseCount/{wardNumber}") 
-	public ResponseDTO<Integer> getTotalHouseCountByWard(@PathVariable("wardNumber") int wardNo) throws CustomSqlException {
+	public ResponseDTO<Integer> getTotalHouseCountByWard(@PathVariable("wardNumber") int wardNo, @RequestParam(name= "toleName", required=false) String toleName) throws CustomSqlException {
 		System.out.println("endpoint called ward--->" + wardNo);
-		return new ResponseDTO<Integer>(wardService.getHouseCountByWard(wardNo));
+		return new ResponseDTO<Integer>(wardService.getHouseCountByWard(wardNo, toleName));
 	}
 	
 	/**

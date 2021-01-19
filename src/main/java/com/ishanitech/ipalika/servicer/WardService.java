@@ -25,7 +25,7 @@ public interface WardService {
 
 	List<WardDTO> getAllwardsInfo();
 	
-	Integer getHouseCountByWard(int wardNo);
+	Integer getHouseCountByWard(int wardNo, String toleName);
 
 	void addWardBuilginImage(MultipartFile image);
 

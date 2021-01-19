@@ -97,11 +97,20 @@ public class WardServiceImpl implements WardService {
 	}
 
 	@Override
-	public Integer getHouseCountByWard(int wardNo) {
+	public Integer getHouseCountByWard(int wardNo, String toleName) {
 		
-		Integer totalHouseCount = dbService.getDao(WardDAO.class).getTotalHouseCountByWard(wardNo);
-		
-		return totalHouseCount;
+		Integer totalHouseCount;
+		System.out.println("ToleName---->" + toleName);
+		System.out.println("WardNo---->" + wardNo);
+		if(toleName.equals("null") || toleName.equals("")) {
+		totalHouseCount = dbService.getDao(WardDAO.class).getTotalHouseCountByWard(wardNo);
+		System.out.println("toleName == null---->" + toleName);
+		}
+		else {
+			totalHouseCount = dbService.getDao(WardDAO.class).getTotalHouseCountByWardTole(wardNo, toleName);	
+			System.out.println("toleName not null--->" + toleName);
+		}
+			return totalHouseCount;
 	}
 
 	@Override

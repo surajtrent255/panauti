@@ -463,6 +463,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 			String adjustedCaseQuery = " AND a.added_by = " + loggedInUser.getUserId() + caseQuery;
 			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(adjustedCaseQuery);
 		} else {
+			System.out.println("case Query-->" + caseQuery);
 			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
 		}
 		

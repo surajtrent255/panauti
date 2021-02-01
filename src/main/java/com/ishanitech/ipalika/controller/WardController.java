@@ -78,6 +78,8 @@ public class WardController {
 	@GetMapping("/totalHouseCount/{wardNumber}") 
 	public ResponseDTO<Integer> getTotalHouseCountByWard(@PathVariable("wardNumber") int wardNo, @RequestParam(name= "toleName", required=false) String toleName) throws CustomSqlException {
 		System.out.println("endpoint called ward--->" + wardNo);
+		if(toleName != null)
+		toleName = toleName.replace("spacex", " ");
 		return new ResponseDTO<Integer>(wardService.getHouseCountByWard(wardNo, toleName));
 	}
 	

@@ -113,7 +113,7 @@ public class CustomQueryCreator {
                     break;
 
                 default:
-                	caseQuery += " AND a.answer_2 = '" + tole + "' ";
+                	caseQuery += " AND a.answer_2 = '" + tole.replace("spacex", " ") + "' ";
                     break;
         		}
         		

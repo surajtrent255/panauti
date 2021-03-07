@@ -111,7 +111,8 @@ public class CustomQueryCreator {
         		switch (tole) {
                 case "":
                     break;
-
+                case "undefined":
+                	break;
                 default:
                 	caseQuery += " AND a.answer_2 = '" + tole.replace("spacex", " ") + "' ";
                     break;

@@ -6,6 +6,7 @@ import com.ishanitech.ipalika.dto.QuestionType;
 import com.ishanitech.ipalika.model.QuestionReport;
 
 public class ReportUtil {
+	public static double PIF = 1.6;
 	public static QuestionReport generateReport(int questionId, String[] fullData, QuestionType type) {
 		QuestionReport report = new QuestionReport();
 		report.setQuestionId(questionId);

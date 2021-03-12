@@ -6,7 +6,6 @@ package com.ishanitech.ipalika.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.beans.factory.annotation.Autowired;

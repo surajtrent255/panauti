@@ -98,6 +98,7 @@ public class ReportUtil {
 				break;
 			case CHECKBOX:
 			case RADIO:
+			case RADIO_D:
 			case DROPDOWN:
 				Stream.of(fullData).forEach(dat -> {
 					//System.out.println("DatDat--->"+ dat);

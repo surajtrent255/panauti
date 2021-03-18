@@ -27,6 +27,7 @@ import com.ishanitech.ipalika.exception.EntityNotFoundException;
 import com.ishanitech.ipalika.exception.FileStorageException;
 import com.ishanitech.ipalika.service.FavouritePlacesService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -70,6 +71,7 @@ public class FavouritePlacesController {
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
+	@ApiOperation("Add Favourite Place")
 	public void addFavouritePlace(HttpServletResponse http, @RequestBody List<FavouritePlaceDTO> favouritePlaceInfo)
 			throws CustomSqlException {
 		log.info("incomming request");

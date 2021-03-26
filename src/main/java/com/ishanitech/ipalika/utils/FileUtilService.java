@@ -1,11 +1,17 @@
 package com.ishanitech.ipalika.utils;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +63,9 @@ public class FileUtilService {
 			
 			Path targetLocation = this.storageLocation.resolve(fileName);
 			Files.copy(image.getInputStream(), targetLocation);
+			if(fileName.contains("house_owner_photo")) {
+			saveImageForIcon(fileName, image);
+			}
 			return fileName;
 		} catch(IOException ex) {
 			throw new FileStorageException(String.format("Couldn't store the file %s!", fileName));
@@ -73,6 +82,9 @@ public class FileUtilService {
 			
 			Path targetLocation = this.storageLocation.resolve(fileName);
 			Files.copy(image.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+			if(fileName.contains("house_owner_photo")) {
+			saveImageForIcon(fileName, image);
+			}
 			return fileName;
 		} catch(IOException ex) {
 			throw new FileStorageException(String.format("Couldn't store the file %s!", fileName));
@@ -98,5 +110,45 @@ public class FileUtilService {
                 System.out.println("Failed to Delete image !!");
             }
     }
+	
+	public void saveImageForIcon(String fileName, MultipartFile image) {
+		
+		Path nextTargetLocation = this.storageLocation.resolve("resized/" + fileName);
+		
+		try {
+				
+			//for resizing image
+			
+			InputStream is = new ByteArrayInputStream(image.getBytes());
+			BufferedImage bi = ImageIO.read(is);
+			
+			BufferedImage img = resizeImage(bi, 99, 99);
+			
+			//converting buffered image to multipart
+			
+			File outputfile = new File(nextTargetLocation.toString());
+			if (!outputfile.exists()){
+			    outputfile.mkdirs();
+			}
+			ImageIO.write(img, "png", outputfile);
+			
+			//conversion to multipart ends
+			
+			//img.transferTo(nextTargetLocation);
+		} catch (IllegalStateException e) {
+			log.error("Exception: {}", e.getLocalizedMessage());
+		} catch (IOException e) {
+			log.error("Exception: {}", e.getLocalizedMessage());
+		}
+		
+	}
+	
+	BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) throws IOException {
+	    BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+	    Graphics2D graphics2D = resizedImage.createGraphics();
+	    graphics2D.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+	    graphics2D.dispose();
+	    return resizedImage;
+	}
 	
 }

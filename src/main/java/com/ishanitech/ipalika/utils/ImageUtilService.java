@@ -13,4 +13,14 @@ public class ImageUtilService {
 				imageName);
 		return fullImageUrl;
 	}
+	
+	public static String makeFullResizedImageurl(RestBaseProperty restBaseProperty, String imageName) {
+		String fullImageUrl = String.format("%s://%s:%s/%s/resized/%s",
+				restBaseProperty.getProtocol(),
+				restBaseProperty.getDomain(),
+				restBaseProperty.getPort(),
+				restBaseProperty.getResourceLocation(),
+				imageName);
+		return fullImageUrl;
+	}
 }

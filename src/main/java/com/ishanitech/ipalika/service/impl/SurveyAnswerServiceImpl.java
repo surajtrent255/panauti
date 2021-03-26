@@ -169,7 +169,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 			else {
 			residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
 			}
-			residents.forEach(resident -> resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl())));
+			residents.forEach(resident -> resident.setImageUrl(ImageUtilService.makeFullResizedImageurl(restUrlProperty, resident.getImageUrl())));
 			return residents;
 		} catch(JdbiException jex) {
 			throw new CustomSqlException("Exception: " + jex.getLocalizedMessage());
@@ -361,7 +361,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 			residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByKey(searchKey, wardNo, caseQuery);
 		}
 		residents.forEach(resident -> {
-			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
+			resident.setImageUrl(ImageUtilService.makeFullResizedImageurl(restUrlProperty, resident.getImageUrl()));
 		});
 		return residents;
 	}
@@ -377,7 +377,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 		residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(wardNo, caseQuery);
 		}
 		residents.forEach(resident -> {
-			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
+			resident.setImageUrl(ImageUtilService.makeFullResizedImageurl(restUrlProperty, resident.getImageUrl()));
 		});
 		return residents;
 	}
@@ -394,7 +394,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 		residents = dbService.getDao(SurveyAnswerDAO.class).searchResidentByWard(wardNo, caseQuery);
 		}
 		residents.forEach(resident -> {
-			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
+			resident.setImageUrl(ImageUtilService.makeFullResizedImageurl(restUrlProperty, resident.getImageUrl()));
 		});
 		return residents;
 	}
@@ -426,7 +426,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 				residents = dbService.getDao(SurveyAnswerDAO.class).getResidents(caseQuery);
 			}
 
-			residents.forEach(resident -> resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl())));
+			residents.forEach(resident -> resident.setImageUrl(ImageUtilService.makeFullResizedImageurl(restUrlProperty, resident.getImageUrl())));
 			
 			if(request.getParameter("action").equals("prev")) {
 				
@@ -468,7 +468,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 		}
 		
 		residents.forEach(resident -> {
-			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
+			resident.setImageUrl(ImageUtilService.makeFullResizedImageurl(restUrlProperty, resident.getImageUrl()));
 		});
 		return residents;
 	}
@@ -491,7 +491,7 @@ public class SurveyAnswerServiceImpl implements SurveyAnswerService {
 		}
 		
 		residents.forEach(resident -> {
-			resident.setImageUrl(ImageUtilService.makeFullImageurl(restUrlProperty, resident.getImageUrl()));
+			resident.setImageUrl(ImageUtilService.makeFullResizedImageurl(restUrlProperty, resident.getImageUrl()));
 		});
 		return residents;
 	}

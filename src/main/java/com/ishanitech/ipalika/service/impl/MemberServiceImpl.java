@@ -18,7 +18,6 @@ import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.MemberService;
 import com.ishanitech.ipalika.utils.CustomQueryCreator;
 
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 public class MemberServiceImpl implements MemberService {

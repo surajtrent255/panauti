@@ -5,7 +5,6 @@
 package com.ishanitech.ipalika.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;

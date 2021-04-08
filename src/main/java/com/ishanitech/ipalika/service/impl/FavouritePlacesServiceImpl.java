@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.jdbi.v3.core.JdbiException;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ishanitech.ipalika.config.properties.RestBaseProperty;
 import com.ishanitech.ipalika.converter.impl.FavouritePlaceConverter;
 import com.ishanitech.ipalika.dao.FavouritePlaceDAO;
 import com.ishanitech.ipalika.dto.FavouritePlaceDTO;
@@ -23,6 +25,7 @@ import com.ishanitech.ipalika.service.DbService;
 import com.ishanitech.ipalika.service.FavouritePlacesService;
 import com.ishanitech.ipalika.utils.CustomQueryCreator;
 import com.ishanitech.ipalika.utils.FileUtilService;
+import com.ishanitech.ipalika.utils.ImageUtilService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +37,9 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 	private final DbService dbService;
 	private final FileUtilService fileUtilService;
 	
+	
+	@Autowired
+	private RestBaseProperty restUrlProperty;
 	
 	public FavouritePlacesServiceImpl(DbService dbService, FileUtilService fileUtilService) {
 		this.dbService = dbService;
@@ -85,6 +91,7 @@ public class FavouritePlacesServiceImpl implements FavouritePlacesService {
 		try {
 			FavouritePlace favPlaceInfo = dbService.getDao(FavouritePlaceDAO.class)
 					.getFavouritePlaceByPlaceId(placeId);
+			favPlaceInfo.setFavPlacePhoto(ImageUtilService.makeFullImageurl(restUrlProperty, favPlaceInfo.getFavPlacePhoto()));
 			favPlace = new FavouritePlaceConverter().fromEntity(favPlaceInfo);
 			return favPlace;
 		} catch (JdbiException jex) {

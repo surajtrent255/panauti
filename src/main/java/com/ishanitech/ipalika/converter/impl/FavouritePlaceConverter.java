@@ -3,12 +3,19 @@ package com.ishanitech.ipalika.converter.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ishanitech.ipalika.config.properties.RestBaseProperty;
 import com.ishanitech.ipalika.converter.BaseConverter;
 import com.ishanitech.ipalika.dto.FavouritePlaceDTO;
 import com.ishanitech.ipalika.model.FavouritePlace;
+import com.ishanitech.ipalika.utils.ImageUtilService;
 
 public class FavouritePlaceConverter extends BaseConverter<FavouritePlace, FavouritePlaceDTO> {
 
+	@Autowired
+	private RestBaseProperty restBaseProperty;
+	
 	@Override
 	public FavouritePlace fromDto(FavouritePlaceDTO dto) {
 		FavouritePlace favPlace = new FavouritePlace();
@@ -31,7 +38,7 @@ public class FavouritePlaceConverter extends BaseConverter<FavouritePlace, Favou
 		favPlaceDTO.setFilledId(entity.getFavPlaceId());
 		favPlaceDTO.setPlaceName(entity.getFavPlaceName());
 		favPlaceDTO.setPlaceDescription(entity.getFavPlaceDesc());
-		favPlaceDTO.setPlaceImage(String.format("%s%s", "http://localhost:8888/resource/", entity.getFavPlacePhoto()));
+		favPlaceDTO.setPlaceImage(ImageUtilService.makeFullImageurl(restBaseProperty, entity.getFavPlacePhoto()));
 		favPlaceDTO.setPlaceGPS(entity.getFavPlaceLocation());
 		favPlaceDTO.setPlaceWard(entity.getFavPlaceWard());
 		favPlaceDTO.setPlaceType(entity.getFavPlaceType());

@@ -1,6 +1,6 @@
 ############## Server port configuration ################   
 server:
-  port: 8888
+  port: 8889
 
 ############## Configuration for the jwt ################
 jwt:
@@ -27,16 +27,16 @@ spring:
 
 database:
   username: root
-  password: root
+  password: qTm78M7Nj8xyLE3L
 
 file:
   upload:
-    directory: /ipasal/ipalika/
+    directory: E:\\ishanitech\\duplicatbackup\\Godawari_Backups\\files
     
 rest:
   protocol: http
   domain: localhost
-  port: 8888
+  port: 8889
   resource-location: resource
   
 logging:
@@ -56,7 +56,7 @@ logging:
   file: /archiesoft/ipalika/webservice/logs/ipalika-rest.log
   
 database:
-  username: root
+  username: ishanitech
   password: 24Pr1y@msh@  
   
 file:
@@ -77,18 +77,19 @@ logging:
   loggin:
     level:
       root: ERROR
-  file: /archiesoft/ipalika/webservice/logs/ipalika-rest.log
+  file: /archiesoft/ipalika/webservice/logs/godawari-rest.log
   
 database:
-  username: root
+  username: ishanitech
   password: 24Pr1y@msh@  
-  file:
+  
+file:
   upload:
-    directory: /home/archiesoft/ipalika/
+    directory: /home/archiesoft/godawari/files
 
 rest:
   protocol: http
-  domain: 103.233.58.62
-  port: 8888
+  domain: 103.233.58.127
+  port: 8889
   resource-location: resource
 

@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authenticationEntryPoint(authenticationEntryPoint)
 			.and()
 			.authorizeRequests()
-			.antMatchers("/resource/**", "/home").permitAll()
+			.antMatchers("/resource/**", "/home", "/assets/*", "/assets/resized/*").permitAll()
 			//.antMatchers("/**").permitAll()
 			.antMatchers(HttpMethod.GET, "/favourite-place/**", "/report/**", "/public/**").permitAll()
 			.antMatchers(HttpMethod.POST, "/public/**").permitAll()
